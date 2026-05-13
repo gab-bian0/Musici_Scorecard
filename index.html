@@ -26,11 +26,11 @@
 html,body{height:100%;overflow:hidden}
 body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(--ink);
   padding-left:var(--sl);padding-right:var(--sr)}
-
+ 
 .scr{display:none;width:100%;height:100dvh;overflow:hidden;position:relative}
 .scr.active{display:flex;flex-direction:column;animation:fi .18s ease}
 @keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-
+ 
 /* ══ SETUP ═══════════════════════════════════════ */
 #sSetup{align-items:center;justify-content:center;
   background:linear-gradient(160deg,#0e3a0c,var(--gd) 60%,#235c20)}
@@ -52,14 +52,14 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .sp-ico{font-size:30px;display:block;margin-bottom:8px}
 .sp-nm{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--goldl);display:block;margin-bottom:2px}
 .sp-at{font-size:10.5px;color:rgba(255,255,255,.45);font-style:italic}
-.start-cta{margin-top:22px;background:linear-gradient(135deg,var(--gold),var(--goldl));
+.start-cta{background:linear-gradient(135deg,var(--gold),var(--goldl));
   color:#0e3a0c;border:none;border-radius:12px;padding:14px 56px;
   font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.08em;cursor:pointer;
   box-shadow:0 4px 18px rgba(201,160,16,.4);opacity:0;pointer-events:none;
   transition:opacity .2s;display:block;margin:22px auto 0}
 .start-cta.rdy{opacity:1;pointer-events:all}
 .start-cta:active{transform:scale(.97)}
-
+ 
 /* ══ HEADER ═════════════════════════════════════ */
 .hdr{background:linear-gradient(135deg,var(--gd),#0e3a0c);
   height:calc(var(--hdr) + var(--st));padding-top:var(--st);flex-shrink:0;
@@ -80,18 +80,17 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .hbtn-rst:active{background:rgba(180,30,30,.45)}
 .total-badge{background:rgba(255,255,255,.1);border:1.5px solid rgba(232,201,74,.25);
   border-radius:8px;color:rgba(255,255,255,.6);font-family:'Cinzel',serif;font-size:10px;
-  font-weight:600;padding:4px 10px;min-width:72px;text-align:center;
-  letter-spacing:.02em}
+  font-weight:600;padding:4px 10px;min-width:72px;text-align:center;letter-spacing:.02em}
 .total-badge.run{color:var(--goldl);border-color:rgba(232,201,74,.55)}
-
+ 
 /* ══ MUSICI BODY ════════════════════════════════ */
 .mus-body{flex:1;display:grid;overflow:hidden;grid-template-columns:43% 57%}
 @media(orientation:portrait){.mus-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
-
+ 
 /* SINISTRA */
 .mus-left{border-right:2px solid var(--gl);background:#fff;
   display:flex;flex-direction:column;padding:9px 10px 8px;gap:7px;overflow:hidden}
-
+ 
 .timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;padding:9px 12px;flex-shrink:0}
 .tb-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;
   color:var(--gd);margin-bottom:1px;display:flex;align-items:center;justify-content:space-between}
@@ -107,17 +106,17 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .tb-hint{font-size:10px;color:#aaa;font-style:italic}
 .tb-total{font-size:10.5px;color:#888;margin-top:3px}
 .tb-total span{font-family:'Cinzel',serif;font-weight:700;color:var(--gd)}
-
-.ctrl-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0}
-.cbtn{padding:9px 5px;border-radius:9px;border:2px solid;
-  font-family:'Cinzel',serif;font-size:10.5px;font-weight:700;letter-spacing:.03em;
-  cursor:pointer;transition:all .14s;text-align:center}
-.cbtn:active{transform:scale(.95)}
-.cbtn.go{border-color:var(--gd);color:var(--gd);background:var(--gll)}
-.cbtn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef}
-.cbtn.stp{border-color:#bbb;color:#999;background:#f8f8f8}
-.cbtn:disabled{opacity:.35;cursor:default;pointer-events:none}
-
+ 
+/* Pulsante START/STOP unificato */
+.startstop-btn{width:100%;padding:11px 6px;border-radius:10px;border:2px solid;
+  font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.05em;
+  cursor:pointer;transition:all .18s;flex-shrink:0;text-align:center}
+.startstop-btn:active{transform:scale(.97)}
+.startstop-btn.go{border-color:var(--gd);color:var(--gd);background:var(--gll)}
+.startstop-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef;
+  box-shadow:0 2px 10px rgba(196,96,16,.15)}
+ 
+/* Pulsante FERMO BRANO */
 .fermo-btn{width:100%;padding:12px 6px;border-radius:10px;border:none;
   background:linear-gradient(135deg,var(--gd),#0e3a0c);
   color:var(--goldl);font-family:'Cinzel',serif;font-size:12.5px;font-weight:700;
@@ -125,7 +124,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   box-shadow:0 3px 14px rgba(29,92,26,.3)}
 .fermo-btn:active{transform:scale(.97);filter:brightness(.9)}
 .fermo-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
-
+ 
 .brani-stats{background:var(--gll);border:1.5px solid var(--gl);
   border-radius:9px;padding:6px 11px;flex-shrink:0}
 .bs-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px}
@@ -133,49 +132,18 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .bs-lbl{color:#999;font-style:italic}
 .bs-val{font-family:'Cinzel',serif;font-weight:700;color:var(--gd)}
 .bs-val.warn{color:var(--red)}
-
+ 
 /* DESTRA */
 .mus-right{display:flex;flex-direction:column;background:var(--parch);overflow:hidden}
 .right-scroll{flex:1;overflow-y:auto;padding:8px 10px 6px}
-
+ 
 .sec-title{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--gd);
   display:flex;align-items:center;gap:6px;margin:5px 0 6px}
 .sec-title::before,.sec-title::after{content:'';flex:1;height:1px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-
-.voci-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:5px}
-.vbtn{padding:7px 5px;border-radius:9px;border:2px solid var(--gl);
-  background:#fff;cursor:pointer;transition:all .14s;text-align:center}
-.vbtn.on{border-color:var(--gd);background:var(--gd)}
-.vbtn:active{transform:scale(.95)}
-.v-n{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gd);display:block}
-.v-lbl{font-size:9px;color:#aaa;display:block}
-.vbtn.on .v-n,.vbtn.on .v-lbl{color:#fff}
-.vbtn.on .v-lbl{color:rgba(255,255,255,.65)}
-
-.tog-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
-.tog{background:#fff;border:1.5px solid #dde8dd;border-radius:8px;
-  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
-.tog.on{background:var(--gll);border-color:var(--gd)}
-.tog.on::before{content:'✓';position:absolute;top:3px;right:6px;
-  font-size:10px;color:var(--gd);font-weight:700}
-.tog:active{transform:scale(.97)}
-.tog-sym{font-family:'Cinzel',serif;font-size:10.5px;font-weight:700;color:var(--gd);display:block}
-.tog-name{font-size:10px;color:var(--ink);display:block}
-.add-warn{font-size:9.5px;color:var(--orange);font-style:italic;min-height:13px;margin-bottom:2px}
-
-.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
-.dtog{background:#fff;border:1.5px solid #f5d5d5;border-radius:7px;
-  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
-.dtog.on{background:var(--red-bg);border-color:var(--red)}
-.dtog.on::before{content:'✓';position:absolute;top:3px;right:6px;
-  font-size:10px;color:var(--red);font-weight:700}
-.dtog:active{transform:scale(.97)}
-.dtog.na{opacity:.3;pointer-events:none}
-.dtog-val{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--red);display:block}
-.dtog-name{font-size:10px;color:var(--ink)}
-
+ 
+/* Penalità */
 .pen-row{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:3px}
 .pbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
   padding:7px 4px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
@@ -189,13 +157,50 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   border-radius:50%;width:16px;height:16px;font-family:'Cinzel',serif;font-size:9px;
   font-weight:700;display:none;align-items:center;justify-content:center}
 .p-cnt.show{display:flex}
-
+ 
 .undo-row{display:flex;flex-wrap:wrap;gap:4px;min-height:18px;margin-bottom:3px}
 .ubtn{border:1.5px solid #ddd;border-radius:6px;padding:2px 8px;
   font-family:'Cinzel',serif;font-size:9.5px;font-weight:600;
   color:#aaa;background:none;cursor:pointer}
 .ubtn:active{background:#f5f5f5;color:#666}
-
+ 
+/* Voci */
+.voci-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:5px}
+.vbtn{padding:7px 5px;border-radius:9px;border:2px solid var(--gl);
+  background:#fff;cursor:pointer;transition:all .14s;text-align:center}
+.vbtn.on{border-color:var(--gd);background:var(--gd)}
+.vbtn:active{transform:scale(.95)}
+.v-n{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gd);display:block}
+.v-lbl{font-size:9px;color:#aaa;display:block}
+.vbtn.on .v-n,.vbtn.on .v-lbl{color:#fff}
+.vbtn.on .v-lbl{color:rgba(255,255,255,.65)}
+ 
+/* Difficoltà aggiuntive */
+.tog-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
+.tog{background:#fff;border:1.5px solid #dde8dd;border-radius:8px;
+  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+.tog.on{background:var(--gll);border-color:var(--gd)}
+.tog.on::before{content:'✓';position:absolute;top:3px;right:6px;
+  font-size:10px;color:var(--gd);font-weight:700}
+.tog:active{transform:scale(.97)}
+.tog-sym{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gd);display:block;margin-bottom:1px}
+/* Nome difficoltà in grassetto e più grande */
+.tog-name{font-size:11.5px;font-weight:700;color:var(--ink);display:block}
+.add-warn{font-size:9.5px;color:var(--orange);font-style:italic;min-height:13px;margin-bottom:2px}
+ 
+/* Declassamenti */
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
+.dtog{background:#fff;border:1.5px solid #f5d5d5;border-radius:7px;
+  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+.dtog.on{background:var(--red-bg);border-color:var(--red)}
+.dtog.on::before{content:'✓';position:absolute;top:3px;right:6px;
+  font-size:10px;color:var(--red);font-weight:700}
+.dtog:active{transform:scale(.97)}
+.dtog.na{opacity:.3;pointer-events:none}
+.dtog-val{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--red);display:block}
+.dtog-name{font-size:10px;color:var(--ink)}
+ 
+/* Lista brani */
 .brani-hdr-row{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--gd);
   display:flex;justify-content:space-between;align-items:center;
@@ -203,10 +208,10 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .brano-row{background:#fff;border-radius:9px;padding:7px 9px;
   border:1.5px solid var(--gl);display:flex;align-items:center;gap:6px;
   margin-bottom:5px;box-shadow:0 1px 5px rgba(29,92,26,.06);animation:fi .15s ease}
-.br-idx{font-family:'Cinzel',serif;font-size:8.5px;color:#bbb;min-width:14px}
+.br-idx{font-family:'Cinzel',serif;font-size:8.5px;color:#bbb;min-width:14px;flex-shrink:0}
 .br-info{flex:1;min-width:0}
 .br-top{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.br-cls{font-family:'Cinzel',serif;font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:5px;color:#fff}
+.br-cls{font-family:'Cinzel',serif;font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:5px;color:#fff;flex-shrink:0}
 .br-cls.D{background:#9e9e9e}.br-cls.C{background:#5b8c5a}
 .br-cls.B{background:#4a7ab5}.br-cls.A{background:#b58a10}.br-cls.AA{background:#8b2252}
 .br-dur{font-size:10.5px;color:#aaa;font-style:italic}
@@ -216,10 +221,12 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .br-pen{font-size:9px;color:var(--red);font-style:italic}
 .br-pts{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--gd);flex-shrink:0}
 .br-pts.sc{color:var(--orange)}
-.br-del{background:none;border:none;color:#ccc;font-size:15px;cursor:pointer;padding:2px 3px;flex-shrink:0}
-.br-del:active{color:var(--red)}
+.br-del{background:none;border:none;color:#ccc;font-size:16px;cursor:pointer;
+  padding:4px 5px;flex-shrink:0;line-height:1;border-radius:6px;transition:background .12s}
+.br-del:active{color:var(--red);background:#fef2f2}
 .no-brani{font-size:12px;color:#bbb;font-style:italic;text-align:center;padding:14px 0}
-
+ 
+/* Totale bar */
 .totals-bar{background:var(--gd);padding:7px 12px;
   display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .tot-item{text-align:center}
@@ -229,7 +236,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .tot-val.warn{color:#ffb040}
 .tot-val.pen{color:#ff8888;font-size:13px}
 .tot-sep{width:1px;height:26px;background:rgba(255,255,255,.12)}
-
+ 
 /* ══ COREOGRAFIA ═══════════════════════════════ */
 .coreo-body{flex:1;overflow-y:auto;padding:10px 12px 20px}
 .stitle{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.15em;
@@ -237,7 +244,20 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   display:flex;align-items:center;gap:8px;margin:8px 0 10px}
 .stitle::before,.stitle::after{content:'';flex:1;height:1px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-
+ 
+/* Pulsante start/stop coreografia */
+.coreo-timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;
+  padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ct-left{flex:1}
+.ct-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gd);margin-bottom:2px}
+.ct-time{font-family:'Cinzel',serif;font-size:36px;font-weight:700;color:#bbb;line-height:1;transition:color .2s}
+.ct-time.run{color:var(--ink)}
+.ct-btn{flex-shrink:0;padding:10px 16px;border-radius:10px;border:2px solid;
+  font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .18s}
+.ct-btn.go{border-color:var(--gd);color:var(--gd);background:#fff}
+.ct-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef}
+.ct-btn:active{transform:scale(.95)}
+ 
 .porta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}
 .p-opt{padding:8px 4px;border-radius:8px;border:2px solid var(--gl);
   background:var(--gll);cursor:pointer;transition:all .15s;text-align:center}
@@ -247,7 +267,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .p-opt.on .p-opt-v{color:var(--goldl)}
 .p-opt-l{font-size:9px;color:#aaa;display:block}
 .p-opt.on .p-opt-l{color:rgba(255,255,255,.65)}
-
+ 
 .fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:12px}
 .fig-card{background:#fff;border-radius:11px;border:2px solid var(--gl);
   padding:9px 10px;box-shadow:0 1px 6px rgba(29,92,26,.06)}
@@ -270,7 +290,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   color:var(--gd);text-align:center;width:44px}
 .fc-total{font-size:10px;color:var(--gd);font-style:italic;text-align:right;font-weight:600}
 .fig-warn{font-size:9px;color:var(--orange);font-style:italic;margin-top:3px}
-
+ 
 .sinc-card{background:#fff;border-radius:11px;border:2px solid var(--gl);
   padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;
   box-shadow:0 1px 6px rgba(29,92,26,.06)}
@@ -280,7 +300,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .sinc-ctrl{display:flex;align-items:center;gap:6px}
 .sinc-val{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--gd);min-width:32px;text-align:center}
 .sinc-pts{font-size:10px;color:var(--gd);font-style:italic;min-width:44px;text-align:right}
-
+ 
 .cpen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
 .cpbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
   padding:9px 6px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
@@ -293,7 +313,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   border-radius:50%;width:18px;height:18px;font-family:'Cinzel',serif;font-size:9px;
   font-weight:700;display:none;align-items:center;justify-content:center}
 .cp-cnt.show{display:flex}
-
+ 
 .coreo-result{background:linear-gradient(135deg,var(--gd),#0e3a0c);
   border-radius:13px;padding:14px;margin-top:4px}
 .cr-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;
@@ -311,8 +331,8 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 </style>
 </head>
 <body>
-
-<!-- ════════════════ SETUP ════════════════ -->
+ 
+<!-- ════════ SETUP ════════ -->
 <div id="sSetup" class="scr active">
   <div class="setup-inner">
     <div class="brand-emb">🎶</div>
@@ -339,8 +359,8 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
     <button class="start-cta" id="startCta" onclick="boot()">▶ INIZIA</button>
   </div>
 </div>
-
-<!-- ════════════════ FIATI / TAMBURI ════════════════ -->
+ 
+<!-- ════════ FIATI / TAMBURI ════════ -->
 <div id="sMusici" class="scr">
   <div class="hdr">
     <div class="hdr-left">
@@ -355,16 +375,15 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       <button class="hbtn-rst" onclick="doReset('musici')">↺ Reset</button>
     </div>
   </div>
-
+ 
   <div class="mus-body">
-
-    <!-- SINISTRA: cronometro + pulsanti principali -->
+ 
+    <!-- SINISTRA -->
     <div class="mus-left">
-
       <div class="timer-block">
         <div class="tb-label">
           <span>🎵 Brano corrente</span>
-          <span id="branoIndexLbl" style="font-size:8px;color:var(--gm)">—</span>
+          <span id="branoLbl" style="font-size:8px;color:var(--gm)">—</span>
         </div>
         <div class="tb-big" id="lapDisp">0:00.00</div>
         <div class="tb-cls-row">
@@ -373,16 +392,13 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
         </div>
         <div class="tb-total">Totale: <span id="totalDisp">0:00.00</span></div>
       </div>
-
-      <div class="ctrl-grid">
-        <button class="cbtn go" id="startStopBtn" onclick="doStartStop()">▶ Start</button>
-        <button class="cbtn stp" id="stopFinalBtn" onclick="doStopFinal()" disabled>■ Stop</button>
-      </div>
-
-      <button class="fermo-btn" id="fermoBtn" onclick="doFermo()" disabled>
-        ✂ FERMO BRANO
-      </button>
-
+ 
+      <!-- START/STOP unificato -->
+      <button class="startstop-btn go" id="ssBtn" onclick="doStartStop()">▶ Start</button>
+ 
+      <!-- FERMO BRANO -->
+      <button class="fermo-btn" id="fermoBtn" onclick="doFermo()" disabled>✂ FERMO BRANO</button>
+ 
       <div class="brani-stats">
         <div class="bs-row">
           <span class="bs-lbl">Brani salvati</span>
@@ -397,13 +413,34 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
           <span class="bs-val" id="aCount">0 / 3</span>
         </div>
       </div>
-
-    </div><!-- /mus-left -->
-
-    <!-- DESTRA: configurazione live brano + lista -->
+    </div>
+ 
+    <!-- DESTRA -->
     <div class="mus-right">
       <div class="right-scroll" id="rightScroll">
-
+ 
+        <!-- PENALITÀ — prime perché più usate -->
+        <div class="sec-title">Penalità di Esecuzione</div>
+        <div class="pen-row">
+          <div class="pbtn" id="pb_lieve"  onclick="addPen('lieve')">
+            <span class="p-sym">/</span><span class="p-lbl">Lieve</span>
+            <span class="p-val">–0.10</span><span class="p-cnt" id="pc_lieve">0</span>
+          </div>
+          <div class="pbtn" id="pb_media"  onclick="addPen('media')">
+            <span class="p-sym">✕</span><span class="p-lbl">Media</span>
+            <span class="p-val">–0.30</span><span class="p-cnt" id="pc_media">0</span>
+          </div>
+          <div class="pbtn" id="pb_grave"  onclick="addPen('grave')">
+            <span class="p-sym">○</span><span class="p-lbl">Grave</span>
+            <span class="p-val">–0.60</span><span class="p-cnt" id="pc_grave">0</span>
+          </div>
+          <div class="pbtn" id="pb_gravis" onclick="addPen('gravis')">
+            <span class="p-sym">S</span><span class="p-lbl">Gravissima</span>
+            <span class="p-val">–0.90</span><span class="p-cnt" id="pc_gravis">0</span>
+          </div>
+        </div>
+        <div class="undo-row" id="penUndoRow"></div>
+ 
         <!-- VOCI -->
         <div class="sec-title">Numero di Voci</div>
         <div class="voci-row">
@@ -417,57 +454,27 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
             <span class="v-n">3</span><span class="v-lbl">Tre voci</span>
           </div>
         </div>
-
+ 
         <!-- DIFFICOLTÀ AGGIUNTIVE -->
         <div class="sec-title">Difficoltà Aggiuntive</div>
         <div class="tog-grid" id="addGrid"></div>
         <div class="add-warn" id="addWarn"></div>
-
+ 
         <!-- DECLASSAMENTI -->
         <div class="sec-title">Declassamenti <span style="font-size:8px;color:#aaa;letter-spacing:0;text-transform:none">(−10 pt cad.)</span></div>
         <div class="dec-grid" id="decGrid"></div>
-
-        <!-- PENALITÀ ESECUZIONE -->
-        <div class="sec-title">Penalità di Esecuzione</div>
-        <div class="pen-row">
-          <div class="pbtn" id="pb_lieve" onclick="addPen('lieve')">
-            <span class="p-sym">/</span>
-            <span class="p-lbl">Lieve</span>
-            <span class="p-val">–0.10</span>
-            <span class="p-cnt" id="pc_lieve">0</span>
-          </div>
-          <div class="pbtn" id="pb_media" onclick="addPen('media')">
-            <span class="p-sym">✕</span>
-            <span class="p-lbl">Media</span>
-            <span class="p-val">–0.30</span>
-            <span class="p-cnt" id="pc_media">0</span>
-          </div>
-          <div class="pbtn" id="pb_grave" onclick="addPen('grave')">
-            <span class="p-sym">○</span>
-            <span class="p-lbl">Grave</span>
-            <span class="p-val">–0.60</span>
-            <span class="p-cnt" id="pc_grave">0</span>
-          </div>
-          <div class="pbtn" id="pb_gravis" onclick="addPen('gravis')">
-            <span class="p-sym">S</span>
-            <span class="p-lbl">Gravissima</span>
-            <span class="p-val">–0.90</span>
-            <span class="p-cnt" id="pc_gravis">0</span>
-          </div>
-        </div>
-        <div class="undo-row" id="penUndoRow"></div>
-
-        <!-- LISTA BRANI SALVATI -->
-        <div class="brani-hdr-row">
+ 
+        <!-- LISTA BRANI -->
+        <div class="brani-hdr-row" style="margin-top:6px">
           <span>Brani Registrati</span>
           <span id="braniPtsHdr" style="font-size:11px;color:var(--gd)">— pt</span>
         </div>
         <div id="braniList">
           <div class="no-brani" id="noBrani">Nessun brano ancora.</div>
         </div>
-
+ 
       </div><!-- /right-scroll -->
-
+ 
       <div class="totals-bar">
         <div class="tot-item">
           <div class="tot-lbl">Punti grezzi</div>
@@ -484,12 +491,12 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
           <div class="tot-val pen" id="totPen">–0.00</div>
         </div>
       </div>
-    </div><!-- /mus-right -->
-
+    </div>
+ 
   </div>
 </div><!-- /sMusici -->
-
-<!-- ════════════════ COREOGRAFIA ════════════════ -->
+ 
+<!-- ════════ COREOGRAFIA ════════ -->
 <div id="sCoreo" class="scr">
   <div class="hdr">
     <div class="hdr-left">
@@ -500,12 +507,21 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       </div>
     </div>
     <div class="hdr-right">
-      <div class="total-badge run" id="coreoBadge">0:00</div>
       <button class="hbtn-rst" onclick="doReset('coreo')">↺ Reset</button>
     </div>
   </div>
-
+ 
   <div class="coreo-body">
+ 
+    <!-- CRONOMETRO COREOGRAFIA con pulsante start/stop -->
+    <div class="coreo-timer-block">
+      <div class="ct-left">
+        <div class="ct-lbl">⏱ Esercizio</div>
+        <div class="ct-time" id="coreoTimeDisp">0:00</div>
+      </div>
+      <button class="ct-btn go" id="coreoSsBtn" onclick="doCoreoStartStop()">▶ Start</button>
+    </div>
+ 
     <div class="stitle">Portamento</div>
     <div class="porta-row">
       <div class="p-opt" id="po_0"  onclick="setPorta(0.0)"><span class="p-opt-v">0.0</span><span class="p-opt-l">Assente</span></div>
@@ -513,7 +529,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       <div class="p-opt" id="po_03" onclick="setPorta(0.3)"><span class="p-opt-v">0.3</span><span class="p-opt-l">Maggior parte</span></div>
       <div class="p-opt on" id="po_05" onclick="setPorta(0.5)"><span class="p-opt-v">0.5</span><span class="p-opt-l">Totalità</span></div>
     </div>
-
+ 
     <div class="stitle">Figurazioni</div>
     <div class="fig-grid">
       <div class="fig-card">
@@ -556,7 +572,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
         </div>
       </div>
     </div>
-
+ 
     <div class="stitle">Momenti di Sincronismo</div>
     <div class="sinc-card">
       <div class="sinc-info">
@@ -570,7 +586,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       </div>
       <div class="sinc-pts" id="sincPts">0 / 12 pt</div>
     </div>
-
+ 
     <div class="stitle">Penalità di Esecuzione</div>
     <div class="cpen-grid">
       <div class="cpbtn" id="cp_lieve" onclick="addCPen('lieve')"><span class="cp-sym">/</span><span class="cp-lbl">Lieve</span><span class="cp-val">–0.10</span><span class="cp-cnt" id="cpc_lieve">0</span></div>
@@ -579,7 +595,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       <div class="cpbtn" id="cp_spec"  onclick="addCPen('spec')"><span class="cp-sym">S</span><span class="cp-lbl">Speciale</span><span class="cp-val">–2.50</span><span class="cp-cnt" id="cpc_spec">0</span></div>
     </div>
     <div class="undo-row" id="cpenUndo"></div>
-
+ 
     <div class="stitle">Risultato</div>
     <div class="coreo-result">
       <div class="cr-title">🎭 Coreografia · Portamento · Esecuzione</div>
@@ -599,28 +615,34 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
         <div class="cr-final-of">punti stimati su 10.00</div>
       </div>
     </div>
+ 
   </div>
 </div><!-- /sCoreo -->
-
+ 
+<!-- ════════ JS ════════ -->
 <script>
 'use strict';
-
-/* ── CONSTANTS ──────────────────────────────────────────── */
-const BASE_VALUES={1:{D:1,C:4,B:10,A:25,AA:45},2:{D:6,C:15,B:40,A:60,AA:80},3:{D:15,C:40,B:60,A:80,AA:100}};
+ 
+/* ─── CONSTANTS ──────────────────────────────────────── */
+const BASE_VALUES={
+  1:{D:1,C:4,B:10,A:25,AA:45},
+  2:{D:6,C:15,B:40,A:60,AA:80},
+  3:{D:15,C:40,B:60,A:80,AA:100}
+};
 const FIATI_ADDS=[
-  {id:'accral',name:'Accel./Rallentando',sym:'+',    mult:0.10},
-  {id:'ingin', name:'Inginocchiamento',  sym:'+',    mult:0.10},
-  {id:'dinam', name:'Dinamica',          sym:'++',   mult:0.20},
-  {id:'separ', name:'Brano in Separazione',sym:'+++',mult:0.40},
-  {id:'polif', name:'Voci Polifoniche',  sym:'++++', mult:0.80}
+  {id:'accral',name:'Accel./Rallentando',sym:'+',    mult:.10},
+  {id:'ingin', name:'Inginocchiamento',  sym:'+',    mult:.10},
+  {id:'dinam', name:'Dinamica',          sym:'++',   mult:.20},
+  {id:'separ', name:'Brano in Separazione',sym:'+++',mult:.40},
+  {id:'polif', name:'Voci Polifoniche',  sym:'++++', mult:.80}
 ];
 const PERC_ADDS=[
-  {id:'accral',name:'Accel./Rallentando',sym:'+',    mult:0.10},
-  {id:'dinam', name:'Dinamica',          sym:'+',    mult:0.10},
-  {id:'ingin', name:'Inginocchiamento',  sym:'++',   mult:0.20},
-  {id:'access',name:'Utilizzo Accessori',sym:'++',   mult:0.20},
-  {id:'separ', name:'Brano in Separazione',sym:'+++',mult:0.40},
-  {id:'contro',name:'Controtempi',       sym:'++++', mult:0.80}
+  {id:'accral',name:'Accel./Rallentando',sym:'+',    mult:.10},
+  {id:'dinam', name:'Dinamica',          sym:'+',    mult:.10},
+  {id:'ingin', name:'Inginocchiamento',  sym:'++',   mult:.20},
+  {id:'access',name:'Utilizzo Accessori',sym:'++',   mult:.20},
+  {id:'separ', name:'Brano in Separazione',sym:'+++',mult:.40},
+  {id:'contro',name:'Controtempi',       sym:'++++', mult:.80}
 ];
 const FIATI_DECS=[
   {id:'melo',name:'Ass. linea melodica'},
@@ -640,57 +662,66 @@ const PERC_DECS=[
 ];
 const MAX_PTS={fiati:1600,tamburi:1550};
 const PEN_KEYS={lieve:'penLieve',media:'penMedia',grave:'penGrave',gravis:'penGravis'};
-const PEN_VALS_={lieve:0.10,media:0.30,grave:0.60,gravis:0.90};
+const PEN_VALS={lieve:.10,media:.30,grave:.60,gravis:.90};
 const PEN_SYMS={lieve:'/ Lieve',media:'✕ Media',grave:'○ Grave',gravis:'S Gravis'};
 const CLASS_HINTS={D:'< 9s',C:'9.0–15.49s',B:'15.5–21.49s',A:'21.5–27.99s',AA:'≥ 28s'};
-
-/* ── STATE ──────────────────────────────────────────────── */
+const FIG_MAX={pres:2,insiemeB:4,insiemeC:3,extP:999,extB:999,extC:999,congedo:1};
+const FIG_PTS={pres:10,insiemeB:4,insiemeC:10,extP:1,extB:3,extC:5,congedo:5};
+ 
+/* ─── STATE ──────────────────────────────────────────── */
 let curSec=null, selCard=null;
-// Cronometro
+ 
+// Cronometro musici
 let timer={running:false,startedAt:null,acc:0};
 let lapStart=0;
 let tickId=null;
-// Brano corrente
+ 
+// Brano corrente (config live)
 function newB(){return{voci:1,adds:[],decs:[],penLieve:0,penMedia:0,penGrave:0,penGravis:0};}
 let curB=newB(), penLog=[];
-// Brani salvati
+ 
+// Brani salvati — array semplice, aggiungiamo push e mai sovrascriviamo
 let brani=[];
+ 
 // Coreografia
-function freshC(){return{pres:0,insiemeB:0,insiemeC:0,extP:0,extB:0,extC:0,congedo:0,sinc:0,porta:0.5,penLieve:0,penMedia:0,penGrave:0,penSpec:0};}
+function freshC(){return{pres:0,insiemeB:0,insiemeC:0,extP:0,extB:0,extC:0,
+  congedo:0,sinc:0,porta:.5,penLieve:0,penMedia:0,penGrave:0,penSpec:0};}
 let coreo=freshC(), cpenLog=[];
-let coreoTick=null, coreoAcc=0, coreoStart=null, coreoRun=false;
-
-/* ── HELPERS ────────────────────────────────────────────── */
+let coreoTimer={running:false,startedAt:null,acc:0};
+let coreoTickId=null;
+ 
+/* ─── HELPERS ────────────────────────────────────────── */
 function getTotal(){return timer.acc+(timer.running?(Date.now()-timer.startedAt)/1000:0);}
 function getLap()  {return Math.max(0,getTotal()-lapStart);}
+ 
 function fmtCC(s){
   const m=Math.floor(s/60),r=s%60,si=Math.floor(r),cc=Math.floor((r-si)*100);
   return `${m}:${si<10?'0':''}${si}.${cc<10?'0':''}${cc}`;
 }
-function fmtMin(s){const m=Math.floor(s/60),ss=Math.floor(s%60);return `${m}:${ss<10?'0':''}${ss}`;}
+function fmtMin(s){
+  const m=Math.floor(s/60),ss=Math.floor(s%60);
+  return `${m}:${ss<10?'0':''}${ss}`;
+}
 function getClass(s){return s<9?'D':s<15.5?'C':s<21.5?'B':s<28?'A':'AA';}
 function getAdds(){return curSec==='fiati'?FIATI_ADDS:PERC_ADDS;}
 function getDecs(){return curSec==='fiati'?FIATI_DECS:PERC_DECS;}
-
-/* ── SETUP ──────────────────────────────────────────────── */
+ 
+/* ─── SETUP ──────────────────────────────────────────── */
 function selSec(sec,el){
   curSec=sec;
   if(selCard)selCard.classList.remove('sel');
   el.classList.add('sel');selCard=el;
   document.getElementById('startCta').classList.add('rdy');
 }
+ 
 function boot(){
   if(!curSec)return;
   document.getElementById('sSetup').classList.remove('active');
   if(curSec==='coreo'){
     document.getElementById('sCoreo').classList.add('active');
-    coreoRun=true;coreoStart=Date.now();coreoAcc=0;
-    coreoTick=setInterval(()=>{
-      const e=coreoAcc+(coreoRun?(Date.now()-coreoStart)/1000:0);
-      document.getElementById('coreoBadge').textContent=fmtMin(e);
-    },1000);
+    // NON parte automaticamente: aspetta il pulsante start
     refreshCoreo();
-  }else{
+  } else {
     document.getElementById('mTitle').textContent=curSec==='fiati'?'🎺 Fiati':'🥁 Tamburi';
     document.getElementById('totMax').textContent=MAX_PTS[curSec];
     buildGrids();
@@ -699,7 +730,7 @@ function boot(){
     refreshMusici();
   }
 }
-
+ 
 function goBack(){
   const hasData=brani.length>0||coreo.sinc>0||coreo.pres>0||coreo.insiemeB>0||coreo.extP>0;
   if(hasData&&!confirm('Tornare alla selezione? I dati saranno persi.'))return;
@@ -708,28 +739,36 @@ function goBack(){
   document.getElementById('sCoreo').classList.remove('active');
   document.getElementById('sSetup').classList.add('active');
 }
+ 
 function doReset(w){
   if(!confirm('Resettare tutti i dati?'))return;
   if(w==='musici'){
     timer={running:false,startedAt:null,acc:0};lapStart=0;
     brani=[];curB=newB();penLog=[];
-    updateTimerBtns();resetAddGrid();resetDecGrid();setVoci(1);
+    updateSsBtn();resetAddGrid();resetDecGrid();setVoci(1);
     refreshMusici();refreshPenUI();
-  }else{
+  } else {
     coreo=freshC();cpenLog=[];
-    coreoRun=true;coreoStart=Date.now();coreoAcc=0;
-    setPorta(0.5);refreshCoreo();
+    // ferma timer e resetta
+    coreoTimer={running:false,startedAt:null,acc:0};
+    document.getElementById('coreoTimeDisp').textContent='0:00';
+    document.getElementById('coreoTimeDisp').className='ct-time';
+    document.getElementById('coreoSsBtn').textContent='▶ Start';
+    document.getElementById('coreoSsBtn').className='ct-btn go';
+    setPorta(.5);refreshCoreo();
   }
 }
+ 
 function clearAll(){
-  clearInterval(tickId);clearInterval(coreoTick);tickId=coreoTick=null;
+  clearInterval(tickId);clearInterval(coreoTickId);
+  tickId=coreoTickId=null;
   timer={running:false,startedAt:null,acc:0};lapStart=0;
   brani=[];curB=newB();penLog=[];
   coreo=freshC();cpenLog=[];
-  coreoRun=false;
+  coreoTimer={running:false,startedAt:null,acc:0};
 }
-
-/* ── TIMER ──────────────────────────────────────────────── */
+ 
+/* ─── TIMER MUSICI ───────────────────────────────────── */
 function tickTimer(){
   const lap=getLap(),tot=getTotal(),cls=getClass(lap);
   const ld=document.getElementById('lapDisp');
@@ -737,123 +776,181 @@ function tickTimer(){
   ld.className='tb-big'+(timer.running?' run':(tot>0?' done':''));
   document.getElementById('totalDisp').textContent=fmtCC(tot);
   const tb=document.getElementById('totalBadge');
-  tb.textContent=fmtCC(tot);tb.className='total-badge'+(timer.running?' run':'');
+  tb.textContent=fmtCC(tot);
+  tb.className='total-badge'+(timer.running?' run':'');
   const cb=document.getElementById('clsBadge');
   cb.textContent=cls;cb.className='cls-badge cls-'+cls;
   document.getElementById('clsHint').textContent=CLASS_HINTS[cls];
-  // update dec availability (class may have changed)
   updateDecNA();
 }
-
+ 
 function doStartStop(){
   if(!timer.running){
     timer.startedAt=Date.now();timer.running=true;
-    document.getElementById('branoIndexLbl').textContent='Brano '+(brani.length+1);
-  }else{
+    if(lapStart===0&&timer.acc===0)
+      document.getElementById('branoLbl').textContent='Brano 1';
+  } else {
     timer.acc+=(Date.now()-timer.startedAt)/1000;
     timer.startedAt=null;timer.running=false;
   }
-  updateTimerBtns();
+  updateSsBtn();
 }
-function doStopFinal(){
-  if(timer.running){timer.acc+=(Date.now()-timer.startedAt)/1000;timer.startedAt=null;timer.running=false;}
-  updateTimerBtns();
+ 
+function updateSsBtn(){
+  const btn=document.getElementById('ssBtn');
+  const started=getTotal()>0||timer.running;
+  if(timer.running){
+    btn.textContent='⏸ Pausa';btn.className='startstop-btn pause';
+  } else {
+    btn.textContent=started?'▶ Riprendi':'▶ Start';
+    btn.className='startstop-btn go';
+  }
+  // abilita fermo brano solo se il cronometro è mai partito
+  document.getElementById('fermoBtn').disabled=!(getTotal()>0||timer.running);
 }
+ 
+/* ─── FERMO BRANO ────────────────────────────────────── */
 function doFermo(){
-  if(getTotal()===0)return;
   const dur=getLap();
-  const b={...curB,adds:[...curB.adds],decs:[...curB.decs],dur,cls:getClass(dur),id:Date.now()};
-  brani.push(b);
-  lapStart=getTotal();
+  // Crea il brano snapshot con COPIA degli array
+  const b={
+    voci:curB.voci,
+    adds:[...curB.adds],
+    decs:[...curB.decs],
+    penLieve:curB.penLieve,
+    penMedia:curB.penMedia,
+    penGrave:curB.penGrave,
+    penGravis:curB.penGravis,
+    dur:dur,
+    cls:getClass(dur),
+    id:Date.now()
+  };
+  brani.push(b);          // aggiungiamo SEMPRE in coda
+  lapStart=getTotal();    // il totale avanza, il lap si azzera
+  // Reset stato brano corrente
   curB=newB();penLog=[];
   setVoci(1);resetAddGrid();resetDecGrid();
-  document.getElementById('branoIndexLbl').textContent='Brano '+(brani.length+1);
-  refreshMusici();refreshPenUI();
-  // scroll in fondo
-  setTimeout(()=>{const rs=document.getElementById('rightScroll');rs.scrollTop=rs.scrollHeight;},80);
+  // Aggiorna etichetta brano corrente
+  document.getElementById('branoLbl').textContent='Brano '+(brani.length+1);
+  refreshMusici();
+  refreshPenUI();
+  // Scorri in fondo alla lista
+  setTimeout(()=>{
+    const rs=document.getElementById('rightScroll');
+    rs.scrollTop=rs.scrollHeight;
+  },80);
 }
-function updateTimerBtns(){
-  const started=getTotal()>0||timer.running;
-  const ss=document.getElementById('startStopBtn');
-  if(timer.running){ss.textContent='⏸ Pausa';ss.className='cbtn pause';}
-  else{ss.textContent='▶ Start';ss.className='cbtn go';}
-  document.getElementById('stopFinalBtn').disabled=!started;
-  document.getElementById('fermoBtn').disabled=!started;
-}
-
-/* ── GRIDS ──────────────────────────────────────────────── */
+ 
+/* ─── GRIDS ──────────────────────────────────────────── */
 function buildGrids(){
   const ag=document.getElementById('addGrid');ag.innerHTML='';
   getAdds().forEach(a=>{
-    const d=document.createElement('div');d.className='tog';d.id='add_'+a.id;
-    d.innerHTML=`<span class="tog-sym">${a.sym} +${(a.mult*100).toFixed(0)}%</span><span class="tog-name">${a.name}</span>`;
-    d.onclick=()=>toggleAdd(a.id);ag.appendChild(d);
+    const d=document.createElement('div');
+    d.className='tog';d.id='add_'+a.id;
+    d.innerHTML=`<span class="tog-sym">${a.sym} +${(a.mult*100).toFixed(0)}%</span>`+
+                `<span class="tog-name">${a.name}</span>`;
+    d.onclick=()=>toggleAdd(a.id);
+    ag.appendChild(d);
   });
   const dg=document.getElementById('decGrid');dg.innerHTML='';
   getDecs().forEach(d_=>{
-    const d=document.createElement('div');d.className='dtog';d.id='dec_'+d_.id;
+    const d=document.createElement('div');
+    d.className='dtog';d.id='dec_'+d_.id;
     d.dataset.notFor=d_.notFor?d_.notFor.join(','):'';
-    d.innerHTML=`<span class="dtog-val">−10</span><span class="dtog-name">${d_.name}</span>`;
-    d.onclick=()=>toggleDec(d_.id);dg.appendChild(d);
+    d.innerHTML=`<span class="dtog-val">−10</span>`+
+                `<span class="dtog-name">${d_.name}</span>`;
+    d.onclick=()=>toggleDec(d_.id);
+    dg.appendChild(d);
   });
 }
+ 
 function resetAddGrid(){
-  getAdds().forEach(a=>{const el=document.getElementById('add_'+a.id);if(el)el.classList.remove('on');});
-  curB.adds=[];document.getElementById('addWarn').textContent='';
+  getAdds().forEach(a=>{
+    const el=document.getElementById('add_'+a.id);
+    if(el)el.classList.remove('on');
+  });
+  curB.adds=[];
+  document.getElementById('addWarn').textContent='';
 }
+ 
 function resetDecGrid(){
-  getDecs().forEach(d=>{const el=document.getElementById('dec_'+d.id);if(el)el.classList.remove('on');});
-  curB.decs=[];updateDecNA();
+  getDecs().forEach(d=>{
+    const el=document.getElementById('dec_'+d.id);
+    if(el){el.classList.remove('on');el.classList.remove('na');}
+  });
+  curB.decs=[];
+  updateDecNA();
 }
+ 
 function toggleAdd(id){
   const idx=curB.adds.indexOf(id);
   if(idx>=0){curB.adds.splice(idx,1);document.getElementById('add_'+id).classList.remove('on');}
-  else{curB.adds.push(id);document.getElementById('add_'+id).classList.add('on');}
+  else      {curB.adds.push(id);    document.getElementById('add_'+id).classList.add('on');}
   const n=curB.adds.length;
-  document.getElementById('addWarn').textContent=n>2?`⚠ ${n} difficoltà: le ${n-2} di valore maggiore saranno scartate.`:'';
+  document.getElementById('addWarn').textContent=
+    n>2?`⚠ ${n} difficoltà selezionate: le ${n-2} di valore maggiore saranno scartate.`:'';
 }
+ 
 function toggleDec(id){
   const el=document.getElementById('dec_'+id);
   if(!el||el.classList.contains('na'))return;
   const idx=curB.decs.indexOf(id);
   if(idx>=0){curB.decs.splice(idx,1);el.classList.remove('on');}
-  else{curB.decs.push(id);el.classList.add('on');}
+  else      {curB.decs.push(id);     el.classList.add('on');}
 }
+ 
 function updateDecNA(){
   if(!curSec)return;
   const cls=getClass(getLap());
   getDecs().forEach(d=>{
     const el=document.getElementById('dec_'+d.id);if(!el)return;
-    if(d.notFor&&d.notFor.includes(cls)){el.classList.add('na');if(curB.decs.includes(d.id)){curB.decs=curB.decs.filter(x=>x!==d.id);el.classList.remove('on');}}
-    else el.classList.remove('na');
+    if(d.notFor&&d.notFor.includes(cls)){
+      el.classList.add('na');
+      // rimuovi anche dallo stato se era attivo
+      const i=curB.decs.indexOf(d.id);
+      if(i>=0){curB.decs.splice(i,1);el.classList.remove('on');}
+    } else {
+      el.classList.remove('na');
+    }
   });
 }
-
-/* ── VOCI ───────────────────────────────────────────────── */
-function setVoci(n){curB.voci=n;[1,2,3].forEach(i=>document.getElementById('v'+i).classList.toggle('on',i===n));}
-
-/* ── PENALITÀ ───────────────────────────────────────────── */
+ 
+/* ─── VOCI ───────────────────────────────────────────── */
+function setVoci(n){
+  curB.voci=n;
+  [1,2,3].forEach(i=>document.getElementById('v'+i).classList.toggle('on',i===n));
+}
+ 
+/* ─── PENALITÀ BRANO ─────────────────────────────────── */
 function addPen(t){
-  curB[PEN_KEYS[t]]++;penLog.push(t);
-  const el=document.getElementById('pb_'+t);el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
+  curB[PEN_KEYS[t]]++;
+  penLog.push(t);
+  const el=document.getElementById('pb_'+t);
+  el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
   refreshPenUI();
 }
 function undoPen(idx){
-  const t=penLog[idx];penLog.splice(idx,1);curB[PEN_KEYS[t]]=Math.max(0,curB[PEN_KEYS[t]]-1);refreshPenUI();
+  const t=penLog[idx];
+  penLog.splice(idx,1);
+  curB[PEN_KEYS[t]]=Math.max(0,curB[PEN_KEYS[t]]-1);
+  refreshPenUI();
 }
 function refreshPenUI(){
   ['lieve','media','grave','gravis'].forEach(t=>{
     const cnt=curB[PEN_KEYS[t]];
-    const c=document.getElementById('pc_'+t);c.textContent=cnt;c.className='p-cnt'+(cnt>0?' show':'');
+    const c=document.getElementById('pc_'+t);
+    c.textContent=cnt;c.className='p-cnt'+(cnt>0?' show':'');
   });
   const ur=document.getElementById('penUndoRow');ur.innerHTML='';
   penLog.forEach((t,i)=>{
     const b=document.createElement('button');b.className='ubtn';
-    b.textContent='↩ '+PEN_SYMS[t];b.onclick=()=>undoPen(i);ur.appendChild(b);
+    b.textContent='↩ '+PEN_SYMS[t];
+    b.onclick=(function(ii){return function(){undoPen(ii);};})(i);
+    ur.appendChild(b);
   });
 }
-
-/* ── CALCOLO ────────────────────────────────────────────── */
+ 
+/* ─── CALCOLO PUNTEGGIO ──────────────────────────────── */
 function calcScore(b,clsOvr){
   const cls=clsOvr||b.cls;
   const base=BASE_VALUES[b.voci][cls];
@@ -861,59 +958,86 @@ function calcScore(b,clsOvr){
   const addDefs=curSec==='fiati'?FIATI_ADDS:PERC_ADDS;
   let sel=b.adds.map(id=>addDefs.find(a=>a.id===id)).filter(Boolean);
   sel.sort((a,z)=>z.mult-a.mult);
-  if(sel.length>2)sel=sel.slice(sel.length-2);
+  if(sel.length>2)sel=sel.slice(sel.length-2); // tieni le 2 di valore minore (scarta le maggiori)
   return raw*sel.reduce((acc,a)=>acc*(1+a.mult),1);
 }
 function calcPen(b){
-  if(curSec==='fiati'){return Math.max(b.penLieve*0.10,b.penMedia*0.30)+b.penGrave*0.60+b.penGravis*0.90;}
-  return b.penLieve*0.10+b.penMedia*0.30+b.penGrave*0.60+b.penGravis*0.90;
+  if(curSec==='fiati')
+    return Math.max(b.penLieve*.10,b.penMedia*.30)+b.penGrave*.60+b.penGravis*.90;
+  return b.penLieve*.10+b.penMedia*.30+b.penGrave*.60+b.penGravis*.90;
 }
 function calcTotals(){
   let aaC=0,aC=0,raw=0;
-  brani.forEach(b=>{let c=b.cls;if(c==='AA'){aaC++;if(aaC>1)c='A';}if(c==='A'){aC++;if(aC>3)c='B';}raw+=calcScore(b,c);});
-  return{raw:Math.min(raw,MAX_PTS[curSec]||1600),aaC,aC,pen:brani.reduce((s,b)=>s+calcPen(b),0)};
+  brani.forEach(b=>{
+    let c=b.cls;
+    if(c==='AA'){aaC++;if(aaC>1)c='A';}
+    if(c==='A') {aC++; if(aC>3) c='B';}
+    raw+=calcScore(b,c);
+  });
+  return{raw:Math.min(raw,MAX_PTS[curSec]||1600),aaC,aC,
+         pen:brani.reduce((s,b)=>s+calcPen(b),0)};
 }
-
-/* ── MUSICI REFRESH ─────────────────────────────────────── */
+ 
+/* ─── MUSICI REFRESH ─────────────────────────────────── */
 function refreshMusici(){
   const list=document.getElementById('braniList');
-  const nb=document.getElementById('noBrani');
-  if(brani.length===0){nb.style.display='block';list.innerHTML='';list.appendChild(nb);}
-  else{
-    nb.style.display='none';list.innerHTML='';
-    // compute effective classes with limits
+  const nb  =document.getElementById('noBrani');
+ 
+  if(brani.length===0){
+    nb.style.display='block';
+    list.innerHTML='';
+    list.appendChild(nb);
+  } else {
+    nb.style.display='none';
+    list.innerHTML='';
+    // Calcola classi effettive con limiti
     let aaC=0,aC=0;
     brani.forEach((b,i)=>{
       let cls=b.cls;
       if(cls==='AA'){aaC++;if(aaC>1)cls='A';}
-      if(cls==='A'){aC++;if(aC>3)cls='B';}
+      if(cls==='A') {aC++; if(aC>3) cls='B';}
       const pts=calcScore(b,cls);
       const pen=calcPen(b);
       const addDefs=curSec==='fiati'?FIATI_ADDS:PERC_ADDS;
-      const addStr=b.adds.length?b.adds.map(id=>{const a=addDefs.find(x=>x.id===id);return a?a.sym:''}).filter(Boolean).join(' '):'';
+      const addStr=b.adds.length
+        ?b.adds.map(id=>{const a=addDefs.find(x=>x.id===id);return a?a.sym:null;}).filter(Boolean).join(' ')
+        :'';
       const decStr=b.decs.length?'−'+b.decs.length+'×10':'';
       const penStr=pen>0?'pen −'+pen.toFixed(2):'';
       const scaled=cls!==b.cls;
-      const row=document.createElement('div');row.className='brano-row';
-      row.innerHTML=`
-        <span class="br-idx">${i+1}</span>
-        <div class="br-info">
-          <div class="br-top">
-            <span class="br-cls ${b.cls}">${b.cls}</span>
-            <span class="br-dur">${b.dur.toFixed(2)}s</span>
-            <span class="br-voci">${b.voci}v</span>
-            ${addStr?`<span class="br-add">${addStr}</span>`:''}
-            ${decStr?`<span class="br-dec">${decStr}</span>`:''}
-            ${penStr?`<span class="br-pen">${penStr}</span>`:''}
-            ${scaled?`<span style="font-size:8.5px;color:var(--orange)">(→${cls})</span>`:''}
-          </div>
-        </div>
-        <span class="br-pts${scaled?' sc':''}">${Math.round(pts*10)/10}</span>
-        <button class="br-del" onclick="deleteBrano(${i})">🗑</button>
-      `;
+ 
+      const row=document.createElement('div');
+      row.className='brano-row';
+      // Usa data-index come attributo per il delete
+      row.dataset.idx=i;
+      row.innerHTML=
+        `<span class="br-idx">${i+1}</span>`+
+        `<div class="br-info">`+
+          `<div class="br-top">`+
+            `<span class="br-cls ${b.cls}">${b.cls}</span>`+
+            `<span class="br-dur">${b.dur.toFixed(2)}s</span>`+
+            `<span class="br-voci">${b.voci}v</span>`+
+            (addStr?`<span class="br-add">${addStr}</span>`:'')+
+            (decStr?`<span class="br-dec">${decStr}</span>`:'')+
+            (penStr?`<span class="br-pen">${penStr}</span>`:'')+
+            (scaled?`<span style="font-size:8.5px;color:var(--orange)">(→${cls})</span>`:'')+
+          `</div>`+
+        `</div>`+
+        `<span class="br-pts${scaled?' sc':''}">${(Math.round(pts*10)/10).toFixed(1)}</span>`+
+        `<button class="br-del" data-del="${i}">🗑</button>`;
       list.appendChild(row);
     });
+ 
+    // Delega click delete sulla lista (evita problemi con indici chiusi)
+    list.onclick=function(e){
+      const btn=e.target.closest('[data-del]');
+      if(!btn)return;
+      const idx=parseInt(btn.dataset.del,10);
+      brani.splice(idx,1);
+      refreshMusici();
+    };
   }
+ 
   const{raw,aaC,aC,pen}=calcTotals();
   const maxP=MAX_PTS[curSec]||1600;
   document.getElementById('braniCount').textContent=brani.length;
@@ -923,44 +1047,68 @@ function refreshMusici(){
   document.getElementById('totPen').textContent='–'+pen.toFixed(2);
   document.getElementById('braniPtsHdr').textContent=Math.round(raw)+' pt';
 }
-function deleteBrano(i){brani.splice(i,1);refreshMusici();}
-
-/* ── COREOGRAFIA ────────────────────────────────────────── */
-const FIG_MAX_={pres:2,insiemeB:4,insiemeC:3,extP:999,extB:999,extC:999,congedo:1};
-const FIG_PTS_={pres:10,insiemeB:4,insiemeC:10,extP:1,extB:3,extC:5,congedo:5};
-function adjFig(k,d){coreo[k]=Math.max(0,Math.min(FIG_MAX_[k],coreo[k]+d));refreshCoreo();}
+ 
+/* ─── CRONOMETRO COREOGRAFIA ─────────────────────────── */
+function doCoreoStartStop(){
+  const btn=document.getElementById('coreoSsBtn');
+  const disp=document.getElementById('coreoTimeDisp');
+  if(!coreoTimer.running){
+    coreoTimer.startedAt=Date.now();coreoTimer.running=true;
+    if(!coreoTickId){
+      coreoTickId=setInterval(()=>{
+        const e=coreoTimer.acc+(coreoTimer.running?(Date.now()-coreoTimer.startedAt)/1000:0);
+        document.getElementById('coreoTimeDisp').textContent=fmtMin(e);
+      },1000);
+    }
+    btn.textContent='⏸ Pausa';btn.className='ct-btn pause';
+    disp.className='ct-time run';
+  } else {
+    coreoTimer.acc+=(Date.now()-coreoTimer.startedAt)/1000;
+    coreoTimer.startedAt=null;coreoTimer.running=false;
+    btn.textContent='▶ Riprendi';btn.className='ct-btn go';
+    disp.className='ct-time done';
+  }
+}
+ 
+/* ─── COREOGRAFIA ────────────────────────────────────── */
+function adjFig(k,d){coreo[k]=Math.max(0,Math.min(FIG_MAX[k],coreo[k]+d));refreshCoreo();}
 function adjSinc(d){coreo.sinc=Math.max(0,Math.min(12,coreo.sinc+d));refreshCoreo();}
 function setPorta(v){
   coreo.porta=v;
-  [{id:'po_0',v:0},{id:'po_01',v:0.1},{id:'po_03',v:0.3},{id:'po_05',v:0.5}]
+  [{id:'po_0',v:0},{id:'po_01',v:.1},{id:'po_03',v:.3},{id:'po_05',v:.5}]
     .forEach(x=>document.getElementById(x.id).classList.toggle('on',x.v===v));
   refreshCoreo();
 }
 function addCPen(t){
   const k='pen'+t.charAt(0).toUpperCase()+t.slice(1);
   coreo[k]++;cpenLog.push(t);
-  const el=document.getElementById('cp_'+t);el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
+  const el=document.getElementById('cp_'+t);
+  el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
   refreshCoreo();
 }
 function undoCPen(idx){
   const t=cpenLog[idx];cpenLog.splice(idx,1);
-  const k='pen'+t.charAt(0).toUpperCase()+t.slice(1);coreo[k]=Math.max(0,coreo[k]-1);refreshCoreo();
+  const k='pen'+t.charAt(0).toUpperCase()+t.slice(1);
+  coreo[k]=Math.max(0,coreo[k]-1);refreshCoreo();
 }
+ 
 function refreshCoreo(){
   ['pres','insiemeB','insiemeC','extP','extB','extC','congedo'].forEach(k=>{
     const c=document.getElementById('fc_'+k);if(c)c.textContent=coreo[k];
-    const t=document.getElementById('ft_'+k);if(t)t.textContent=(coreo[k]*FIG_PTS_[k])+' pt';
-    const b=document.getElementById('fp_'+k);if(b)b.disabled=coreo[k]>=FIG_MAX_[k];
+    const t=document.getElementById('ft_'+k);if(t)t.textContent=(coreo[k]*FIG_PTS[k])+' pt';
+    const b=document.getElementById('fp_'+k);if(b)b.disabled=coreo[k]>=FIG_MAX[k];
   });
   document.getElementById('sincVal').textContent=coreo.sinc;
   document.getElementById('sincPts').textContent=coreo.sinc+' / 12 pt';
   document.getElementById('sincPlus').disabled=coreo.sinc>=12;
+ 
   const insPts=Math.min(coreo.insiemeB*4+coreo.insiemeC*10,30);
   const insOver=coreo.insiemeB*4+coreo.insiemeC*10>30;
   document.getElementById('fw_insieme').textContent=insOver?'⚠ Cappato a 30 pt':'';
   const extRaw=coreo.extP+coreo.extB*3+coreo.extC*5;
   const extPts=Math.min(extRaw,68);
   document.getElementById('fw_esterne').textContent=extRaw>68?'⚠ Cappato a 68 pt':'';
+ 
   ['lieve','media','grave','spec'].forEach(t=>{
     const k='pen'+t.charAt(0).toUpperCase()+t.slice(1);
     const cnt=coreo[k];const el=document.getElementById('cpc_'+t);
@@ -968,12 +1116,19 @@ function refreshCoreo(){
   });
   const ur=document.getElementById('cpenUndo');ur.innerHTML='';
   const syms={lieve:'/ Lieve',media:'✕ Media',grave:'○ Grave',spec:'S Spec'};
-  cpenLog.forEach((t,i)=>{const b=document.createElement('button');b.className='ubtn';b.textContent='↩ '+syms[t];b.onclick=()=>undoCPen(i);ur.appendChild(b);});
+  cpenLog.forEach((t,i)=>{
+    const b=document.createElement('button');b.className='ubtn';
+    b.textContent='↩ '+syms[t];
+    b.onclick=(function(ii){return function(){undoCPen(ii);};})(i);
+    ur.appendChild(b);
+  });
+ 
   const presPts=coreo.pres*10,congPts=coreo.congedo*5,sincPts=coreo.sinc;
   const rawT=presPts+insPts+extPts+congPts+sincPts;
   const conv=Math.min(rawT/135*9.5,9.5);
-  const pen=coreo.penLieve*0.10+coreo.penMedia*0.30+coreo.penGrave*0.60+coreo.penSpec*2.50;
+  const pen=coreo.penLieve*.10+coreo.penMedia*.30+coreo.penGrave*.60+coreo.penSpec*2.50;
   const fin=Math.max(0,conv+coreo.porta-pen);
+ 
   document.getElementById('cr_raw').textContent=rawT+' / 135';
   document.getElementById('cr_pres').textContent=presPts+' pt';
   document.getElementById('cr_ins').textContent=insPts+' pt'+(insOver?' ⚠':'');
@@ -985,8 +1140,8 @@ function refreshCoreo(){
   document.getElementById('cr_pen').textContent='–'+pen.toFixed(2);
   document.getElementById('cr_final').textContent=fin.toFixed(2);
 }
-
-/* ── INIT ───────────────────────────────────────────────── */
+ 
+/* ─── INIT ───────────────────────────────────────────── */
 document.getElementById('sMusici').classList.remove('active');
 document.getElementById('sCoreo').classList.remove('active');
 </script>
