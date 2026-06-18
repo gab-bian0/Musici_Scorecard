@@ -1265,7 +1265,8 @@ const PDF_GD=[29,92,26], PDF_GOLD=[180,140,10], PDF_RED=[181,34,34],
       PDF_INK=[20,30,18], PDF_GREY=[140,140,140], PDF_LGREEN=[235,245,231];
 
 function pdfHeader(doc,sectionLabel,squadra,giudice,evento,subRules){
-  const W=210, M=15;
+  const W=doc.internal.pageSize.getWidth();
+  const M=15;
   doc.setFillColor(...PDF_GD);
   doc.rect(0,0,W,26,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(17);
@@ -1298,7 +1299,9 @@ function pdfHeader(doc,sectionLabel,squadra,giudice,evento,subRules){
 }
 
 function pdfFooter(doc,pageNum){
-  const W=210,H=297,M=15;
+  const W=doc.internal.pageSize.getWidth();
+  const H=doc.internal.pageSize.getHeight();
+  const M=15;
   doc.setFont('helvetica','italic');doc.setFontSize(7.5);
   doc.setTextColor(...PDF_GREY);
   doc.text('FISB Rev. 33 · 2025 — Categoria Tradizionale · Generato automaticamente',M,H-10);
@@ -1308,28 +1311,30 @@ function pdfFooter(doc,pageNum){
 function buildMusiciPDF(squadra,giudice,evento){
   if(!window.jspdf){alert('Libreria PDF non disponibile: verificare la connessione internet.');return;}
   const{jsPDF}=window.jspdf;
-  const doc=new jsPDF({unit:'mm',format:'a4'});
-  const W=210,M=15;
-  const sectionLabel=(curSec==='fiati'?'🎺 Sezione Fiati':'🥁 Sezione Tamburi')+' — Difficoltà Musicale ed Esecuzione';
+  // Orizzontale: più spazio per le colonne di testo (difficoltà/declassamenti)
+  const doc=new jsPDF({unit:'mm',format:'a4',orientation:'landscape'});
+  const M=15;
+  const sectionLabel=(curSec==='fiati'?'Sezione Fiati':'Sezione Tamburi')+' — Difficoltà Musicale ed Esecuzione';
   let y=pdfHeader(doc,sectionLabel,squadra,giudice,evento,'FISB Rev. 33 · 2025 — Categoria Tradizionale');
   let pageNum=1;
 
-  // Colonne tabella (somma = 180mm)
+  // Colonne tabella in orizzontale (somma = 267mm su pagina A4 landscape)
   const cols=[
     {w:9,  lbl:'#',     a:'center'},
-    {w:16, lbl:'Cls',   a:'center'},
-    {w:20, lbl:'Durata',a:'center'},
-    {w:12, lbl:'Voci',  a:'center'},
-    {w:46, lbl:'Difficoltà Agg.', a:'left'},
-    {w:42, lbl:'Declassamenti',  a:'left'},
+    {w:14, lbl:'Cls',   a:'center'},
+    {w:18, lbl:'Durata',a:'center'},
+    {w:11, lbl:'Voci',  a:'center'},
+    {w:95, lbl:'Difficoltà Aggiuntive', a:'left'},
+    {w:80, lbl:'Declassamenti',         a:'left'},
     {w:16, lbl:'Pen.',  a:'center'},
-    {w:19, lbl:'Punti', a:'right'}
+    {w:24, lbl:'Punti', a:'right'}
   ];
+  const TOTW=cols.reduce((s,c)=>s+c.w,0);
   function colX(i){let x=M;for(let k=0;k<i;k++)x+=cols[k].w;return x;}
 
   function drawTableHeader(){
     doc.setFillColor(...PDF_GD);
-    doc.rect(M,y,180,7,'F');
+    doc.rect(M,y,TOTW,7,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(8.5);
     doc.setTextColor(232,201,74);
     cols.forEach((c,i)=>{
@@ -1344,45 +1349,55 @@ function buildMusiciPDF(squadra,giudice,evento){
   const decDefs=curSec==='fiati'?FIATI_DECS:PERC_DECS;
   let aaC=0,aC=0;
   doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+  const PAGE_BOTTOM=178; // limite utile in landscape (H=210mm, margine per footer)
 
   brani.forEach((b,i)=>{
-    if(y>268){ pdfFooter(doc,pageNum); doc.addPage(); pageNum++; y=20; drawTableHeader(); doc.setFont('helvetica','normal');doc.setFontSize(8.5); }
-
     let cls=b.cls;
     if(cls==='AA'){aaC++;if(aaC>1)cls='A';}
     if(cls==='A'){aC++;if(aC>3)cls='B';}
     const pts=calcScore(b,cls);
     const pen=calcPen(b);
-    const addStr=b.adds.length?b.adds.map(id=>{const a=addDefs.find(x=>x.id===id);return a?a.name:'';}).filter(Boolean).join(', '):'—';
-    const decStr=b.decs.length?b.decs.map(id=>{const d=decDefs.find(x=>x.id===id);return d?d.name:'';}).filter(Boolean).join(', '):'—';
-    const penStr=pen>0?('−'+pen.toFixed(2)):'—';
+    const addStr=b.adds.length?b.adds.map(id=>{const a=addDefs.find(x=>x.id===id);return a?a.name:'';}).filter(Boolean).join(', '):'-';
+    const decStr=b.decs.length?b.decs.map(id=>{const d=decDefs.find(x=>x.id===id);return d?d.name:'';}).filter(Boolean).join(', '):'-';
+    const penStr=pen>0?('-'+pen.toFixed(2)):'-';
 
-    // Zebra striping
-    if(i%2===1){doc.setFillColor(...PDF_LGREEN);doc.rect(M,y,180,7,'F');}
-
-    doc.setTextColor(...PDF_INK);
-    doc.text(String(i+1),colX(0)+cols[0].w/2,y+4.7,{align:'center'});
-    doc.text(b.cls+(cls!==b.cls?(' →'+cls):''),colX(1)+cols[1].w/2,y+4.7,{align:'center'});
-    doc.text(b.dur.toFixed(2)+'s',colX(2)+cols[2].w/2,y+4.7,{align:'center'});
-    doc.text(String(b.voci),colX(3)+cols[3].w/2,y+4.7,{align:'center'});
-
-    // Testo lungo: troncamento automatico con splitTextToSize
+    // Avvolgimento testo multilinea: nessun contenuto viene mai tagliato
+    doc.setFont('helvetica','normal');doc.setFontSize(8.5);
     const addLines=doc.splitTextToSize(addStr,cols[4].w-4);
-    doc.text(addLines[0]||'—',colX(4)+2,y+4.7);
     const decLines=doc.splitTextToSize(decStr,cols[5].w-4);
-    doc.text(decLines[0]||'—',colX(5)+2,y+4.7);
+    const maxLines=Math.max(1,addLines.length,decLines.length);
+    const rowH=maxLines<=1?7:(7+(maxLines-1)*4.2);
+
+    if(y+rowH>PAGE_BOTTOM){
+      pdfFooter(doc,pageNum);
+      doc.addPage('a4','landscape');
+      pageNum++; y=20;
+      drawTableHeader();
+      doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+    }
+
+    if(i%2===1){doc.setFillColor(...PDF_LGREEN);doc.rect(M,y,TOTW,rowH,'F');}
+
+    const midY=y+(rowH/2)+1.6;
+    doc.setTextColor(...PDF_INK);
+    doc.text(String(i+1),colX(0)+cols[0].w/2,midY,{align:'center'});
+    doc.text(b.cls+(cls!==b.cls?(' ->'+cls):''),colX(1)+cols[1].w/2,midY,{align:'center'});
+    doc.text(b.dur.toFixed(2)+'s',colX(2)+cols[2].w/2,midY,{align:'center'});
+    doc.text(String(b.voci),colX(3)+cols[3].w/2,midY,{align:'center'});
+
+    addLines.forEach((line,li)=>doc.text(line,colX(4)+2,y+4.7+li*4.2));
+    decLines.forEach((line,li)=>doc.text(line,colX(5)+2,y+4.7+li*4.2));
 
     doc.setTextColor(...PDF_RED);
-    doc.text(penStr,colX(6)+cols[6].w/2,y+4.7,{align:'center'});
+    doc.text(penStr,colX(6)+cols[6].w/2,midY,{align:'center'});
     doc.setTextColor(...PDF_GD);doc.setFont('helvetica','bold');
-    doc.text((Math.round(pts*10)/10).toFixed(1),colX(7)+cols[7].w-2,y+4.7,{align:'right'});
+    doc.text((Math.round(pts*10)/10).toFixed(1),colX(7)+cols[7].w-2,midY,{align:'right'});
     doc.setFont('helvetica','normal');
 
-    // linea sottile di separazione
     doc.setDrawColor(220,220,220);doc.setLineWidth(.2);
-    doc.line(M,y+7,M+180,y+7);
+    doc.line(M,y+rowH,M+TOTW,y+rowH);
 
-    y+=7;
+    y+=rowH;
   });
 
   if(brani.length===0){
@@ -1393,13 +1408,13 @@ function buildMusiciPDF(squadra,giudice,evento){
 
   // Riepilogo totali
   y+=8;
-  if(y>250){ pdfFooter(doc,pageNum); doc.addPage(); pageNum++; y=24; }
+  if(y>PAGE_BOTTOM-12){ pdfFooter(doc,pageNum); doc.addPage('a4','landscape'); pageNum++; y=24; }
   const t=calcTotals();
   const maxP=MAX_PTS[curSec]||1600;
   const voto10=Math.max(0,(t.raw/maxP)*10 - t.pen);
 
   doc.setDrawColor(...PDF_GOLD);doc.setLineWidth(.6);
-  doc.line(M,y,M+180,y);
+  doc.line(M,y,M+TOTW,y);
   y+=8;
 
   doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(...PDF_GD);
@@ -1408,33 +1423,35 @@ function buildMusiciPDF(squadra,giudice,evento){
 
   const sumRows=[
     ['Brani registrati', String(brani.length)],
-    ['Brani in classe AA (max 1)', t.aaC+(t.aaC>1?'  ⚠ oltre il limite':'')],
-    ['Brani in classe A (max 3)',  t.aC +(t.aC>3 ?'  ⚠ oltre il limite':'')],
+    ['Brani in classe AA (max 1)', t.aaC+(t.aaC>1?'  (oltre il limite)':'')],
+    ['Brani in classe A (max 3)',  t.aC +(t.aC>3 ?'  (oltre il limite)':'')],
     ['Punti grezzi (su massimale)', Math.round(t.raw)+' / '+maxP],
-    ['Penalità di esecuzione totali', '−'+t.pen.toFixed(2)]
+    ['Penalità di esecuzione totali', '-'+t.pen.toFixed(2)]
   ];
   doc.setFont('helvetica','normal');doc.setFontSize(10);
   sumRows.forEach(r=>{
     doc.setTextColor(...PDF_INK);
     doc.text(r[0],M,y);
     doc.setFont('helvetica','bold');
-    doc.text(r[1],M+180,y,{align:'right'});
+    doc.text(r[1],M+TOTW,y,{align:'right'});
     doc.setFont('helvetica','normal');
     y+=6.5;
   });
 
-  // Riquadro voto finale in base 10
+  // Riquadro voto finale in base 10 — su più righe, niente testo accavallato
   y+=5;
-  if(y>250){ pdfFooter(doc,pageNum); doc.addPage(); pageNum++; y=24; }
+  if(y>PAGE_BOTTOM-30){ pdfFooter(doc,pageNum); doc.addPage('a4','landscape'); pageNum++; y=24; }
   doc.setFillColor(...PDF_GD);
-  doc.roundedRect(M,y,180,26,3,3,'F');
-  doc.setFont('helvetica','normal');doc.setFontSize(9);
+  doc.roundedRect(M,y,TOTW,30,3,3,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(10);
   doc.setTextColor(220,235,215);
-  doc.text('PUNTEGGIO FINALE (base 10)  =  (grezzi / massimale) × 10 − penalità',M+90,y+8,{align:'center'});
-  doc.setFont('helvetica','bold');doc.setFontSize(26);
+  doc.text('PUNTEGGIO FINALE (base 10)',M+TOTW/2,y+8,{align:'center'});
+  doc.setFont('helvetica','italic');doc.setFontSize(8);
+  doc.setTextColor(200,220,195);
+  doc.text('(punti grezzi / massimale) × 10  -  penalità di esecuzione',M+TOTW/2,y+13.5,{align:'center'});
+  doc.setFont('helvetica','bold');doc.setFontSize(27);
   doc.setTextColor(232,201,74);
-  doc.text(voto10.toFixed(3),M+90,y+20,{align:'center'});
-  y+=30;
+  doc.text(voto10.toFixed(3),M+TOTW/2,y+25,{align:'center'});
 
   pdfFooter(doc,pageNum);
   const fname='Musici_'+(curSec==='fiati'?'Fiati':'Tamburi')+'_'+Date.now()+'.pdf';
@@ -1445,8 +1462,8 @@ function buildCoreoPDF(squadra,giudice,evento){
   if(!window.jspdf){alert('Libreria PDF non disponibile: verificare la connessione internet.');return;}
   const{jsPDF}=window.jspdf;
   const doc=new jsPDF({unit:'mm',format:'a4'});
-  const W=210,M=15;
-  let y=pdfHeader(doc,'🎭 Coreografia — Portamento ed Esecuzione',squadra,giudice,evento,'FISB Rev. 33 · 2025 — Categoria Tradizionale');
+  const M=15;
+  let y=pdfHeader(doc,'Coreografia — Portamento ed Esecuzione',squadra,giudice,evento,'FISB Rev. 33 · 2025 — Categoria Tradizionale');
 
   const insPts=Math.min(coreo.insiemeB*4+coreo.insiemeC*10,30);
   const extRaw=coreo.extP+coreo.extB*3+coreo.extC*5;
@@ -1500,7 +1517,7 @@ function buildCoreoPDF(squadra,giudice,evento){
     ['Punti coreo grezzi', rawT+' / 135'],
     ['Stima voto coreo (0–9.5)', conv.toFixed(2)],
     ['Portamento', '+'+coreo.porta.toFixed(2)],
-    ['Penalità di esecuzione totali', '−'+pen.toFixed(2)]
+    ['Penalità di esecuzione totali', '-'+pen.toFixed(2)]
   ];
   doc.setFont('helvetica','normal');doc.setFontSize(10);
   sumRows.forEach(r=>{
