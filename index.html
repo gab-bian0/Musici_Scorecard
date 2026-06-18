@@ -3,39 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>FISB – Scorecard Musici Live</title>
+<title>FISB – Scorecard Musici</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Musici Live">
+<meta name="apple-mobile-web-app-title" content="Musici">
 <meta name="theme-color" content="#1D5C1A">
-
-<!-- Font storici ed eleganti FISB -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --gd:#1D5C1A; /* Verde scuro federale */
-  --gm:#2E7A2A; /* Verde medio */
-  --gl:#C8E6C0; /* Verde chiaro per bordi */
-  --gll:#EBF5E7; /* Verde chiarissimo per sfondi */
-  --gold:#C9A010; /* Oro */
-  --goldl:#E8C94A; /* Oro chiaro */
-  --goldf:#F5E89A;
-  --parch:#F4F8F0; /* Sfondo carta/pergamena */
-  --ink:#0E1A0C; /* Inchiostro scuro */
-  --red:#B52222;
-  --red-bg:#FEF2F2;
+  --gd:#1D5C1A;--gm:#2E7A2A;--gl:#C8E6C0;--gll:#EBF5E7;
+  --gold:#C9A010;--goldl:#E8C94A;--goldf:#F5E89A;
+  --parch:#F4F8F0;--ink:#0E1A0C;
+  --red:#B52222;--red-bg:#FEF2F2;
   --orange:#C46010;
   --st:env(safe-area-inset-top,0px);
   --sb:env(safe-area-inset-bottom,0px);
   --sl:env(safe-area-inset-left,0px);
   --sr:env(safe-area-inset-right,0px);
-  --hdr:56px;
+  --hdr:52px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background-color: var(--bg-primary)}
+html,body{height:100%;overflow:hidden}
 body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(--ink);
-  padding-left:var(--sl);padding-right:var(--sr);user-select:none}
+  padding-left:var(--sl);padding-right:var(--sr)}
 
 .scr{display:none;width:100%;height:100dvh;overflow:hidden;position:relative}
 .scr.active{display:flex;flex-direction:column;animation:fi .18s ease}
@@ -43,82 +33,30 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 
 /* ══ SETUP ═══════════════════════════════════════ */
 #sSetup{align-items:center;justify-content:center;
-  background:linear-gradient(160deg,#0e3a0c,var(--gd) 60%,#235c20);
-  overflow-y:auto;padding:20px 10px}
-.setup-inner{width:100%;max-width:480px;padding:24px 20px;text-align:center}
-.brand-emb{width:86px;height:86px;border-radius:50%;margin:0 auto 14px;
+  background:linear-gradient(160deg,#0e3a0c,var(--gd) 60%,#235c20)}
+.setup-inner{width:100%;max-width:400px;padding:24px 20px;text-align:center}
+.brand-emb{width:82px;height:82px;border-radius:50%;margin:0 auto 14px;
   background:linear-gradient(135deg,var(--goldl),var(--gold));
-  display:flex;align-items:center;justify-content:center;font-size:42px;
+  display:flex;align-items:center;justify-content:center;font-size:38px;
   box-shadow:0 6px 24px rgba(0,0,0,.4)}
-.brand-t{font-family:'Cinzel',serif;font-size:26px;font-weight:700;
-  color:var(--goldl);letter-spacing:.06em;margin-bottom:4px;text-shadow:0 2px 4px rgba(0,0,0,0.3)}
-.brand-v{font-size:12.5px;color:rgba(255,255,255,.55);font-style:italic;margin-bottom:24px}
-.setup-lbl{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px}
-
-.form-group {
-  margin-bottom: 18px;
-  text-align: left;
-}
-.form-group label {
-  display: block;
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 6px;
-}
-.form-group input {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1.5px solid rgba(232, 201, 74, 0.3);
-  border-radius: 10px;
-  padding: 11px 14px;
-  color: #fff;
-  font-family: 'EB Garamond', serif;
-  font-size: 16px;
-  outline: none;
-  transition: all 0.2s;
-}
-.form-group input:focus {
-  border-color: var(--goldl);
-  background: rgba(0, 0, 0, 0.35);
-  box-shadow: 0 0 10px rgba(232, 201, 74, 0.2);
-}
-
-.sp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
-.sp-card{background:rgba(255,255,255,.06);border:2px solid rgba(232,201,74,.2);
-  border-radius:12px;padding:12px 4px 10px;cursor:pointer;transition:all .18s;text-align:center}
+.brand-t{font-family:'Cinzel',serif;font-size:24px;font-weight:700;
+  color:var(--goldl);letter-spacing:.06em;margin-bottom:4px}
+.brand-v{font-size:12px;color:rgba(255,255,255,.4);font-style:italic;margin-bottom:28px}
+.setup-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:14px}
+.sp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px}
+.sp-card{background:rgba(255,255,255,.08);border:2px solid rgba(232,201,74,.25);
+  border-radius:14px;padding:16px 8px 14px;cursor:pointer;transition:all .18s;text-align:center}
 .sp-card:active{transform:scale(.95)}
-.sp-card.sel{border-color:var(--goldl);background:rgba(232,201,74,.18);box-shadow:0 0 12px rgba(232,201,74,0.15)}
-.sp-ico{font-size:26px;display:block;margin-bottom:4px}
-.sp-nm{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--goldl);display:block;margin-bottom:2px}
-.sp-at{font-size:9.5px;color:rgba(255,255,255,.4);font-style:italic}
-
-.check-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-.checkbox-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 13.5px;
-  cursor: pointer;
-}
-.checkbox-label input {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--gold);
-}
-
+.sp-card.sel{border-color:var(--goldl);background:rgba(232,201,74,.15)}
+.sp-ico{font-size:30px;display:block;margin-bottom:8px}
+.sp-nm{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--goldl);display:block;margin-bottom:2px}
+.sp-at{font-size:10.5px;color:rgba(255,255,255,.45);font-style:italic}
 .start-cta{background:linear-gradient(135deg,var(--gold),var(--goldl));
-  color:#0e3a0c;border:none;border-radius:12px;padding:14px 64px;
-  font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.08em;cursor:pointer;
+  color:#0e3a0c;border:none;border-radius:12px;padding:14px 56px;
+  font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.08em;cursor:pointer;
   box-shadow:0 4px 18px rgba(201,160,16,.4);opacity:0;pointer-events:none;
-  transition:all .2s;display:block;margin:12px auto 0}
+  transition:opacity .2s;display:block;margin:22px auto 0}
 .start-cta.rdy{opacity:1;pointer-events:all}
 .start-cta:active{transform:scale(.97)}
 
@@ -126,325 +64,270 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .hdr{background:linear-gradient(135deg,var(--gd),#0e3a0c);
   height:calc(var(--hdr) + var(--st));padding-top:var(--st);flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
-  padding-left:12px;padding-right:12px;
+  padding-left:10px;padding-right:10px;
   box-shadow:0 2px 14px rgba(0,0,0,.28);z-index:50}
-.hdr-left{display:flex;align-items:center;gap:10px}
-.hbtn-back{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);
+.hdr-left{display:flex;align-items:center;gap:8px}
+.hbtn-back{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);
   border-radius:8px;color:#fff;font-family:'Cinzel',serif;font-size:11px;
   font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.03em}
 .hbtn-back:active{background:rgba(255,255,255,.2)}
-.hdr-title-wrapper {display:flex;flex-direction:column}
-.hdr-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--goldl);letter-spacing:.05em;line-height:1.2}
-.hdr-sub{font-size:10px;color:rgba(255,255,255,.5);font-style:italic}
-.hdr-right{display:flex;align-items:center;gap:8px}
-.hbtn-rst{background:rgba(180,30,30,.2);border:1.5px solid rgba(180,30,30,.4);
+.hdr-title{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--goldl);letter-spacing:.05em}
+.hdr-sub{font-size:10.5px;color:rgba(255,255,255,.5);font-style:italic}
+.hdr-right{display:flex;align-items:center;gap:6px}
+.hbtn-rst{background:rgba(180,30,30,.25);border:1.5px solid rgba(180,30,30,.45);
   border-radius:8px;color:#ffa0a0;font-family:'Cinzel',serif;font-size:10px;
-  font-weight:700;padding:5px 9px;cursor:pointer;letter-spacing:.03em}
-.hbtn-rst:active{background:rgba(180,30,30,.4)}
-.total-badge{background:rgba(0,0,0,.2);border:1.5px solid rgba(232,201,74,.25);
-  border-radius:8px;color:rgba(255,255,255,.6);font-family:'JetBrains Mono',monospace;font-size:13px;
-  font-weight:700;padding:4px 8px;min-width:86px;text-align:center}
-.total-badge.run{color:var(--goldl);border-color:rgba(232,201,74,.55);box-shadow:0 0 8px rgba(232,201,74,.3)}
+  font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.03em}
+.hbtn-rst:active{background:rgba(180,30,30,.45)}
+.total-badge{background:rgba(255,255,255,.1);border:1.5px solid rgba(232,201,74,.25);
+  border-radius:8px;color:rgba(255,255,255,.6);font-family:'Cinzel',serif;font-size:10px;
+  font-weight:600;padding:4px 10px;min-width:72px;text-align:center;letter-spacing:.02em}
+.total-badge.run{color:var(--goldl);border-color:rgba(232,201,74,.55)}
 
 /* ══ MUSICI BODY ════════════════════════════════ */
-.mus-body{flex:1;display:grid;overflow:hidden;grid-template-columns:40% 60%}
-@media(max-width: 680px){.mus-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+.mus-body{flex:1;display:grid;overflow:hidden;grid-template-columns:43% 57%}
+@media(orientation:portrait){.mus-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
 
 /* SINISTRA */
 .mus-left{border-right:2px solid var(--gl);background:#fff;
-  display:flex;flex-direction:column;padding:12px;gap:8px;overflow-y:auto}
+  display:flex;flex-direction:column;padding:9px 10px 8px;gap:7px;overflow:hidden}
 
-.timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;padding:12px}
-.tb-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--gd);margin-bottom:2px;display:flex;align-items:center;justify-content:space-between}
-.tb-big{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:700;color:#bbb;
-  letter-spacing:-1px;line-height:1.05;transition:color .2s}
+.timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;padding:9px 12px;flex-shrink:0}
+.tb-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gd);margin-bottom:1px;display:flex;align-items:center;justify-content:space-between}
+.tb-big{font-family:'Cinzel',serif;font-size:44px;font-weight:700;color:#bbb;
+  letter-spacing:.01em;line-height:1.05;transition:color .2s}
 .tb-big.run{color:var(--ink)}
 .tb-big.done{color:var(--gd)}
-.tb-cls-row{display:flex;align-items:center;gap:8px;margin-top:4px}
-.cls-badge{font-family:'Cinzel',serif;font-size:11px;font-weight:700;
+.tb-cls-row{display:flex;align-items:center;gap:7px;margin-top:2px}
+.cls-badge{font-family:'Cinzel',serif;font-size:10px;font-weight:700;
   padding:2px 8px;border-radius:7px;color:#fff;letter-spacing:.04em}
 .cls-D{background:#9e9e9e}.cls-C{background:#5b8c5a}
 .cls-B{background:#4a7ab5}.cls-A{background:#b58a10}.cls-AA{background:#8b2252}
-.tb-hint{font-size:11px;color:#aaa;font-style:italic}
-.tb-total{font-size:11.5px;color:#777;margin-top:6px;border-top:1px solid rgba(0,0,0,0.05);padding-top:6px}
-.tb-total span{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--gd)}
+.tb-hint{font-size:10px;color:#aaa;font-style:italic}
+.tb-total{font-size:10.5px;color:#888;margin-top:3px}
+.tb-total span{font-family:'Cinzel',serif;font-weight:700;color:var(--gd)}
 
-/* Pulsanti start/stop e fermo brano */
-.startstop-btn{width:100%;padding:13px 6px;border-radius:10px;border:2px solid;
-  font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.05em;
+/* Pulsante START/STOP unificato */
+.startstop-btn{width:100%;padding:11px 6px;border-radius:10px;border:2px solid;
+  font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.05em;
   cursor:pointer;transition:all .18s;flex-shrink:0;text-align:center}
 .startstop-btn:active{transform:scale(.97)}
 .startstop-btn.go{border-color:var(--gd);color:var(--gd);background:var(--gll)}
 .startstop-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef;
   box-shadow:0 2px 10px rgba(196,96,16,.15)}
 
-.fermo-btn{width:100%;padding:14px 6px;border-radius:10px;border:none;
+/* Pulsante FERMO BRANO */
+.fermo-btn{width:100%;padding:12px 6px;border-radius:10px;border:none;
   background:linear-gradient(135deg,var(--gd),#0e3a0c);
-  color:var(--goldl);font-family:'Cinzel',serif;font-size:13px;font-weight:700;
+  color:var(--goldl);font-family:'Cinzel',serif;font-size:12.5px;font-weight:700;
   letter-spacing:.06em;cursor:pointer;transition:all .15s;flex-shrink:0;
   box-shadow:0 3px 14px rgba(29,92,26,.3)}
 .fermo-btn:active{transform:scale(.97);filter:brightness(.9)}
 .fermo-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
 
 .brani-stats{background:var(--gll);border:1.5px solid var(--gl);
-  border-radius:9px;padding:8px 12px;flex-shrink:0;margin-top:4px}
-.bs-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+  border-radius:9px;padding:6px 11px;flex-shrink:0}
+.bs-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px}
 .bs-row:last-child{margin-bottom:0}
-.bs-lbl{color:#888;font-style:italic}
+.bs-lbl{color:#999;font-style:italic}
 .bs-val{font-family:'Cinzel',serif;font-weight:700;color:var(--gd)}
 .bs-val.warn{color:var(--red)}
 
-.action-block {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 /* DESTRA */
 .mus-right{display:flex;flex-direction:column;background:var(--parch);overflow:hidden}
-.right-scroll{flex:1;overflow-y:auto;padding:10px 12px}
+.right-scroll{flex:1;overflow-y:auto;padding:8px 10px 6px}
 
-.sec-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.16em;
+.sec-title{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--gd);
-  display:flex;align-items:center;gap:6px;margin:10px 0 8px}
+  display:flex;align-items:center;gap:6px;margin:5px 0 6px}
 .sec-title::before,.sec-title::after{content:'';flex:1;height:1px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 
 /* Penalità */
-.pen-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px}
+.pen-row{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:3px}
 .pbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
-  padding:8px 4px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
+  padding:7px 4px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
 .pbtn:active{background:#fcd0d0;border-color:var(--red);transform:scale(.96)}
 .pbtn.flash{animation:pflash .22s ease}
 @keyframes pflash{0%,100%{background:var(--red-bg)}40%{background:#fcd0d0;border-color:var(--red)}}
-.p-sym{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--red);display:block}
-.p-lbl{font-size:9px;color:#8b0000;display:block}
-.p-val{font-size:9.5px;color:var(--red);font-style:italic;display:block}
+.p-sym{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--red);display:block}
+.p-lbl{font-size:8px;color:#8b0000;display:block}
+.p-val{font-size:8.5px;color:var(--red);font-style:italic;display:block}
 .p-cnt{position:absolute;top:3px;right:4px;background:var(--red);color:#fff;
-  border-radius:50%;width:18px;height:18px;font-family:'Cinzel',serif;font-size:9.5px;
+  border-radius:50%;width:16px;height:16px;font-family:'Cinzel',serif;font-size:9px;
   font-weight:700;display:none;align-items:center;justify-content:center}
 .p-cnt.show{display:flex}
 
-.undo-row{display:flex;flex-wrap:wrap;gap:5px;min-height:20px;margin-bottom:6px}
-.ubtn{border:1.5px solid #ddd;border-radius:6px;padding:3px 8px;
-  font-family:'Cinzel',serif;font-size:10px;font-weight:600;
-  color:#888;background:none;cursor:pointer}
-.ubtn:active{background:#eaeaea;color:#444}
+.undo-row{display:flex;flex-wrap:wrap;gap:4px;min-height:18px;margin-bottom:3px}
+.ubtn{border:1.5px solid #ddd;border-radius:6px;padding:2px 8px;
+  font-family:'Cinzel',serif;font-size:9.5px;font-weight:600;
+  color:#aaa;background:none;cursor:pointer}
+.ubtn:active{background:#f5f5f5;color:#666}
 
 /* Voci */
-.voci-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
-.vbtn{padding:8px 5px;border-radius:9px;border:2px solid var(--gl);
+.voci-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:5px}
+.vbtn{padding:7px 5px;border-radius:9px;border:2px solid var(--gl);
   background:#fff;cursor:pointer;transition:all .14s;text-align:center}
 .vbtn.on{border-color:var(--gd);background:var(--gd)}
 .vbtn:active{transform:scale(.95)}
 .v-n{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gd);display:block}
-.v-lbl{font-size:9.5px;color:#aaa;display:block}
+.v-lbl{font-size:9px;color:#aaa;display:block}
 .vbtn.on .v-n,.vbtn.on .v-lbl{color:#fff}
 .vbtn.on .v-lbl{color:rgba(255,255,255,.65)}
 
 /* Difficoltà aggiuntive */
-.tog-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:4px}
+.tog-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
 .tog{background:#fff;border:1.5px solid #dde8dd;border-radius:8px;
-  padding:6px 10px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
 .tog.on{background:var(--gll);border-color:var(--gd)}
-.tog.on::before{content:'✓';position:absolute;top:4px;right:8px;
-  font-size:11px;color:var(--gd);font-weight:700}
+.tog.on::before{content:'✓';position:absolute;top:3px;right:6px;
+  font-size:10px;color:var(--gd);font-weight:700}
 .tog:active{transform:scale(.97)}
-.tog-sym{font-family:'Cinzel',serif;font-size:9.5px;font-weight:700;color:var(--gd);display:block;margin-bottom:1px}
-.tog-name{font-size:12px;font-weight:700;color:var(--ink);display:block}
-.add-warn{font-size:10px;color:var(--orange);font-style:italic;min-height:15px;margin-bottom:4px}
+.tog-sym{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gd);display:block;margin-bottom:1px}
+/* Nome difficoltà in grassetto e più grande */
+.tog-name{font-size:11.5px;font-weight:700;color:var(--ink);display:block}
+.add-warn{font-size:9.5px;color:var(--orange);font-style:italic;min-height:13px;margin-bottom:2px}
 
 /* Declassamenti */
-.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:4px}
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
 .dtog{background:#fff;border:1.5px solid #f5d5d5;border-radius:7px;
-  padding:6px 10px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
 .dtog.on{background:var(--red-bg);border-color:var(--red)}
-.dtog.on::before{content:'✓';position:absolute;top:4px;right:8px;
-  font-size:11px;color:var(--red);font-weight:700}
+.dtog.on::before{content:'✓';position:absolute;top:3px;right:6px;
+  font-size:10px;color:var(--red);font-weight:700}
 .dtog:active{transform:scale(.97)}
 .dtog.na{opacity:.3;pointer-events:none}
 .dtog-val{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--red);display:block}
-.dtog-name{font-size:11px;color:var(--ink)}
+.dtog-name{font-size:10px;color:var(--ink)}
 
 /* Lista brani */
-.brani-hdr-row{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.14em;
+.brani-hdr-row{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--gd);
   display:flex;justify-content:space-between;align-items:center;
-  padding:6px 0}
-.brano-row{background:#fff;border-radius:9px;padding:8px 10px;
-  border:1.5px solid var(--gl);display:flex;align-items:center;gap:8px;
-  margin-bottom:6px;box-shadow:0 1px 5px rgba(29,92,26,.06);animation:fi .15s ease}
-.br-idx{font-family:'Cinzel',serif;font-size:9.5px;color:#bbb;min-width:16px;flex-shrink:0}
+  padding:3px 0 6px}
+.brano-row{background:#fff;border-radius:9px;padding:7px 9px;
+  border:1.5px solid var(--gl);display:flex;align-items:center;gap:6px;
+  margin-bottom:5px;box-shadow:0 1px 5px rgba(29,92,26,.06);animation:fi .15s ease}
+.br-idx{font-family:'Cinzel',serif;font-size:8.5px;color:#bbb;min-width:14px;flex-shrink:0}
 .br-info{flex:1;min-width:0}
-.br-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.br-cls{font-family:'Cinzel',serif;font-size:9px;font-weight:700;padding:1px 6px;border-radius:5px;color:#fff;flex-shrink:0}
+.br-top{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.br-cls{font-family:'Cinzel',serif;font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:5px;color:#fff;flex-shrink:0}
 .br-cls.D{background:#9e9e9e}.br-cls.C{background:#5b8c5a}
 .br-cls.B{background:#4a7ab5}.br-cls.A{background:#b58a10}.br-cls.AA{background:#8b2252}
-.br-dur{font-size:11px;color:#aaa;font-style:italic}
-.br-voci{font-family:'Cinzel',serif;font-size:10px;color:var(--gd)}
-.br-add{font-size:9.5px;color:var(--gm);display:block}
-.br-dec{font-size:9.5px;color:var(--red);display:block}
-.br-pts{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gd);flex-shrink:0}
-.br-del{background:none;border:none;color:#ccc;font-size:18px;cursor:pointer;
-  padding:4px 6px;flex-shrink:0;line-height:1;border-radius:6px;transition:background .12s}
+.br-dur{font-size:10.5px;color:#aaa;font-style:italic}
+.br-voci{font-family:'Cinzel',serif;font-size:9.5px;color:var(--gd)}
+.br-add{font-size:9px;color:var(--gm)}
+.br-dec{font-size:9px;color:var(--red)}
+.br-pen{font-size:9px;color:var(--red);font-style:italic}
+.br-pts{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--gd);flex-shrink:0}
+.br-pts.sc{color:var(--orange)}
+.br-del{background:none;border:none;color:#ccc;font-size:16px;cursor:pointer;
+  padding:4px 5px;flex-shrink:0;line-height:1;border-radius:6px;transition:background .12s}
 .br-del:active{color:var(--red);background:#fef2f2}
-.no-brani{font-size:13px;color:#bbb;font-style:italic;text-align:center;padding:16px 0}
+.no-brani{font-size:12px;color:#bbb;font-style:italic;text-align:center;padding:14px 0}
 
 /* Totale bar */
-.totals-bar{background:var(--gd);padding:10px 16px;
+.totals-bar{background:var(--gd);padding:7px 12px;
   display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .tot-item{text-align:center}
-.tot-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(255,255,255,.55)}
-.tot-val{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--goldl);line-height:1.1}
+.tot-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.5)}
+.tot-val{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--goldl);line-height:1.1}
 .tot-val.warn{color:#ffb040}
-.tot-val.pen{color:#ff8888;font-size:14px}
-.tot-sep{width:1px;height:28px;background:rgba(255,255,255,.15)}
+.tot-val.pen{color:#ff8888;font-size:13px}
+.tot-sep{width:1px;height:26px;background:rgba(255,255,255,.12)}
 
 /* ══ COREOGRAFIA ═══════════════════════════════ */
-.coreo-body{flex:1;overflow-y:auto;padding:12px 14px 24px}
-.stitle{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:.15em;
+.coreo-body{flex:1;overflow-y:auto;padding:10px 12px 20px}
+.stitle{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.15em;
   text-transform:uppercase;color:var(--gd);
-  display:flex;align-items:center;gap:8px;margin:12px 0 10px}
+  display:flex;align-items:center;gap:8px;margin:8px 0 10px}
 .stitle::before,.stitle::after{content:'';flex:1;height:1px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 
+/* Pulsante start/stop coreografia */
 .coreo-timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;
-  padding:12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .ct-left{flex:1}
-.ct-lbl{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gd);margin-bottom:2px}
-.ct-time{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;color:#bbb;line-height:1;transition:color .2s}
+.ct-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gd);margin-bottom:2px}
+.ct-time{font-family:'Cinzel',serif;font-size:36px;font-weight:700;color:#bbb;line-height:1;transition:color .2s}
 .ct-time.run{color:var(--ink)}
-.ct-btn{flex-shrink:0;padding:11px 18px;border-radius:10px;border:2px solid;
-  font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .18s}
+.ct-btn{flex-shrink:0;padding:10px 16px;border-radius:10px;border:2px solid;
+  font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .18s}
 .ct-btn.go{border-color:var(--gd);color:var(--gd);background:#fff}
 .ct-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef}
 .ct-btn:active{transform:scale(.95)}
 
-.porta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
-.p-opt{padding:9px 4px;border-radius:8px;border:2px solid var(--gl);
+.porta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}
+.p-opt{padding:8px 4px;border-radius:8px;border:2px solid var(--gl);
   background:var(--gll);cursor:pointer;transition:all .15s;text-align:center}
 .p-opt.on{border-color:var(--gd);background:var(--gd)}
 .p-opt:active{transform:scale(.95)}
-.p-opt-v{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--gd);display:block}
+.p-opt-v{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gd);display:block}
 .p-opt.on .p-opt-v{color:var(--goldl)}
-.p-opt-l{font-size:9.5px;color:#aaa;display:block}
+.p-opt-l{font-size:9px;color:#aaa;display:block}
 .p-opt.on .p-opt-l{color:rgba(255,255,255,.65)}
 
-.fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:12px}
 .fig-card{background:#fff;border-radius:11px;border:2px solid var(--gl);
-  padding:10px 12px;box-shadow:0 1px 6px rgba(29,92,26,.06)}
+  padding:9px 10px;box-shadow:0 1px 6px rgba(29,92,26,.06)}
 .fig-card.wide{grid-column:1/-1}
-.fig-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.fig-name{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--gd)}
-.fig-pts-lbl{font-size:10px;color:#aaa;font-style:italic}
-.fig-counter{display:flex;align-items:center;gap:6px}
-.fc-btn{width:38px;height:38px;border-radius:8px;border:none;
-  font-size:22px;font-weight:300;cursor:pointer;
+.fig-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.fig-name{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gd)}
+.fig-pts-lbl{font-size:9.5px;color:#aaa;font-style:italic}
+.fig-counter{display:flex;align-items:center;gap:5px}
+.fc-btn{width:36px;height:36px;border-radius:7px;border:none;
+  font-size:20px;font-weight:300;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:all .12s;user-select:none}
+  transition:all .12s;-webkit-user-select:none;user-select:none}
 .fc-btn.plus{background:var(--gd);color:var(--goldl)}
 .fc-btn.plus:active{background:var(--gm)}
 .fc-btn.plus:disabled{background:var(--gl);color:#aaa}
 .fc-btn.minus{background:var(--gll);border:1.5px solid var(--gl);color:var(--gd)}
 .fc-btn.minus:active{background:var(--gl)}
 .fc-btn.minus:disabled{color:#ccc;border-color:#eee}
-.fc-count{font-family:'Cinzel',serif;font-size:24px;font-weight:700;
-  color:var(--gd);text-align:center;width:48px}
-.fc-total{font-size:10.5px;color:var(--gd);font-style:italic;text-align:right;font-weight:600}
-.fig-warn{font-size:9.5px;color:var(--orange);font-style:italic;margin-top:4px}
+.fc-count{font-family:'Cinzel',serif;font-size:22px;font-weight:700;
+  color:var(--gd);text-align:center;width:44px}
+.fc-total{font-size:10px;color:var(--gd);font-style:italic;text-align:right;font-weight:600}
+.fig-warn{font-size:9px;color:var(--orange);font-style:italic;margin-top:3px}
 
 .sinc-card{background:#fff;border-radius:11px;border:2px solid var(--gl);
-  padding:11px 13px;margin-bottom:14px;display:flex;align-items:center;gap:12px;
+  padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;
   box-shadow:0 1px 6px rgba(29,92,26,.06)}
 .sinc-info{flex:1}
-.sinc-name{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--gd)}
-.sinc-rule{font-size:10.5px;color:#aaa;font-style:italic}
-.sinc-ctrl{display:flex;align-items:center;gap:8px}
-.sinc-val{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--gd);min-width:36px;text-align:center}
-.sinc-pts{font-size:10.5px;color:var(--gd);font-style:italic;min-width:48px;text-align:right}
+.sinc-name{font-family:'Cinzel',serif;font-size:10.5px;font-weight:700;color:var(--gd)}
+.sinc-rule{font-size:10px;color:#aaa;font-style:italic}
+.sinc-ctrl{display:flex;align-items:center;gap:6px}
+.sinc-val{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--gd);min-width:32px;text-align:center}
+.sinc-pts{font-size:10px;color:var(--gd);font-style:italic;min-width:44px;text-align:right}
 
-.cpen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.cpen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
 .cpbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
-  padding:10px 6px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
+  padding:9px 6px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
 .cpbtn:active{background:#fcd0d0;border-color:var(--red);transform:scale(.96)}
-.cp-sym{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--red);display:block}
-.cp-lbl{font-size:9.5px;color:#8b0000;display:block;margin-top:1px}
-.cp-val{font-size:9.5px;color:var(--red);font-style:italic;display:block}
+.cpbtn.flash{animation:pflash .22s ease}
+.cp-sym{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--red);display:block}
+.cp-lbl{font-size:9px;color:#8b0000;display:block;margin-top:1px}
+.cp-val{font-size:9px;color:var(--red);font-style:italic;display:block}
 .cp-cnt{position:absolute;top:4px;right:6px;background:var(--red);color:#fff;
-  border-radius:50%;width:18px;height:18px;font-family:'Cinzel',serif;font-size:9.5px;
+  border-radius:50%;width:18px;height:18px;font-family:'Cinzel',serif;font-size:9px;
   font-weight:700;display:none;align-items:center;justify-content:center}
 .cp-cnt.show{display:flex}
 
 .coreo-result{background:linear-gradient(135deg,var(--gd),#0e3a0c);
-  border-radius:13px;padding:16px;margin-top:6px}
-.cr-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.15em;
+  border-radius:13px;padding:14px;margin-top:4px}
+.cr-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;
   text-transform:uppercase;color:rgba(255,255,255,.5);text-align:center;margin-bottom:12px}
 .cr-row{display:flex;justify-content:space-between;align-items:center;
-  padding:6px 10px;border-radius:7px;margin-bottom:4px;background:rgba(255,255,255,.06)}
-.cr-lbl{font-size:13px;color:rgba(255,255,255,.75);font-style:italic}
-.cr-val{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#fff}
+  padding:6px 10px;border-radius:7px;margin-bottom:3px;background:rgba(255,255,255,.06)}
+.cr-lbl{font-size:12px;color:rgba(255,255,255,.7);font-style:italic}
+.cr-val{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#fff}
 .cr-val.pen{color:#ff8888}
-.cr-sep{height:1px;background:rgba(255,255,255,.1);margin:8px 0}
+.cr-sep{height:1px;background:rgba(255,255,255,.1);margin:7px 0}
 .cr-final{text-align:center;margin-top:10px}
-.cr-final-num{font-family:'Cinzel',serif;font-size:54px;font-weight:900;
-  color:var(--goldl);line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.36)}
-.cr-final-of{font-size:12.5px;color:rgba(255,255,255,.4);margin-top:2px}
-
-/* ══ SUPERVISORE ═══════════════════════════════ */
-.super-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px 20px;
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-}
-.super-card {
-  background: #fff;
-  border: 2px solid var(--gl);
-  border-radius: 14px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-.super-input-group {
-  margin-bottom: 16px;
-}
-.super-input-group label {
-  display: block;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  color: var(--gd);
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.super-input-group input {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1.5px solid var(--gl);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
-  outline: none;
-}
-.super-input-group input:focus {
-  border-color: var(--gd);
-}
-
-/* ══ UTILITY ═══════════════════════════════════ */
-.hidden{display:none !important}
-.w-full{width:100%}
-.btn-export{background:linear-gradient(135deg,var(--gold),var(--goldl));
-  color:#0e3a0c;border:none;border-radius:8px;padding:8px 12px;
-  font-family:'Cinzel',serif;font-weight:700;font-size:11.5px;cursor:pointer;
-  box-shadow:0 3px 10px rgba(201,160,16,0.3);text-align:center}
-.btn-export:active{transform:scale(.97)}
-.btn-save{background:var(--parch);color:var(--gd);border:1.5px solid var(--gl);
-  border-radius:8px;padding:8px 12px;font-family:'Cinzel',serif;font-weight:700;
-  font-size:11.5px;cursor:pointer;text-align:center}
-.btn-save:active{transform:scale(.97)}
+.cr-final-num{font-family:'Cinzel',serif;font-size:50px;font-weight:900;
+  color:var(--goldl);line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.cr-final-of{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px}
 </style>
 </head>
 <body>
@@ -455,50 +338,25 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
     <div class="brand-emb">🎶</div>
     <div class="brand-t">Scorecard Musici</div>
     <div class="brand-v">FISB Rev. 33 · 2025 — Categoria Tradizionale</div>
-    
-    <div class="form-group">
-      <label for="group-name-input">Nome Gruppo Musici</label>
-      <input type="text" id="group-name-input" placeholder="Es. Sestiere Porta Romana" autocomplete="off">
-    </div>
-    
-    <div class="form-group">
-      <label for="phase-input">Fase di Gara / Note</label>
-      <input type="text" id="phase-input" placeholder="Es. Qualificazioni, Finale..." autocomplete="off">
-    </div>
-
-    <p class="setup-lbl" style="margin-top: 10px;">Scegli la sezione da valutare</p>
+    <p class="setup-lbl">Scegli la sezione da valutare</p>
     <div class="sp-grid">
       <div class="sp-card" onclick="selSec('fiati',this)">
         <span class="sp-ico">🎺</span>
         <span class="sp-nm">Fiati</span>
-        <span class="sp-at">Difficoltà &amp; Esecuzione</span>
+        <span class="sp-at">Difficoltà Musicale &amp; Esecuzione</span>
       </div>
       <div class="sp-card" onclick="selSec('tamburi',this)">
         <span class="sp-ico">🥁</span>
         <span class="sp-nm">Tamburi</span>
-        <span class="sp-at">Difficoltà &amp; Esecuzione</span>
+        <span class="sp-at">Difficoltà Musicale &amp; Esecuzione</span>
       </div>
       <div class="sp-card" onclick="selSec('coreo',this)">
         <span class="sp-ico">🎭</span>
-        <span class="sp-nm">Coreo</span>
+        <span class="sp-nm">Coreografia</span>
         <span class="sp-at">Portamento &amp; Esecuzione</span>
       </div>
-      <div class="sp-card" onclick="selSec('supervisore',this)">
-        <span class="sp-ico">📋</span>
-        <span class="sp-nm">Superv.</span>
-        <span class="sp-at">Aggregazione Voti</span>
-      </div>
     </div>
-    
-    <!-- Opzione Chiarine Naturali -->
-    <div id="natural-chiarine-setup" class="check-container hidden">
-      <label class="checkbox-label">
-        <input type="checkbox" id="check-natural">
-        Chiarine Naturali (+12% addendum)
-      </label>
-    </div>
-
-    <button class="start-cta" id="startCta" onclick="boot()">▶ INIZIA GARA</button>
+    <button class="start-cta" id="startCta" onclick="boot()">▶ INIZIA</button>
   </div>
 </div>
 
@@ -506,10 +364,10 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 <div id="sMusici" class="scr">
   <div class="hdr">
     <div class="hdr-left">
-      <button class="hbtn-back" onclick="goBack()">◀ Esci</button>
-      <div class="hdr-title-wrapper">
+      <button class="hbtn-back" onclick="goBack()">◀ Sezione</button>
+      <div>
         <div class="hdr-title" id="mTitle">Fiati</div>
-        <div class="hdr-sub" id="mSub">Gruppo: - | Fase: -</div>
+        <div class="hdr-sub">Difficoltà Musicale ed Esecuzione</div>
       </div>
     </div>
     <div class="hdr-right">
@@ -525,7 +383,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       <div class="timer-block">
         <div class="tb-label">
           <span>🎵 Brano corrente</span>
-          <span id="branoLbl" style="font-size:9px;color:var(--gm);font-weight:bold">—</span>
+          <span id="branoLbl" style="font-size:8px;color:var(--gm)">—</span>
         </div>
         <div class="tb-big" id="lapDisp">0:00.00</div>
         <div class="tb-cls-row">
@@ -536,7 +394,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       </div>
 
       <!-- START/STOP unificato -->
-      <button class="startstop-btn go" id="ssBtn" onclick="doStartStop()">▶ Start Esercizio</button>
+      <button class="startstop-btn go" id="ssBtn" onclick="doStartStop()">▶ Start</button>
 
       <!-- FERMO BRANO -->
       <button class="fermo-btn" id="fermoBtn" onclick="doFermo()" disabled>✂ FERMO BRANO</button>
@@ -547,19 +405,13 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
           <span class="bs-val" id="braniCount">0</span>
         </div>
         <div class="bs-row">
-          <span class="bs-lbl">Brani AA (Max 1)</span>
+          <span class="bs-lbl">Brani AA</span>
           <span class="bs-val" id="aaCount">0 / 1</span>
         </div>
         <div class="bs-row">
-          <span class="bs-lbl">Brani A (Max 3)</span>
+          <span class="bs-lbl">Brani A</span>
           <span class="bs-val" id="aCount">0 / 3</span>
         </div>
-      </div>
-      
-      <!-- Blocco Azioni Report -->
-      <div class="action-block">
-        <button class="btn-export w-full" onclick="copyReportText()">📋 Copia Report WhatsApp</button>
-        <button class="btn-save w-full" onclick="saveSessionToStorage()">💾 Salva Sessione</button>
       </div>
     </div>
 
@@ -567,7 +419,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
     <div class="mus-right">
       <div class="right-scroll" id="rightScroll">
 
-        <!-- PENALITÀ -->
+        <!-- PENALITÀ — prime perché più usate -->
         <div class="sec-title">Penalità di Esecuzione</div>
         <div class="pen-row">
           <div class="pbtn" id="pb_lieve"  onclick="addPen('lieve')">
@@ -589,40 +441,36 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
         </div>
         <div class="undo-row" id="penUndoRow"></div>
 
-        <!-- CONFIGURAZIONE BRANO ATTIVO -->
-        <div class="active-tune-config-panel" style="background: rgba(255,255,255,0.4); border: 1.5px dashed var(--gl); padding: 10px; border-radius: 10px; margin-bottom: 8px;">
-          <div class="sec-title" style="margin-top: 0; margin-bottom: 4px;">Configura Brano Corrente</div>
-          
-          <!-- VOCI -->
-          <div style="font-size: 11px; font-weight: bold; color: var(--gd); margin-bottom: 3px;">Voci:</div>
-          <div class="voci-row">
-            <div class="vbtn on" id="v1" onclick="setVoci(1)">
-              <span class="v-n">1</span><span class="v-lbl">Unisono</span>
-            </div>
-            <div class="vbtn" id="v2" onclick="setVoci(2)">
-              <span class="v-n">2</span><span class="v-lbl">Due voci</span>
-            </div>
-            <div class="vbtn" id="v3" onclick="setVoci(3)">
-              <span class="v-n">3</span><span class="v-lbl">Tre voci</span>
-            </div>
+        <!-- VOCI -->
+        <div class="sec-title">Numero di Voci</div>
+        <div class="voci-row">
+          <div class="vbtn on" id="v1" onclick="setVoci(1)">
+            <span class="v-n">1</span><span class="v-lbl">Unisono</span>
           </div>
-
-          <!-- DIFFICOLTÀ AGGIUNTIVE -->
-          <div style="font-size: 11px; font-weight: bold; color: var(--gd); margin-bottom: 3px;">Difficoltà (Max 2):</div>
-          <div class="tog-grid" id="addGrid"></div>
-          <div class="add-warn" id="addWarn"></div>
-
-          <!-- DECLASSAMENTI -->
-          <div style="font-size: 11px; font-weight: bold; color: var(--gd); margin-bottom: 3px;">Declassamenti (-10 pt):</div>
-          <div class="dec-grid" id="decGrid"></div>
+          <div class="vbtn" id="v2" onclick="setVoci(2)">
+            <span class="v-n">2</span><span class="v-lbl">Due voci</span>
+          </div>
+          <div class="vbtn" id="v3" onclick="setVoci(3)">
+            <span class="v-n">3</span><span class="v-lbl">Tre voci</span>
+          </div>
         </div>
+
+        <!-- DIFFICOLTÀ AGGIUNTIVE -->
+        <div class="sec-title">Difficoltà Aggiuntive</div>
+        <div class="tog-grid" id="addGrid"></div>
+        <div class="add-warn" id="addWarn"></div>
+
+        <!-- DECLASSAMENTI -->
+        <div class="sec-title">Declassamenti <span style="font-size:8px;color:#aaa;letter-spacing:0;text-transform:none">(−10 pt cad.)</span></div>
+        <div class="dec-grid" id="decGrid"></div>
 
         <!-- LISTA BRANI -->
-        <div class="brani-hdr-row">
-          <span>Brani Registrati ed Editabili</span>
-          <span id="braniPtsHdr" style="font-size:12px;color:var(--gd);font-weight:bold">— pt</span>
+        <div class="brani-hdr-row" style="margin-top:6px">
+          <span>Brani Registrati</span>
+          <span id="braniPtsHdr" style="font-size:11px;color:var(--gd)">— pt</span>
         </div>
-        <div class="no-brani" id="noBrani">Nessun brano salvato. Clicca FERMO BRANO durante la gara.</div>
+        <!-- noBrani è ESTERNO a braniList: non viene mai distrutto da innerHTML='' -->
+        <div class="no-brani" id="noBrani">Nessun brano ancora.</div>
         <div id="braniList"></div>
 
       </div><!-- /right-scroll -->
@@ -634,18 +482,13 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
         </div>
         <div class="tot-sep"></div>
         <div class="tot-item">
-          <div class="tot-lbl">Pen. Tempo</div>
-          <div class="tot-val pen" id="totTimePen">–0.00</div>
+          <div class="tot-lbl">Max</div>
+          <div class="tot-val" id="totMax">1600</div>
         </div>
         <div class="tot-sep"></div>
         <div class="tot-item">
-          <div class="tot-lbl">Pen. Esec.</div>
+          <div class="tot-lbl">Pen. ese.</div>
           <div class="tot-val pen" id="totPen">–0.00</div>
-        </div>
-        <div class="tot-sep"></div>
-        <div class="tot-item">
-          <div class="tot-lbl">VOTO FINALE</div>
-          <div class="tot-val" id="totFinal" style="color:var(--goldl)">0.00</div>
         </div>
       </div>
     </div>
@@ -657,10 +500,10 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 <div id="sCoreo" class="scr">
   <div class="hdr">
     <div class="hdr-left">
-      <button class="hbtn-back" onclick="goBack()">◀ Esci</button>
-      <div class="hdr-title-wrapper">
+      <button class="hbtn-back" onclick="goBack()">◀ Sezione</button>
+      <div>
         <div class="hdr-title">🎭 Coreografia</div>
-        <div class="hdr-sub" id="cSub">Gruppo: - | Fase: -</div>
+        <div class="hdr-sub">Portamento ed Esecuzione</div>
       </div>
     </div>
     <div class="hdr-right">
@@ -673,19 +516,13 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
     <!-- CRONOMETRO COREOGRAFIA con pulsante start/stop -->
     <div class="coreo-timer-block">
       <div class="ct-left">
-        <div class="ct-lbl">⏱ Esercizio (Max 6'10")</div>
+        <div class="ct-lbl">⏱ Esercizio</div>
         <div class="ct-time" id="coreoTimeDisp">0:00</div>
       </div>
       <button class="ct-btn go" id="coreoSsBtn" onclick="doCoreoStartStop()">▶ Start</button>
     </div>
 
-    <!-- AZIONI REPORT COREOGRAFIA -->
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <button class="btn-export" style="flex:1" onclick="copyReportText()">📋 Copia Report WhatsApp</button>
-      <button class="btn-save" style="flex:1" onclick="saveSessionToStorage()">💾 Salva Sessione</button>
-    </div>
-
-    <div class="stitle">Portamento Musici</div>
+    <div class="stitle">Portamento</div>
     <div class="porta-row">
       <div class="p-opt" id="po_0"  onclick="setPorta(0.0)"><span class="p-opt-v">0.0</span><span class="p-opt-l">Assente</span></div>
       <div class="p-opt" id="po_01" onclick="setPorta(0.1)"><span class="p-opt-v">0.1</span><span class="p-opt-l">Parziale</span></div>
@@ -693,7 +530,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       <div class="p-opt on" id="po_05" onclick="setPorta(0.5)"><span class="p-opt-v">0.5</span><span class="p-opt-l">Totalità</span></div>
     </div>
 
-    <div class="stitle">Figurazioni Coreografia Musici</div>
+    <div class="stitle">Figurazioni</div>
     <div class="fig-grid">
       <div class="fig-card">
         <div class="fig-top"><div><div class="fig-name">Presentazione</div><div class="fig-pts-lbl">+10 pt · max 2</div></div></div>
@@ -750,7 +587,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       <div class="sinc-pts" id="sincPts">0 / 12 pt</div>
     </div>
 
-    <div class="stitle">Penalità di Esecuzione Coreografia</div>
+    <div class="stitle">Penalità di Esecuzione</div>
     <div class="cpen-grid">
       <div class="cpbtn" id="cp_lieve" onclick="addCPen('lieve')"><span class="cp-sym">/</span><span class="cp-lbl">Lieve</span><span class="cp-val">–0.10</span><span class="cp-cnt" id="cpc_lieve">0</span></div>
       <div class="cpbtn" id="cp_media" onclick="addCPen('media')"><span class="cp-sym">✕</span><span class="cp-lbl">Media</span><span class="cp-val">–0.30</span><span class="cp-cnt" id="cpc_media">0</span></div>
@@ -759,15 +596,20 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
     </div>
     <div class="undo-row" id="cpenUndo"></div>
 
-    <div class="stitle">Risultato Finale Coreografia</div>
+    <div class="stitle">Risultato</div>
     <div class="coreo-result">
       <div class="cr-title">🎭 Coreografia · Portamento · Esecuzione</div>
       <div class="cr-row"><span class="cr-lbl">Punti coreo grezzi</span><span class="cr-val" id="cr_raw">0 / 135</span></div>
+      <div class="cr-row"><span class="cr-lbl">Presentazione</span><span class="cr-val" id="cr_pres">0</span></div>
+      <div class="cr-row"><span class="cr-lbl">Figurazioni d'Insieme</span><span class="cr-val" id="cr_ins">0</span></div>
+      <div class="cr-row"><span class="cr-lbl">Figurazioni Esterne</span><span class="cr-val" id="cr_ext">0</span></div>
+      <div class="cr-row"><span class="cr-lbl">Congedo</span><span class="cr-val" id="cr_cong">0</span></div>
+      <div class="cr-row"><span class="cr-lbl">Sincronismo</span><span class="cr-val" id="cr_sinc">0</span></div>
+      <div class="cr-sep"></div>
       <div class="cr-row"><span class="cr-lbl">Stima voto coreo (0–9.5)</span><span class="cr-val" id="cr_conv">0.00</span></div>
       <div class="cr-row"><span class="cr-lbl">Portamento</span><span class="cr-val" id="cr_porta">0.50</span></div>
-      <div class="cr-row pen"><span class="cr-lbl">Penalità esecuzione</span><span class="cr-val pen" id="cr_pen">–0.00</span></div>
-      <div class="cr-row pen"><span class="cr-lbl">Penalità tempo</span><span class="cr-val pen" id="cr_c_timepen">–0.00</span></div>
       <div class="cr-sep"></div>
+      <div class="cr-row pen"><span class="cr-lbl">Penalità esecuzione totali</span><span class="cr-val pen" id="cr_pen">–0.00</span></div>
       <div class="cr-final">
         <div class="cr-final-num" id="cr_final">—</div>
         <div class="cr-final-of">punti stimati su 10.00</div>
@@ -777,82 +619,11 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   </div>
 </div><!-- /sCoreo -->
 
-<!-- ════════ SUPERVISORE ════════ -->
-<div id="sSupervisore" class="scr">
-  <div class="hdr">
-    <div class="hdr-left">
-      <button class="hbtn-back" onclick="goBack()">◀ Esci</button>
-      <div class="hdr-title-wrapper">
-        <div class="hdr-title">📋 Supervisore</div>
-        <div class="hdr-sub" id="sSubName">Gruppo: - | Fase: -</div>
-      </div>
-    </div>
-    <div class="hdr-right">
-      <div class="total-badge" id="superTimerBadge">0:00.00</div>
-      <button class="hbtn-rst" onclick="doReset('super')">↺ Reset</button>
-    </div>
-  </div>
-
-  <div class="super-body">
-    <div class="super-card">
-      <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gd);margin-bottom:12px;border-bottom:1.5px solid var(--gl);padding-bottom:6px">
-        Aggregazione Voti Sezioni
-      </div>
-
-      <!-- TIMER SUPERVISORE -->
-      <div class="coreo-timer-block" style="padding: 8px 10px; margin-bottom: 14px;">
-        <div class="ct-left">
-          <div class="ct-lbl">⏱ Cronometro Esercizio (Max 6'10")</div>
-          <div class="ct-time" id="superTimeDisp" style="font-size:30px">0:00</div>
-        </div>
-        <button class="ct-btn go" id="superSsBtn" onclick="doSuperStartStop()" style="padding:8px 12px">▶ Start</button>
-      </div>
-
-      <div class="super-input-group">
-        <label for="input-s-tamburi">Voto Tamburi (0–10.00)</label>
-        <input type="number" id="input-s-tamburi" step="0.01" min="0" max="10" value="10.00" oninput="updateSuperScore()">
-      </div>
-
-      <div class="super-input-group">
-        <label for="input-s-chiarine">Voto Chiarine (0–10.00)</label>
-        <input type="number" id="input-s-chiarine" step="0.01" min="0" max="10" value="10.00" oninput="updateSuperScore()">
-      </div>
-
-      <div class="super-input-group">
-        <label for="input-s-coreo">Voto Coreografia Musici (0–10.00)</label>
-        <input type="number" id="input-s-coreo" step="0.01" min="0" max="10" value="10.00" oninput="updateSuperScore()">
-      </div>
-
-      <div class="super-input-group">
-        <label for="input-s-inspector">Penalità Ispettore (Mancato N. atleti, costumi, ecc.)</label>
-        <input type="number" id="input-s-inspector" step="0.5" min="0" value="0.00" oninput="updateSuperScore()">
-      </div>
-
-      <div class="coreo-result" style="margin-top: 16px;">
-        <div class="cr-title">Valutazione Finale Aggregata</div>
-        <div class="cr-row"><span class="cr-lbl">Media voti sezioni</span><span class="cr-val" id="s-val-media">10.00</span></div>
-        <div class="cr-row pen"><span class="cr-lbl">Penalità tempo</span><span class="cr-val pen" id="s-val-timepen">–0.00</span></div>
-        <div class="cr-row pen"><span class="cr-lbl">Penalità ispettore</span><span class="cr-val pen" id="s-val-inspector">–0.00</span></div>
-        <div class="cr-sep"></div>
-        <div class="cr-final">
-          <div class="cr-final-num" id="s-val-final">—</div>
-          <div class="cr-final-of">punti aggregati su 10.00</div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:8px;margin-top:16px">
-        <button class="btn-export" style="flex:1" onclick="copyReportText()">📋 Copia Report</button>
-        <button class="btn-save" style="flex:1" onclick="saveSessionToStorage()">💾 Salva</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ════════ JS ════════ -->
 <script>
 'use strict';
 
-/* ─── COSTANTS ──────────────────────────────────────── */
+/* ─── CONSTANTS ──────────────────────────────────────── */
 const BASE_VALUES={
   1:{D:1,C:4,B:10,A:25,AA:45},
   2:{D:6,C:15,B:40,A:60,AA:80},
@@ -894,13 +665,11 @@ const PEN_KEYS={lieve:'penLieve',media:'penMedia',grave:'penGrave',gravis:'penGr
 const PEN_VALS={lieve:.10,media:.30,grave:.60,gravis:.90};
 const PEN_SYMS={lieve:'/ Lieve',media:'✕ Media',grave:'○ Grave',gravis:'S Gravis'};
 const CLASS_HINTS={D:'< 9s',C:'9.0–15.49s',B:'15.5–21.49s',A:'21.5–27.99s',AA:'≥ 28s'};
-const FIG_MAX={pres:2,insiemeB:4,insiemeC:3,extP:99,extB:99,extC:99,congedo:1};
+const FIG_MAX={pres:2,insiemeB:4,insiemeC:3,extP:999,extB:999,extC:999,congedo:1};
 const FIG_PTS={pres:10,insiemeB:4,insiemeC:10,extP:1,extB:3,extC:5,congedo:5};
 
 /* ─── STATE ──────────────────────────────────────────── */
 let curSec=null, selCard=null;
-let groupName='';
-let phaseNote='';
 
 // Cronometro musici
 let timer={running:false,startedAt:null,acc:0};
@@ -911,7 +680,7 @@ let tickId=null;
 function newB(){return{voci:1,adds:[],decs:[],penLieve:0,penMedia:0,penGrave:0,penGravis:0};}
 let curB=newB(), penLog=[];
 
-// Brani salvati
+// Brani salvati — array semplice, aggiungiamo push e mai sovrascriviamo
 let brani=[];
 
 // Coreografia
@@ -921,15 +690,9 @@ let coreo=freshC(), cpenLog=[];
 let coreoTimer={running:false,startedAt:null,acc:0};
 let coreoTickId=null;
 
-// Supervisore
-let superTimer={running:false,startedAt:null,acc:0};
-let superTickId=null;
-
 /* ─── HELPERS ────────────────────────────────────────── */
 function getTotal(){return timer.acc+(timer.running?(Date.now()-timer.startedAt)/1000:0);}
 function getLap()  {return Math.max(0,getTotal()-lapStart);}
-function getCoreoTotal(){return coreoTimer.acc+(coreoTimer.running?(Date.now()-coreoTimer.startedAt)/1000:0);}
-function getSuperTotal(){return superTimer.acc+(superTimer.running?(Date.now()-superTimer.startedAt)/1000:0);}
 
 function fmtCC(s){
   const m=Math.floor(s/60),r=s%60,si=Math.floor(r),cc=Math.floor((r-si)*100);
@@ -943,54 +706,23 @@ function getClass(s){return s<9?'D':s<15.5?'C':s<21.5?'B':s<28?'A':'AA';}
 function getAdds(){return curSec==='fiati'?FIATI_ADDS:PERC_ADDS;}
 function getDecs(){return curSec==='fiati'?FIATI_DECS:PERC_DECS;}
 
-// CALCOLO PENALITÀ DI TEMPO GENERALE (Grande Squadra Musici: Max 6'10" = 370 secondi)
-function calcTimePenalty(totalSeconds) {
-  if (totalSeconds <= 370) return 0.0;
-  const deviation = totalSeconds - 370;
-  if (deviation >= 30) {
-    return 3.50; // flat 3.5 points penalty
-  }
-  // 0.3 points for every 5 seconds (or fraction)
-  const fiveSecondBlocks = Math.ceil(deviation / 5);
-  return parseFloat((fiveSecondBlocks * 0.30).toFixed(2));
-}
-
 /* ─── SETUP ──────────────────────────────────────────── */
 function selSec(sec,el){
   curSec=sec;
   if(selCard)selCard.classList.remove('sel');
   el.classList.add('sel');selCard=el;
   document.getElementById('startCta').classList.add('rdy');
-  
-  // Mostra/Nascondi addendum chiarine naturali
-  if (sec === 'fiati') {
-    document.getElementById('natural-chiarine-setup').classList.remove('hidden');
-  } else {
-    document.getElementById('natural-chiarine-setup').classList.add('hidden');
-  }
 }
 
 function boot(){
   if(!curSec)return;
-  
-  groupName = document.getElementById('group-name-input').value.trim() || 'Senza Nome';
-  phaseNote = document.getElementById('phase-input').value.trim() || 'Gara';
-  
   document.getElementById('sSetup').classList.remove('active');
-  
   if(curSec==='coreo'){
-    document.getElementById('cSub').textContent = `Gruppo: ${groupName} | Fase: ${phaseNote}`;
     document.getElementById('sCoreo').classList.add('active');
-    coreoTickId = setInterval(tickCoreoTimer, 100);
+    // NON parte automaticamente: aspetta il pulsante start
     refreshCoreo();
-  } else if (curSec==='supervisore') {
-    document.getElementById('sSubName').textContent = `Gruppo: ${groupName} | Fase: ${phaseNote}`;
-    document.getElementById('sSupervisore').classList.add('active');
-    superTickId = setInterval(tickSuperTimer, 100);
-    updateSuperScore();
   } else {
     document.getElementById('mTitle').textContent=curSec==='fiati'?'🎺 Fiati':'🥁 Tamburi';
-    document.getElementById('mSub').textContent = `Gruppo: ${groupName} | Fase: ${phaseNote}`;
     document.getElementById('totMax').textContent=MAX_PTS[curSec];
     buildGrids();
     document.getElementById('sMusici').classList.add('active');
@@ -1002,10 +734,12 @@ function boot(){
 function goBack(){
   clearAll();
   resetMusiciDOM();
-  
+  document.getElementById('coreoTimeDisp').textContent='0:00';
+  document.getElementById('coreoTimeDisp').className='ct-time';
+  document.getElementById('coreoSsBtn').textContent='\u25B6 Start';
+  document.getElementById('coreoSsBtn').className='ct-btn go';
   document.getElementById('sMusici').classList.remove('active');
   document.getElementById('sCoreo').classList.remove('active');
-  document.getElementById('sSupervisore').classList.remove('active');
   document.getElementById('sSetup').classList.add('active');
 }
 
@@ -1019,17 +753,14 @@ function resetMusiciDOM(){
   document.getElementById('clsBadge').className='cls-badge cls-D';
   document.getElementById('clsHint').textContent='\u2013';
   document.getElementById('branoLbl').textContent='\u2014';
-  document.getElementById('ssBtn').textContent='\u25B6 Start Esercizio';
+  document.getElementById('ssBtn').textContent='\u25B6 Start';
   document.getElementById('ssBtn').className='startstop-btn go';
   document.getElementById('fermoBtn').disabled=true;
-  
-  // Clear inputs
-  document.getElementById('group-name-input').value = '';
-  document.getElementById('phase-input').value = '';
 }
 
 function doReset(w){
   if(w==='musici'){
+    // Ferma e riavvia il ticker (evita sovrascritture durante il reset)
     clearInterval(tickId);
     timer={running:false,startedAt:null,acc:0};lapStart=0;
     brani=[];curB=newB();penLog=[];
@@ -1037,7 +768,7 @@ function doReset(w){
     resetAddGrid();resetDecGrid();setVoci(1);
     refreshMusici();refreshPenUI();
     tickId=setInterval(tickTimer,33);
-  } else if (w==='coreo') {
+  } else {
     clearInterval(coreoTickId);
     coreoTimer={running:false,startedAt:null,acc:0};
     coreo=freshC();cpenLog=[];
@@ -1045,33 +776,18 @@ function doReset(w){
     document.getElementById('coreoTimeDisp').className='ct-time';
     document.getElementById('coreoSsBtn').textContent='\u25B6 Start';
     document.getElementById('coreoSsBtn').className='ct-btn go';
-    setPorta(.5);
-    refreshCoreo();
-    coreoTickId=setInterval(tickCoreoTimer,100);
-  } else {
-    clearInterval(superTickId);
-    superTimer={running:false,startedAt:null,acc:0};
-    document.getElementById('superTimeDisp').textContent='0:00';
-    document.getElementById('superTimeDisp').className='ct-time';
-    document.getElementById('superSsBtn').textContent='\u25B6 Start';
-    document.getElementById('superSsBtn').className='ct-btn go';
-    document.getElementById('input-s-tamburi').value = '10.00';
-    document.getElementById('input-s-chiarine').value = '10.00';
-    document.getElementById('input-s-coreo').value = '10.00';
-    document.getElementById('input-s-inspector').value = '0.00';
-    updateSuperScore();
-    superTickId=setInterval(tickSuperTimer,100);
+    coreoTickId=null;
+    setPorta(.5);refreshCoreo();
   }
 }
 
 function clearAll(){
-  clearInterval(tickId);clearInterval(coreoTickId);clearInterval(superTickId);
-  tickId=coreoTickId=superTickId=null;
+  clearInterval(tickId);clearInterval(coreoTickId);
+  tickId=coreoTickId=null;
   timer={running:false,startedAt:null,acc:0};lapStart=0;
   brani=[];curB=newB();penLog=[];
   coreo=freshC();cpenLog=[];
   coreoTimer={running:false,startedAt:null,acc:0};
-  superTimer={running:false,startedAt:null,acc:0};
 }
 
 /* ─── TIMER MUSICI ───────────────────────────────────── */
@@ -1083,29 +799,11 @@ function tickTimer(){
   document.getElementById('totalDisp').textContent=fmtCC(tot);
   const tb=document.getElementById('totalBadge');
   tb.textContent=fmtCC(tot);
-  
-  // Alert color if near 6'10"
-  if (tot > 370) {
-    tb.className='total-badge run';
-    tb.style.color = 'var(--red)';
-    tb.style.borderColor = 'var(--red)';
-  } else if (tot > 340) {
-    tb.className='total-badge run';
-    tb.style.color = 'var(--orange)';
-    tb.style.borderColor = 'var(--orange)';
-  } else {
-    tb.className='total-badge'+(timer.running?' run':'');
-    tb.style.color = '';
-    tb.style.borderColor = '';
-  }
-  
+  tb.className='total-badge'+(timer.running?' run':'');
   const cb=document.getElementById('clsBadge');
   cb.textContent=cls;cb.className='cls-badge cls-'+cls;
   document.getElementById('clsHint').textContent=CLASS_HINTS[cls];
   updateDecNA();
-  
-  // Update totals live to reflect time penalty
-  refreshTotalsDisplay();
 }
 
 function doStartStop(){
@@ -1126,15 +824,17 @@ function updateSsBtn(){
   if(timer.running){
     btn.textContent='⏸ Pausa';btn.className='startstop-btn pause';
   } else {
-    btn.textContent=started?'▶ Riprendi Esercizio':'▶ Start Esercizio';
+    btn.textContent=started?'▶ Riprendi':'▶ Start';
     btn.className='startstop-btn go';
   }
+  // abilita fermo brano solo se il cronometro è mai partito
   document.getElementById('fermoBtn').disabled=!(getTotal()>0||timer.running);
 }
 
 /* ─── FERMO BRANO ────────────────────────────────────── */
 function doFermo(){
   const dur=getLap();
+  // Crea il brano snapshot con COPIA degli array
   const b={
     voci:curB.voci,
     adds:[...curB.adds],
@@ -1147,17 +847,16 @@ function doFermo(){
     cls:getClass(dur),
     id:Date.now()
   };
-  brani.push(b);          
-  lapStart=getTotal();    
-  
-  // Reset
+  brani.push(b);          // aggiungiamo SEMPRE in coda
+  lapStart=getTotal();    // il totale avanza, il lap si azzera
+  // Reset stato brano corrente
   curB=newB();penLog=[];
   setVoci(1);resetAddGrid();resetDecGrid();
-  
+  // Aggiorna etichetta brano corrente
   document.getElementById('branoLbl').textContent='Brano '+(brani.length+1);
   refreshMusici();
   refreshPenUI();
-  
+  // Scorri in fondo alla lista
   setTimeout(()=>{
     const rs=document.getElementById('rightScroll');
     rs.scrollTop=rs.scrollHeight;
@@ -1223,12 +922,13 @@ function toggleDec(id){
 }
 
 function updateDecNA(){
-  if(!curSec || curSec === 'coreo' || curSec === 'supervisore')return;
+  if(!curSec)return;
   const cls=getClass(getLap());
   getDecs().forEach(d=>{
     const el=document.getElementById('dec_'+d.id);if(!el)return;
     if(d.notFor&&d.notFor.includes(cls)){
       el.classList.add('na');
+      // rimuovi anche dallo stato se era attivo
       const i=curB.decs.indexOf(d.id);
       if(i>=0){curB.decs.splice(i,1);el.classList.remove('on');}
     } else {
@@ -1250,14 +950,12 @@ function addPen(t){
   const el=document.getElementById('pb_'+t);
   el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
   refreshPenUI();
-  refreshTotalsDisplay();
 }
 function undoPen(idx){
   const t=penLog[idx];
   penLog.splice(idx,1);
   curB[PEN_KEYS[t]]=Math.max(0,curB[PEN_KEYS[t]]-1);
   refreshPenUI();
-  refreshTotalsDisplay();
 }
 function refreshPenUI(){
   ['lieve','media','grave','gravis'].forEach(t=>{
@@ -1282,490 +980,188 @@ function calcScore(b,clsOvr){
   const addDefs=curSec==='fiati'?FIATI_ADDS:PERC_ADDS;
   let sel=b.adds.map(id=>addDefs.find(a=>a.id===id)).filter(Boolean);
   sel.sort((a,z)=>z.mult-a.mult);
-  if(sel.length>2)sel=sel.slice(sel.length-2); 
+  if(sel.length>2)sel=sel.slice(sel.length-2); // tieni le 2 di valore minore (scarta le maggiori)
   return raw*sel.reduce((acc,a)=>acc*(1+a.mult),1);
 }
 function calcPen(b){
+  if(curSec==='fiati')
+    return Math.max(b.penLieve*.10,b.penMedia*.30)+b.penGrave*.60+b.penGravis*.90;
   return b.penLieve*.10+b.penMedia*.30+b.penGrave*.60+b.penGravis*.90;
 }
-
 function calcTotals(){
   let aaC=0,aC=0,raw=0;
-  // Waterfall demotion
-  let processed = brani.map(b => ({...b}));
-  processed.sort((x, y) => {
-    const valX = getBasePoints(x.cls, x.voci);
-    const valY = getBasePoints(y.cls, y.voci);
-    return valY - valX;
-  });
-
-  processed.forEach(b=>{
+  brani.forEach(b=>{
     let c=b.cls;
     if(c==='AA'){aaC++;if(aaC>1)c='A';}
     if(c==='A') {aC++; if(aC>3) c='B';}
-    b.effectiveClass = c;
     raw+=calcScore(b,c);
   });
-  
-  return{
-    raw:Math.min(raw,MAX_PTS[curSec]||1600),
-    aaC,
-    aC,
-    pen:brani.reduce((s,b)=>s+calcPen(b),0) + penLog.reduce((s,t)=>s+PEN_VALS[t],0)
-  };
+  return{raw:Math.min(raw,MAX_PTS[curSec]||1600),aaC,aC,
+         pen:brani.reduce((s,b)=>s+calcPen(b),0)};
 }
 
-function getBasePoints(meritClass, voices) {
-  const voiceIndex = Math.min(voices, 3) - 1;
-  const scores = {
-    'D': [1, 6, 15],
-    'C': [4, 15, 40],
-    'B': [10, 40, 60],
-    'A': [25, 60, 80],
-    'AA': [45, 80, 100]
-  };
-  return scores[meritClass] ? scores[meritClass][voiceIndex] : 0;
-}
-
-function refreshTotalsDisplay() {
-  if (curSec === 'coreo' || curSec === 'supervisore') return;
-  const tot = calcTotals();
-  const timePen = calcTimePenalty(getTotal());
-  
-  document.getElementById('totRaw').textContent = tot.raw.toFixed(1);
-  document.getElementById('totPen').textContent = `-${tot.pen.toFixed(2)}`;
-  document.getElementById('totTimePen').textContent = `-${timePen.toFixed(2)}`;
-  
-  // Calculate scaled and addendum
-  const limit = MAX_PTS[curSec];
-  let scaled = (tot.raw / limit) * 10.0;
-  
-  const isNatural = document.getElementById('check-natural').checked;
-  if (curSec === 'fiati' && isNatural) {
-    scaled = scaled * 1.12;
-  }
-  scaled = Math.min(10.0, scaled);
-  
-  let finalVal = scaled - tot.pen - timePen;
-  finalVal = Math.max(0, finalVal);
-  
-  document.getElementById('totFinal').textContent = finalVal.toFixed(2);
-}
-
-function refreshMusici() {
-  const tot = calcTotals();
-  document.getElementById('braniCount').textContent = brani.length;
-  document.getElementById('aaCount').textContent = `${tot.aaC} / 1`;
-  document.getElementById('aCount').textContent = `${tot.aC} / 3`;
-  
-  // Render brani list
-  const bl=document.getElementById('braniList');bl.innerHTML='';
-  const noB=document.getElementById('noBrani');
-  
-  if(brani.length===0){
-    noB.style.display='block';
-    document.getElementById('braniPtsHdr').textContent='— pt';
-    refreshTotalsDisplay();
-    return;
-  }
-  noB.style.display='none';
-  
-  let aaC=0,aC=0;
-  // Sort and apply waterfall to render list with demoted badges
-  let listItems = brani.map((b, idx) => ({...b, originalIdx: idx}));
-  listItems.sort((x, y) => {
-    const valX = getBasePoints(x.cls, x.voci);
-    const valY = getBasePoints(y.cls, y.voci);
-    return valY - valX;
-  });
-
-  listItems.forEach(b => {
-    let c = b.cls;
-    if(c==='AA'){aaC++;if(aaC>1)c='A';}
-    if(c==='A') {aC++; if(aC>3) c='B';}
-    b.effectiveClass = c;
-  });
-
-  // Re-sort by original index for chronological view
-  listItems.sort((x,y) => x.originalIdx - y.originalIdx);
-
-  listItems.forEach((b, i)=>{
-    const pts = calcScore(b, b.effectiveClass);
-    const isDemoted = b.cls !== b.effectiveClass;
-    
-    // Add items to DOM
-    const d=document.createElement('div');
-    d.className='brano-row';
-    
-    let addsText = b.adds.map(id => {
-      const a = getAdds().find(add => add.id === id);
-      return a ? `${a.sym} ${a.name}` : '';
-    }).filter(Boolean).join(', ');
-    
-    let decsText = b.decs.map(id => {
-      const dec = getDecs().find(d_ => d_.id === id);
-      return dec ? `− ${dec.name}` : '';
-    }).filter(Boolean).join(', ');
-
-    d.innerHTML = `
-      <span class="br-idx">#${i+1}</span>
-      <div class="br-info">
-        <div class="br-top">
-          <span class="br-cls ${b.effectiveClass}">${b.effectiveClass} ${isDemoted ? `<small style="font-size:7px;font-weight:normal">(da ${b.cls})</small>` : ''}</span>
-          <span class="br-dur">${b.dur.toFixed(1)}s</span>
-          <span class="br-voci">${b.voci} Voc${b.voci > 1 ? 'i' : 'e'}</span>
-        </div>
-        ${addsText ? `<span class="br-add">Diff: ${addsText}</span>` : ''}
-        ${decsText ? `<span class="br-dec">Decl: ${decsText}</span>` : ''}
-      </div>
-      <div class="br-pts">${pts.toFixed(1)}</div>
-      <button class="br-del" onclick="window.delBrano(${b.originalIdx})">✕</button>
-    `;
-    bl.appendChild(d);
-  });
-
-  document.getElementById('braniPtsHdr').textContent = `${brani.reduce((sum, b) => sum + calcScore(b, b.effectiveClass), 0).toFixed(1)} pt`;
-  refreshTotalsDisplay();
-}
-
-window.delBrano = function(i) {
-  if (i >= 0 && i < brani.length) {
-    brani.splice(i, 1);
-    refreshMusici();
-  }
+/* ─── GLOBAL DELETE — accessibile dagli onclick inline ── */
+window.delBrano=function(i){
+  if(i>=0&&i<brani.length){brani.splice(i,1);refreshMusici();}
 };
 
-/* ─── TIMER COREOGRAFIA ──────────────────────────────── */
-function tickCoreoTimer(){
-  const s=getCoreoTotal();
-  const d=document.getElementById('coreoTimeDisp');
-  d.textContent=fmtMin(s);
-  
-  if (s > 370) {
-    d.className='ct-time run';
-    d.style.color = 'var(--red)';
-  } else if (s > 340) {
-    d.className='ct-time run';
-    d.style.color = 'var(--orange)';
+/* ─── MUSICI REFRESH ─────────────────────────────────── */
+function refreshMusici(){
+  const list=document.getElementById('braniList');
+  const nb  =document.getElementById('noBrani');
+
+  // Svuota sempre la lista (noBrani è un sibling, non viene toccato)
+  list.innerHTML='';
+
+  if(brani.length===0){
+    nb.style.display='block';
   } else {
-    d.className='ct-time' + (coreoTimer.running ? ' run' : '');
-    d.style.color = '';
+    nb.style.display='none';
+    let aaC=0,aC=0;
+    brani.forEach(function(b,i){
+      let cls=b.cls;
+      if(cls==='AA'){aaC++;if(aaC>1)cls='A';}
+      if(cls==='A') {aC++; if(aC>3) cls='B';}
+      const pts=calcScore(b,cls);
+      const pen=calcPen(b);
+      const addDefs=curSec==='fiati'?FIATI_ADDS:PERC_ADDS;
+      const addStr=b.adds.length
+        ?b.adds.map(function(id){var a=addDefs.find(function(x){return x.id===id;});return a?a.sym:null;}).filter(Boolean).join(' ')
+        :'';
+      const decStr=b.decs.length?'−'+b.decs.length+'×10':'';
+      const penStr=pen>0?'pen −'+pen.toFixed(2):'';
+      const scaled=cls!==b.cls;
+
+      const row=document.createElement('div');
+      row.className='brano-row';
+      // Bottone delete con onclick inline globale — tecnica più affidabile
+      row.innerHTML=
+        '<span class="br-idx">'+(i+1)+'</span>'+
+        '<div class="br-info">'+
+          '<div class="br-top">'+
+            '<span class="br-cls '+b.cls+'">'+b.cls+'</span>'+
+            '<span class="br-dur">'+b.dur.toFixed(2)+'s</span>'+
+            '<span class="br-voci">'+b.voci+'v</span>'+
+            (addStr?'<span class="br-add">'+addStr+'</span>':'')+
+            (decStr?'<span class="br-dec">'+decStr+'</span>':'')+
+            (penStr?'<span class="br-pen">'+penStr+'</span>':'')+
+            (scaled?'<span style="font-size:8.5px;color:var(--orange)">(→'+cls+')</span>':'')+
+          '</div>'+
+        '</div>'+
+        '<span class="br-pts'+(scaled?' sc':'')+'">'+
+          (Math.round(pts*10)/10).toFixed(1)+
+        '</span>'+
+        '<button class="br-del" onclick="delBrano('+i+')">🗑</button>';
+      list.appendChild(row);
+    });
   }
-  
-  // Update live score
-  updateChoreoResults();
+
+  const t=calcTotals();
+  const maxP=MAX_PTS[curSec]||1600;
+  document.getElementById('braniCount').textContent=brani.length;
+  const ae=document.getElementById('aaCount');ae.textContent=t.aaC+' / 1';ae.className='bs-val'+(t.aaC>1?' warn':'');
+  const ae2=document.getElementById('aCount');ae2.textContent=t.aC+' / 3';ae2.className='bs-val'+(t.aC>3?' warn':'');
+  const rv=document.getElementById('totRaw');rv.textContent=Math.round(t.raw);rv.className='tot-val'+(t.raw>=maxP?' warn':'');
+  document.getElementById('totPen').textContent='–'+t.pen.toFixed(2);
+  document.getElementById('braniPtsHdr').textContent=Math.round(t.raw)+' pt';
 }
 
+/* ─── CRONOMETRO COREOGRAFIA ─────────────────────────── */
 function doCoreoStartStop(){
+  const btn=document.getElementById('coreoSsBtn');
+  const disp=document.getElementById('coreoTimeDisp');
   if(!coreoTimer.running){
     coreoTimer.startedAt=Date.now();coreoTimer.running=true;
-    document.getElementById('coreoSsBtn').textContent='⏸ Pausa';
-    document.getElementById('coreoSsBtn').className='ct-btn pause';
+    if(!coreoTickId){
+      coreoTickId=setInterval(()=>{
+        const e=coreoTimer.acc+(coreoTimer.running?(Date.now()-coreoTimer.startedAt)/1000:0);
+        document.getElementById('coreoTimeDisp').textContent=fmtMin(e);
+      },1000);
+    }
+    btn.textContent='⏸ Pausa';btn.className='ct-btn pause';
+    disp.className='ct-time run';
   } else {
     coreoTimer.acc+=(Date.now()-coreoTimer.startedAt)/1000;
     coreoTimer.startedAt=null;coreoTimer.running=false;
-    document.getElementById('coreoSsBtn').textContent='▶ Riprendi';
-    document.getElementById('coreoSsBtn').className='ct-btn go';
+    btn.textContent='▶ Riprendi';btn.className='ct-btn go';
+    disp.className='ct-time done';
   }
 }
 
-/* ─── COREOGRAFIA SCORING ────────────────────────────── */
-function setPorta(val){
-  coreo.porta=val;
-  ['0','01','03','05'].forEach(id=>{
-    const k = id==='0'?0.0 : id==='01'?0.1 : id==='03'?0.3 : 0.5;
-    document.getElementById('po_'+id).classList.toggle('on', k===val);
-  });
-  updateChoreoResults();
+/* ─── COREOGRAFIA ────────────────────────────────────── */
+function adjFig(k,d){coreo[k]=Math.max(0,Math.min(FIG_MAX[k],coreo[k]+d));refreshCoreo();}
+function adjSinc(d){coreo.sinc=Math.max(0,Math.min(12,coreo.sinc+d));refreshCoreo();}
+function setPorta(v){
+  coreo.porta=v;
+  [{id:'po_0',v:0},{id:'po_01',v:.1},{id:'po_03',v:.3},{id:'po_05',v:.5}]
+    .forEach(x=>document.getElementById(x.id).classList.toggle('on',x.v===v));
+  refreshCoreo();
 }
-
-function adjFig(k,val){
-  const old=coreo[k];
-  let n=old+val;
-  if(n<0)n=0;
-  if(FIG_MAX[k] && n>FIG_MAX[k])n=FIG_MAX[k];
-  
-  // Custom combined limits
-  if (k === 'insiemeB' || k === 'insiemeC') {
-    const baseVal = k==='insiemeB'? n*4 : coreo.insiemeB*4;
-    const compVal = k==='insiemeC'? n*10 : coreo.insiemeC*10;
-    if (baseVal + compVal > 30) {
-      document.getElementById('fw_insieme').textContent = '⚠ Limite max 30 punti per Figurazioni d\'Insieme raggiunto.';
-    } else {
-      document.getElementById('fw_insieme').textContent = '';
-    }
-  }
-  
-  if (k === 'extP' || k === 'extB' || k === 'extC') {
-    const pVal = k==='extP'? n*1 : coreo.extP*1;
-    const bVal = k==='extB'? n*3 : coreo.extB*3;
-    const cVal = k==='extC'? n*5 : coreo.extC*5;
-    if (pVal + bVal + cVal > 68) {
-      document.getElementById('fw_esterne').textContent = '⚠ Limite max 68 punti per Figurazioni Esterne raggiunto.';
-    } else {
-      document.getElementById('fw_esterne').textContent = '';
-    }
-  }
-
-  coreo[k]=n;
-  document.getElementById('fc_'+k).textContent=n;
-  document.getElementById('ft_'+k).textContent=(n*FIG_PTS[k])+' pt';
-  
-  // Enable plus buttons depending on limit
-  document.getElementById('fp_'+k).disabled = (n >= FIG_MAX[k]);
-  
-  updateChoreoResults();
-}
-
-function adjSinc(val){
-  let n=coreo.sinc+val;
-  if(n<0)n=0;
-  if(n>12)n=12;
-  coreo.sinc=n;
-  document.getElementById('sincVal').textContent=n;
-  document.getElementById('sincPts').textContent=`${n} / 12 pt`;
-  document.getElementById('sincPlus').disabled = (n >= 12);
-  
-  updateChoreoResults();
-}
-
 function addCPen(t){
-  const keys = {lieve:'penLieve',media:'penMedia',grave:'penGrave',spec:'penSpec'};
-  coreo[keys[t]]++;
-  cpenLog.push(t);
+  const k='pen'+t.charAt(0).toUpperCase()+t.slice(1);
+  coreo[k]++;cpenLog.push(t);
   const el=document.getElementById('cp_'+t);
   el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
-  refreshCPenUI();
-  updateChoreoResults();
+  refreshCoreo();
 }
 function undoCPen(idx){
-  const keys = {lieve:'penLieve',media:'penMedia',grave:'penGrave',spec:'penSpec'};
-  const t=cpenLog[idx];
-  cpenLog.splice(idx,1);
-  coreo[keys[t]]=Math.max(0,coreo[keys[t]]-1);
-  refreshCPenUI();
-  updateChoreoResults();
+  const t=cpenLog[idx];cpenLog.splice(idx,1);
+  const k='pen'+t.charAt(0).toUpperCase()+t.slice(1);
+  coreo[k]=Math.max(0,coreo[k]-1);refreshCoreo();
 }
-function refreshCPenUI(){
-  const keys = {lieve:'penLieve',media:'penMedia',grave:'penGrave',spec:'penSpec'};
-  const syms = {lieve:'/ Lieve',media:'✕ Media',grave:'○ Grave',spec:'S Speciale'};
-  
+
+function refreshCoreo(){
+  ['pres','insiemeB','insiemeC','extP','extB','extC','congedo'].forEach(k=>{
+    const c=document.getElementById('fc_'+k);if(c)c.textContent=coreo[k];
+    const t=document.getElementById('ft_'+k);if(t)t.textContent=(coreo[k]*FIG_PTS[k])+' pt';
+    const b=document.getElementById('fp_'+k);if(b)b.disabled=coreo[k]>=FIG_MAX[k];
+  });
+  document.getElementById('sincVal').textContent=coreo.sinc;
+  document.getElementById('sincPts').textContent=coreo.sinc+' / 12 pt';
+  document.getElementById('sincPlus').disabled=coreo.sinc>=12;
+
+  const insPts=Math.min(coreo.insiemeB*4+coreo.insiemeC*10,30);
+  const insOver=coreo.insiemeB*4+coreo.insiemeC*10>30;
+  document.getElementById('fw_insieme').textContent=insOver?'⚠ Cappato a 30 pt':'';
+  const extRaw=coreo.extP+coreo.extB*3+coreo.extC*5;
+  const extPts=Math.min(extRaw,68);
+  document.getElementById('fw_esterne').textContent=extRaw>68?'⚠ Cappato a 68 pt':'';
+
   ['lieve','media','grave','spec'].forEach(t=>{
-    const cnt=coreo[keys[t]];
-    const c=document.getElementById('cpc_'+t);
-    c.textContent=cnt;c.className='cp-cnt'+(cnt>0?' show':'');
+    const k='pen'+t.charAt(0).toUpperCase()+t.slice(1);
+    const cnt=coreo[k];const el=document.getElementById('cpc_'+t);
+    el.textContent=cnt;el.className='cp-cnt'+(cnt>0?' show':'');
   });
   const ur=document.getElementById('cpenUndo');ur.innerHTML='';
+  const syms={lieve:'/ Lieve',media:'✕ Media',grave:'○ Grave',spec:'S Spec'};
   cpenLog.forEach((t,i)=>{
     const b=document.createElement('button');b.className='ubtn';
     b.textContent='↩ '+syms[t];
     b.onclick=(function(ii){return function(){undoCPen(ii);};})(i);
     ur.appendChild(b);
   });
+
+  const presPts=coreo.pres*10,congPts=coreo.congedo*5,sincPts=coreo.sinc;
+  const rawT=presPts+insPts+extPts+congPts+sincPts;
+  const conv=Math.min(rawT/135*9.5,9.5);
+  const pen=coreo.penLieve*.10+coreo.penMedia*.30+coreo.penGrave*.60+coreo.penSpec*2.50;
+  const fin=Math.max(0,conv+coreo.porta-pen);
+
+  document.getElementById('cr_raw').textContent=rawT+' / 135';
+  document.getElementById('cr_pres').textContent=presPts+' pt';
+  document.getElementById('cr_ins').textContent=insPts+' pt'+(insOver?' ⚠':'');
+  document.getElementById('cr_ext').textContent=extPts+' pt'+(extRaw>68?' ⚠':'');
+  document.getElementById('cr_cong').textContent=congPts+' pt';
+  document.getElementById('cr_sinc').textContent=sincPts+' pt';
+  document.getElementById('cr_conv').textContent=conv.toFixed(2);
+  document.getElementById('cr_porta').textContent=coreo.porta.toFixed(2);
+  document.getElementById('cr_pen').textContent='–'+pen.toFixed(2);
+  document.getElementById('cr_final').textContent=fin.toFixed(2);
 }
 
-function getChoreoRawTotal() {
-  const pres = coreo.pres * 10;
-  const ins = Math.min(30, (coreo.insiemeB * 4) + (coreo.insiemeC * 10));
-  const est = Math.min(68, (coreo.extP * 1) + (coreo.extB * 3) + (coreo.extC * 5));
-  const cong = coreo.congedo * 5;
-  const sinc = coreo.sinc * 1;
-  return pres + ins + est + cong + sinc;
-}
-
-function updateChoreoResults() {
-  const raw = getChoreoRawTotal();
-  const scaled = (raw / 135) * 9.5;
-  
-  document.getElementById('cr_raw').textContent = `${raw} / 135`;
-  document.getElementById('cr_pres').textContent = `+${coreo.pres*10} pt`;
-  document.getElementById('cr_ins').textContent = `+${Math.min(30, (coreo.insiemeB * 4) + (coreo.insiemeC * 10))} pt`;
-  document.getElementById('cr_ext').textContent = `+${Math.min(68, (coreo.extP * 1) + (coreo.extB * 3) + (coreo.extC * 5))} pt`;
-  document.getElementById('cr_cong').textContent = `+${coreo.congedo*5} pt`;
-  document.getElementById('cr_sinc').textContent = `+${coreo.sinc*1} pt`;
-  
-  document.getElementById('cr_conv').textContent = scaled.toFixed(2);
-  document.getElementById('cr_porta').textContent = coreo.porta.toFixed(2);
-  
-  // Execution penalties
-  const penTotal = (coreo.penLieve * 0.10) + (coreo.penMedia * 0.30) + (coreo.penGrave * 0.60) + (coreo.penSpec * 2.50);
-  document.getElementById('cr_pen').textContent = `-${penTotal.toFixed(2)}`;
-  
-  // Time penalties
-  const timePen = calcTimePenalty(getCoreoTotal());
-  document.getElementById('cr_c_timepen').textContent = `-${timePen.toFixed(2)}`;
-  
-  let finalScore = (scaled + coreo.porta) - penTotal - timePen;
-  finalScore = Math.max(0, finalScore);
-  
-  document.getElementById('cr_final').textContent = finalScore.toFixed(2);
-}
-
-function refreshCoreo() {
-  // Counters sync
-  ['pres','insiemeB','insiemeC','extP','extB','extC','congedo'].forEach(k=>{
-    document.getElementById('fc_'+k).textContent = coreo[k];
-    document.getElementById('ft_'+k).textContent = (coreo[k] * FIG_PTS[k]) + ' pt';
-    document.getElementById('fp_'+k).disabled = (coreo[k] >= FIG_MAX[k]);
-  });
-  document.getElementById('sincVal').textContent = coreo.sinc;
-  document.getElementById('sincPts').textContent = `${coreo.sinc} / 12 pt`;
-  document.getElementById('sincPlus').disabled = (coreo.sinc >= 12);
-  
-  refreshCPenUI();
-  updateChoreoResults();
-}
-
-/* ─── TIMER SUPERVISORE ──────────────────────────────── */
-function tickSuperTimer() {
-  const s = getSuperTotal();
-  const d = document.getElementById('superTimeDisp');
-  d.textContent = fmtMin(s);
-  
-  if (s > 370) {
-    d.className = 'ct-time run';
-    d.style.color = 'var(--red)';
-  } else if (s > 340) {
-    d.className = 'ct-time run';
-    d.style.color = 'var(--orange)';
-  } else {
-    d.className = 'ct-time' + (superTimer.running ? ' run' : '');
-    d.style.color = '';
-  }
-  
-  const b = document.getElementById('superTimerBadge');
-  b.textContent = fmtCC(s);
-  b.className = 'total-badge' + (superTimer.running ? ' run' : '');
-  
-  updateSuperScore();
-}
-
-function doSuperStartStop() {
-  if (!superTimer.running) {
-    superTimer.startedAt = Date.now();
-    superTimer.running = true;
-    document.getElementById('superSsBtn').textContent = '⏸ Pausa';
-    document.getElementById('superSsBtn').className = 'ct-btn pause';
-  } else {
-    superTimer.acc += (Date.now() - superTimer.startedAt) / 1000;
-    superTimer.startedAt = null;
-    superTimer.running = false;
-    document.getElementById('superSsBtn').textContent = '▶ Riprendi';
-    document.getElementById('superSsBtn').className = 'ct-btn go';
-  }
-}
-
-function updateSuperScore() {
-  if (curSec !== 'supervisore') return;
-  
-  const tamburi = Math.min(10, Math.max(0, parseFloat(document.getElementById('input-s-tamburi').value) || 0));
-  const chiarine = Math.min(10, Math.max(0, parseFloat(document.getElementById('input-s-chiarine').value) || 0));
-  const coreografia = Math.min(10, Math.max(0, parseFloat(document.getElementById('input-s-coreo').value) || 0));
-  const inspector = Math.max(0, parseFloat(document.getElementById('input-s-inspector').value) || 0);
-  
-  const media = (tamburi + chiarine + coreografia) / 3;
-  const timePen = calcTimePenalty(getSuperTotal());
-  
-  document.getElementById('s-val-media').textContent = media.toFixed(2);
-  document.getElementById('s-val-timepen').textContent = `-${timePen.toFixed(2)}`;
-  document.getElementById('s-val-inspector').textContent = `-${inspector.toFixed(2)}`;
-  
-  let finalScore = media - timePen - inspector;
-  finalScore = Math.max(0, finalScore);
-  
-  document.getElementById('s-val-final').textContent = finalScore.toFixed(2);
-}
-
-/* ─── STORAGGIO E REPORTISTICA ───────────────────────── */
-function saveSessionToStorage() {
-  let finalScore = 0.0;
-  if (curSec === 'coreo') {
-    finalScore = parseFloat(document.getElementById('cr_final').textContent) || 0.0;
-  } else if (curSec === 'supervisore') {
-    finalScore = parseFloat(document.getElementById('s-val-final').textContent) || 0.0;
-  } else {
-    finalScore = parseFloat(document.getElementById('totFinal').textContent) || 0.0;
-  }
-
-  const session = {
-    id: Date.now(),
-    date: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }),
-    groupName: groupName,
-    phaseNote: phaseNote,
-    section: curSec,
-    duration: curSec === 'coreo' ? getCoreoTotal() : (curSec === 'supervisore' ? getSuperTotal() : getTotal()),
-    score: finalScore
-  };
-
-  let history = JSON.parse(localStorage.getItem('fisb_musici_history') || '[]');
-  history.push(session);
-  localStorage.setItem('fisb_musici_history', JSON.stringify(history));
-  
-  alert(`Sessione di giudizio per "${groupName}" salvata in locale!`);
-  goBack();
-}
-
-function copyReportText() {
-  let text = `🛡️ *SCORECARD FISB MUSICI LIVE* 🛡️\n`;
-  text += `------------------------------------\n`;
-  text += `👤 *Gruppo:* ${groupName}\n`;
-  text += `📅 *Fase:* ${phaseNote}\n`;
-  
-  const m = curSec === 'coreo' ? getCoreoTotal() : (curSec === 'supervisore' ? getSuperTotal() : getTotal());
-  text += `⏱️ *Tempo Esercizio:* ${fmtMin(m)}\n`;
-  text += `------------------------------------\n`;
-
-  if (curSec === 'coreo') {
-    const raw = getChoreoRawTotal();
-    const scaled = (raw / 135) * 9.5;
-    const pen = (coreo.penLieve * 0.10) + (coreo.penMedia * 0.30) + (coreo.penGrave * 0.60) + (coreo.penSpec * 2.50);
-    const timePen = calcTimePenalty(getCoreoTotal());
-    const finalVal = parseFloat(document.getElementById('cr_final').textContent) || 0.0;
-    
-    text += `🎭 *Coreografia Musici:* ${raw}/135 pt (Scalato: ${scaled.toFixed(2)}/9.50)\n`;
-    text += `🧍 *Portamento:* ${coreo.porta.toFixed(2)}/0.50\n`;
-    text += `⚠️ *Penalità Esecuzione:* -${pen.toFixed(2)} pt\n`;
-    if (timePen > 0) text += `⏱️ *Penalità Tempo:* -${timePen.toFixed(2)} pt\n`;
-    text += `🏆 *VOTO FINALE:* *${finalVal.toFixed(2)}* / 10.00\n`;
-  } else if (curSec === 'supervisore') {
-    const tamburi = parseFloat(document.getElementById('input-s-tamburi').value) || 0;
-    const chiarine = parseFloat(document.getElementById('input-s-chiarine').value) || 0;
-    const coreoVal = parseFloat(document.getElementById('input-s-coreo').value) || 0;
-    const inspector = parseFloat(document.getElementById('input-s-inspector').value) || 0;
-    const timePen = calcTimePenalty(getSuperTotal());
-    const finalVal = parseFloat(document.getElementById('s-val-final').textContent) || 0.0;
-    
-    text += `📋 *Aggregazione Supervisore:*\n`;
-    text += `  • 🥁 Tamburi: ${tamburi.toFixed(2)} pt\n`;
-    text += `  • 🎺 Chiarine: ${chiarine.toFixed(2)} pt\n`;
-    text += `  • 📐 Coreografia: ${coreoVal.toFixed(2)} pt\n`;
-    if (timePen > 0) text += `⏱️ *Penalità Tempo:* -${timePen.toFixed(2)} pt\n`;
-    if (inspector > 0) text += `👮 *Penalità Ispettore:* -${inspector.toFixed(2)} pt\n`;
-    text += `🏆 *VOTO COMBINATO:* *${finalVal.toFixed(2)}* / 10.00\n`;
-  } else { // fiati / tamburi
-    const tot = calcTotals();
-    const timePen = calcTimePenalty(getTotal());
-    const finalVal = parseFloat(document.getElementById('totFinal').textContent) || 0.0;
-    const isNatural = document.getElementById('check-natural').checked;
-    
-    text += `${curSec === 'fiati' ? '🎺 *Sezione Fiati*' : '🥁 *Sezione Tamburi*'}\n`;
-    text += `🎼 *Punti Difficoltà:* ${tot.raw.toFixed(1)} pt\n`;
-    if (curSec === 'fiati' && isNatural) text += `🌿 *Addendum Chiarine Naturali:* +12%\n`;
-    text += `⚠️ *Penalità Esecuzione:* -${tot.pen.toFixed(2)} pt\n`;
-    if (timePen > 0) text += `⏱️ *Penalità Tempo:* -${timePen.toFixed(2)} pt\n`;
-    text += `🏆 *VOTO FINALE:* *${finalVal.toFixed(2)}* / 10.00\n`;
-  }
-  
-  text += `------------------------------------\n`;
-  text += `Generato con Scorecard FISB Musici Live`;
-
-  navigator.clipboard.writeText(text).then(() => {
-    alert('Report copiato! Incollalo ora su WhatsApp.');
-  }).catch(err => {
-    alert('Impossibile copiare il report automaticamente.');
-  });
-}
-
+/* ─── INIT ───────────────────────────────────────────── */
+document.getElementById('sMusici').classList.remove('active');
+document.getElementById('sCoreo').classList.remove('active');
 </script>
 </body>
 </html>
