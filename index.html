@@ -51,8 +51,8 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .sp-card:active{transform:scale(.95)}
 .sp-card.sel{border-color:var(--goldl);background:rgba(232,201,74,.15)}
 .sp-ico{font-size:30px;display:block;margin-bottom:8px}
-.sp-nm{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--goldl);display:block;margin-bottom:2px}
-.sp-at{font-size:10.5px;color:rgba(255,255,255,.45);font-style:italic}
+.sp-nm{font-family:'Cinzel',serif;font-size:13.5px;font-weight:700;color:var(--goldl);display:block;margin-bottom:2px}
+.sp-at{font-size:11px;color:rgba(255,255,255,.5);font-style:italic}
 .start-cta{background:linear-gradient(135deg,var(--gold),var(--goldl));
   color:#0e3a0c;border:none;border-radius:12px;padding:14px 56px;
   font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.08em;cursor:pointer;
@@ -76,11 +76,11 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .hdr-sub{font-size:10.5px;color:rgba(255,255,255,.5);font-style:italic}
 .hdr-right{display:flex;align-items:center;gap:6px}
 .hbtn-rst{background:rgba(180,30,30,.25);border:1.5px solid rgba(180,30,30,.45);
-  border-radius:8px;color:#ffa0a0;font-family:'Cinzel',serif;font-size:10px;
+  border-radius:8px;color:#ffa0a0;font-family:'Cinzel',serif;font-size:11px;
   font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.03em}
 .hbtn-rst:active{background:rgba(180,30,30,.45)}
 .hbtn-pdf{background:rgba(232,201,74,.18);border:1.5px solid rgba(232,201,74,.5);
-  border-radius:8px;color:var(--goldl);font-family:'Cinzel',serif;font-size:10px;
+  border-radius:8px;color:var(--goldl);font-family:'Cinzel',serif;font-size:11px;
   font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.03em}
 .hbtn-pdf:active{background:rgba(232,201,74,.32)}
 .total-badge{background:rgba(255,255,255,.1);border:1.5px solid rgba(232,201,74,.25);
@@ -104,17 +104,17 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .tb-big.run{color:var(--ink)}
 .tb-big.done{color:var(--gd)}
 .tb-cls-row{display:flex;align-items:center;gap:7px;margin-top:2px}
-.cls-badge{font-family:'Cinzel',serif;font-size:10px;font-weight:700;
-  padding:2px 8px;border-radius:7px;color:#fff;letter-spacing:.04em}
+.cls-badge{font-family:'Cinzel',serif;font-size:13px;font-weight:700;
+  padding:3px 11px;border-radius:7px;color:#fff;letter-spacing:.04em}
 .cls-D{background:#9e9e9e}.cls-C{background:#5b8c5a}
 .cls-B{background:#4a7ab5}.cls-A{background:#b58a10}.cls-AA{background:#8b2252}
-.tb-hint{font-size:10px;color:#aaa;font-style:italic}
+.tb-hint{font-size:11.5px;color:#999;font-style:italic}
 .tb-total{font-size:10.5px;color:#888;margin-top:3px}
 .tb-total span{font-family:'Cinzel',serif;font-weight:700;color:var(--gd)}
 
 /* Pulsante START/STOP unificato */
-.startstop-btn{width:100%;padding:11px 6px;border-radius:10px;border:2px solid;
-  font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.05em;
+.startstop-btn{width:100%;padding:14px 6px;border-radius:10px;border:2px solid;
+  font-family:'Cinzel',serif;font-size:15px;font-weight:700;letter-spacing:.05em;
   cursor:pointer;transition:all .18s;flex-shrink:0;text-align:center}
 .startstop-btn:active{transform:scale(.97)}
 .startstop-btn.go{border-color:var(--gd);color:var(--gd);background:var(--gll)}
@@ -122,9 +122,9 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   box-shadow:0 2px 10px rgba(196,96,16,.15)}
 
 /* Pulsante FERMO BRANO */
-.fermo-btn{width:100%;padding:12px 6px;border-radius:10px;border:none;
+.fermo-btn{width:100%;padding:15px 6px;border-radius:10px;border:none;
   background:linear-gradient(135deg,var(--gd),#0e3a0c);
-  color:var(--goldl);font-family:'Cinzel',serif;font-size:12.5px;font-weight:700;
+  color:var(--goldl);font-family:'Cinzel',serif;font-size:15px;font-weight:700;
   letter-spacing:.06em;cursor:pointer;transition:all .15s;flex-shrink:0;
   box-shadow:0 3px 14px rgba(29,92,26,.3)}
 .fermo-btn:active{transform:scale(.97);filter:brightness(.9)}
@@ -151,13 +151,13 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 /* Penalità */
 .pen-row{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:3px}
 .pbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
-  padding:7px 4px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
+  padding:9px 4px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
 .pbtn:active{background:#fcd0d0;border-color:var(--red);transform:scale(.96)}
 .pbtn.flash{animation:pflash .22s ease}
 @keyframes pflash{0%,100%{background:var(--red-bg)}40%{background:#fcd0d0;border-color:var(--red)}}
-.p-sym{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--red);display:block}
-.p-lbl{font-size:8px;color:#8b0000;display:block}
-.p-val{font-size:8.5px;color:var(--red);font-style:italic;display:block}
+.p-sym{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--red);display:block}
+.p-lbl{font-size:10.5px;font-weight:600;color:#8b0000;display:block;margin-top:1px}
+.p-val{font-size:10px;color:var(--red);font-style:italic;display:block}
 .p-cnt{position:absolute;top:3px;right:4px;background:var(--red);color:#fff;
   border-radius:50%;width:16px;height:16px;font-family:'Cinzel',serif;font-size:9px;
   font-weight:700;display:none;align-items:center;justify-content:center}
@@ -171,39 +171,39 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 
 /* Voci */
 .voci-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:5px}
-.vbtn{padding:7px 5px;border-radius:9px;border:2px solid var(--gl);
+.vbtn{padding:9px 5px;border-radius:9px;border:2px solid var(--gl);
   background:#fff;cursor:pointer;transition:all .14s;text-align:center}
 .vbtn.on{border-color:var(--gd);background:var(--gd)}
 .vbtn:active{transform:scale(.95)}
-.v-n{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gd);display:block}
-.v-lbl{font-size:9px;color:#aaa;display:block}
+.v-n{font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:var(--gd);display:block}
+.v-lbl{font-size:11px;color:#888;display:block;margin-top:1px}
 .vbtn.on .v-n,.vbtn.on .v-lbl{color:#fff}
 .vbtn.on .v-lbl{color:rgba(255,255,255,.65)}
 
 /* Difficoltà aggiuntive */
 .tog-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
 .tog{background:#fff;border:1.5px solid #dde8dd;border-radius:8px;
-  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+  padding:7px 9px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
 .tog.on{background:var(--gll);border-color:var(--gd)}
 .tog.on::before{content:'✓';position:absolute;top:3px;right:6px;
   font-size:10px;color:var(--gd);font-weight:700}
 .tog:active{transform:scale(.97)}
-.tog-sym{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gd);display:block;margin-bottom:1px}
+.tog-sym{font-family:'Cinzel',serif;font-size:12.5px;font-weight:700;color:var(--gd);display:block;margin-bottom:2px}
 /* Nome difficoltà in grassetto e più grande */
-.tog-name{font-size:11.5px;font-weight:700;color:var(--ink);display:block}
+.tog-name{font-size:13px;font-weight:700;color:var(--ink);display:block;line-height:1.15}
 .add-warn{font-size:9.5px;color:var(--orange);font-style:italic;min-height:13px;margin-bottom:2px}
 
 /* Declassamenti */
 .dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px}
 .dtog{background:#fff;border:1.5px solid #f5d5d5;border-radius:7px;
-  padding:5px 8px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+  padding:6px 9px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
 .dtog.on{background:var(--red-bg);border-color:var(--red)}
 .dtog.on::before{content:'✓';position:absolute;top:3px;right:6px;
   font-size:10px;color:var(--red);font-weight:700}
 .dtog:active{transform:scale(.97)}
 .dtog.na{opacity:.3;pointer-events:none}
-.dtog-val{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--red);display:block}
-.dtog-name{font-size:10px;color:var(--ink)}
+.dtog-val{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--red);display:block;margin-bottom:1px}
+.dtog-name{font-size:12px;font-weight:500;color:var(--ink);line-height:1.15}
 
 /* Lista brani */
 .brani-hdr-row{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.14em;
@@ -232,12 +232,12 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .no-brani{font-size:12px;color:#bbb;font-style:italic;text-align:center;padding:14px 0}
 
 /* Totale bar */
-.totals-bar{background:var(--gd);padding:7px 12px;
+.totals-bar{background:var(--gd);padding:7px 9px;
   display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .tot-item{text-align:center}
-.tot-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:.12em;
+.tot-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.12em;
   text-transform:uppercase;color:rgba(255,255,255,.5)}
-.tot-val{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--goldl);line-height:1.1}
+.tot-val{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--goldl);line-height:1.1}
 .tot-val.warn{color:#ffb040}
 .tot-val.pen{color:#ff8888;font-size:13px}
 .tot-sep{width:1px;height:26px;background:rgba(255,255,255,.12)}
@@ -264,13 +264,13 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .ct-btn:active{transform:scale(.95)}
 
 .porta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}
-.p-opt{padding:8px 4px;border-radius:8px;border:2px solid var(--gl);
+.p-opt{padding:10px 4px;border-radius:8px;border:2px solid var(--gl);
   background:var(--gll);cursor:pointer;transition:all .15s;text-align:center}
 .p-opt.on{border-color:var(--gd);background:var(--gd)}
 .p-opt:active{transform:scale(.95)}
-.p-opt-v{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gd);display:block}
+.p-opt-v{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gd);display:block}
 .p-opt.on .p-opt-v{color:var(--goldl)}
-.p-opt-l{font-size:9px;color:#aaa;display:block}
+.p-opt-l{font-size:10.5px;color:#888;display:block;margin-top:1px}
 .p-opt.on .p-opt-l{color:rgba(255,255,255,.65)}
 
 .fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:12px}
@@ -278,8 +278,8 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   padding:9px 10px;box-shadow:0 1px 6px rgba(29,92,26,.06)}
 .fig-card.wide{grid-column:1/-1}
 .fig-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
-.fig-name{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gd)}
-.fig-pts-lbl{font-size:9.5px;color:#aaa;font-style:italic}
+.fig-name{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--gd)}
+.fig-pts-lbl{font-size:10.5px;color:#999;font-style:italic}
 .fig-counter{display:flex;align-items:center;gap:5px}
 .fc-btn{width:36px;height:36px;border-radius:7px;border:none;
   font-size:20px;font-weight:300;cursor:pointer;
@@ -293,27 +293,27 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .fc-btn.minus:disabled{color:#ccc;border-color:#eee}
 .fc-count{font-family:'Cinzel',serif;font-size:22px;font-weight:700;
   color:var(--gd);text-align:center;width:44px}
-.fc-total{font-size:10px;color:var(--gd);font-style:italic;text-align:right;font-weight:600}
+.fc-total{font-size:11.5px;color:var(--gd);font-style:italic;text-align:right;font-weight:600}
 .fig-warn{font-size:9px;color:var(--orange);font-style:italic;margin-top:3px}
 
 .sinc-card{background:#fff;border-radius:11px;border:2px solid var(--gl);
   padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;
   box-shadow:0 1px 6px rgba(29,92,26,.06)}
 .sinc-info{flex:1}
-.sinc-name{font-family:'Cinzel',serif;font-size:10.5px;font-weight:700;color:var(--gd)}
-.sinc-rule{font-size:10px;color:#aaa;font-style:italic}
+.sinc-name{font-family:'Cinzel',serif;font-size:12.5px;font-weight:700;color:var(--gd)}
+.sinc-rule{font-size:11px;color:#999;font-style:italic}
 .sinc-ctrl{display:flex;align-items:center;gap:6px}
 .sinc-val{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--gd);min-width:32px;text-align:center}
-.sinc-pts{font-size:10px;color:var(--gd);font-style:italic;min-width:44px;text-align:right}
+.sinc-pts{font-size:11.5px;color:var(--gd);font-style:italic;min-width:44px;text-align:right}
 
 .cpen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
 .cpbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
-  padding:9px 6px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
+  padding:11px 6px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
 .cpbtn:active{background:#fcd0d0;border-color:var(--red);transform:scale(.96)}
 .cpbtn.flash{animation:pflash .22s ease}
-.cp-sym{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--red);display:block}
-.cp-lbl{font-size:9px;color:#8b0000;display:block;margin-top:1px}
-.cp-val{font-size:9px;color:var(--red);font-style:italic;display:block}
+.cp-sym{font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:var(--red);display:block}
+.cp-lbl{font-size:11px;font-weight:600;color:#8b0000;display:block;margin-top:2px}
+.cp-val{font-size:10.5px;color:var(--red);font-style:italic;display:block}
 .cp-cnt{position:absolute;top:4px;right:6px;background:var(--red);color:#fff;
   border-radius:50%;width:18px;height:18px;font-family:'Cinzel',serif;font-size:9px;
   font-weight:700;display:none;align-items:center;justify-content:center}
@@ -521,6 +521,11 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
         <div class="tot-item">
           <div class="tot-lbl">Pen. ese.</div>
           <div class="tot-val pen" id="totPen">–0.00</div>
+        </div>
+        <div class="tot-sep"></div>
+        <div class="tot-item">
+          <div class="tot-lbl">Voto /10</div>
+          <div class="tot-val" id="totVoto" style="color:#fff">0.000</div>
         </div>
       </div>
     </div>
@@ -738,7 +743,8 @@ let lapStart=0;
 let tickId=null;
 
 // Brano corrente (config live)
-function newB(){return{voci:1,adds:[],decs:[],penLieve:0,penMedia:0,penGrave:0,penGravis:0};}
+function defaultVoci(){return curSec==='tamburi'?3:1;}
+function newB(){return{voci:defaultVoci(),adds:[],decs:[],penLieve:0,penMedia:0,penGrave:0,penGravis:0};}
 let curB=newB(), penLog=[];
 
 // Brani salvati — array semplice, aggiungiamo push e mai sovrascriviamo
@@ -786,6 +792,8 @@ function boot(){
     document.getElementById('mTitle').textContent=curSec==='fiati'?'🎺 Fiati':'🥁 Tamburi';
     document.getElementById('totMax').textContent=MAX_PTS[curSec];
     buildGrids();
+    curB=newB();          // ricrea con voci di default corrette per la sezione
+    setVoci(defaultVoci());
     document.getElementById('sMusici').classList.add('active');
     tickId=setInterval(tickTimer,33);
     refreshMusici();
@@ -826,7 +834,7 @@ function doReset(w){
     timer={running:false,startedAt:null,acc:0};lapStart=0;
     brani=[];curB=newB();penLog=[];
     resetMusiciDOM();
-    resetAddGrid();resetDecGrid();setVoci(1);
+    resetAddGrid();resetDecGrid();setVoci(defaultVoci());
     refreshMusici();refreshPenUI();
     tickId=setInterval(tickTimer,33);
   } else {
@@ -912,7 +920,7 @@ function doFermo(){
   lapStart=getTotal();    // il totale avanza, il lap si azzera
   // Reset stato brano corrente
   curB=newB();penLog=[];
-  setVoci(1);resetAddGrid();resetDecGrid();
+  setVoci(defaultVoci());resetAddGrid();resetDecGrid();
   // Aggiorna etichetta brano corrente
   document.getElementById('branoLbl').textContent='Brano '+(brani.length+1);
   refreshMusici();
@@ -1124,6 +1132,8 @@ function refreshMusici(){
   const ae2=document.getElementById('aCount');ae2.textContent=t.aC+' / 3';ae2.className='bs-val'+(t.aC>3?' warn':'');
   const rv=document.getElementById('totRaw');rv.textContent=Math.round(t.raw);rv.className='tot-val'+(t.raw>=maxP?' warn':'');
   document.getElementById('totPen').textContent='–'+t.pen.toFixed(2);
+  const voto10=Math.max(0,(t.raw/maxP)*10 - t.pen);
+  document.getElementById('totVoto').textContent=voto10.toFixed(3);
   document.getElementById('braniPtsHdr').textContent=Math.round(t.raw)+' pt';
 }
 
@@ -1386,6 +1396,7 @@ function buildMusiciPDF(squadra,giudice,evento){
   if(y>250){ pdfFooter(doc,pageNum); doc.addPage(); pageNum++; y=24; }
   const t=calcTotals();
   const maxP=MAX_PTS[curSec]||1600;
+  const voto10=Math.max(0,(t.raw/maxP)*10 - t.pen);
 
   doc.setDrawColor(...PDF_GOLD);doc.setLineWidth(.6);
   doc.line(M,y,M+180,y);
@@ -1411,6 +1422,19 @@ function buildMusiciPDF(squadra,giudice,evento){
     doc.setFont('helvetica','normal');
     y+=6.5;
   });
+
+  // Riquadro voto finale in base 10
+  y+=5;
+  if(y>250){ pdfFooter(doc,pageNum); doc.addPage(); pageNum++; y=24; }
+  doc.setFillColor(...PDF_GD);
+  doc.roundedRect(M,y,180,26,3,3,'F');
+  doc.setFont('helvetica','normal');doc.setFontSize(9);
+  doc.setTextColor(220,235,215);
+  doc.text('PUNTEGGIO FINALE (base 10)  =  (grezzi / massimale) × 10 − penalità',M+90,y+8,{align:'center'});
+  doc.setFont('helvetica','bold');doc.setFontSize(26);
+  doc.setTextColor(232,201,74);
+  doc.text(voto10.toFixed(3),M+90,y+20,{align:'center'});
+  y+=30;
 
   pdfFooter(doc,pageNum);
   const fname='Musici_'+(curSec==='fiati'?'Fiati':'Tamburi')+'_'+Date.now()+'.pdf';
