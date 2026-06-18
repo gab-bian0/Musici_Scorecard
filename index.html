@@ -121,14 +121,19 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .startstop-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef;
   box-shadow:0 2px 10px rgba(196,96,16,.15)}
 
-/* Pulsante FERMO BRANO */
-.fermo-btn{width:100%;padding:15px 6px;border-radius:10px;border:none;
+/* Pulsanti STOP BRANO / RESTART affiancati */
+.stopbrano-btn{padding:15px 4px;border-radius:10px;border:none;
   background:linear-gradient(135deg,var(--gd),#0e3a0c);
-  color:var(--goldl);font-family:'Cinzel',serif;font-size:15px;font-weight:700;
-  letter-spacing:.06em;cursor:pointer;transition:all .15s;flex-shrink:0;
+  color:var(--goldl);font-family:'Cinzel',serif;font-size:13.5px;font-weight:700;
+  letter-spacing:.04em;cursor:pointer;transition:all .15s;
   box-shadow:0 3px 14px rgba(29,92,26,.3)}
-.fermo-btn:active{transform:scale(.97);filter:brightness(.9)}
-.fermo-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+.stopbrano-btn:active{transform:scale(.97);filter:brightness(.9)}
+.stopbrano-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+.restart-btn{padding:15px 4px;border-radius:10px;border:2px solid var(--gold);
+  background:#fff;color:var(--gold);font-family:'Cinzel',serif;font-size:13.5px;font-weight:700;
+  letter-spacing:.04em;cursor:pointer;transition:all .15s}
+.restart-btn:active{transform:scale(.97);background:var(--goldf)}
+.restart-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
 
 .brani-stats{background:var(--gll);border:1.5px solid var(--gl);
   border-radius:9px;padding:6px 11px;flex-shrink:0}
@@ -212,7 +217,9 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   padding:3px 0 6px}
 .brano-row{background:#fff;border-radius:9px;padding:7px 9px;
   border:1.5px solid var(--gl);display:flex;align-items:center;gap:6px;
-  margin-bottom:5px;box-shadow:0 1px 5px rgba(29,92,26,.06);animation:fi .15s ease}
+  margin-bottom:5px;box-shadow:0 1px 5px rgba(29,92,26,.06);animation:fi .15s ease;
+  transition:transform .1s,background .1s}
+.brano-row:active{transform:scale(.985);background:var(--gll)}
 .br-idx{font-family:'Cinzel',serif;font-size:8.5px;color:#bbb;min-width:14px;flex-shrink:0}
 .br-info{flex:1;min-width:0}
 .br-top{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
@@ -249,19 +256,6 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   display:flex;align-items:center;gap:8px;margin:8px 0 10px}
 .stitle::before,.stitle::after{content:'';flex:1;height:1px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-
-/* Pulsante start/stop coreografia */
-.coreo-timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;
-  padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.ct-left{flex:1}
-.ct-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gd);margin-bottom:2px}
-.ct-time{font-family:'Cinzel',serif;font-size:36px;font-weight:700;color:#bbb;line-height:1;transition:color .2s}
-.ct-time.run{color:var(--ink)}
-.ct-btn{flex-shrink:0;padding:10px 16px;border-radius:10px;border:2px solid;
-  font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .18s}
-.ct-btn.go{border-color:var(--gd);color:var(--gd);background:#fff}
-.ct-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef}
-.ct-btn:active{transform:scale(.95)}
 
 .porta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}
 .p-opt{padding:10px 4px;border-radius:8px;border:2px solid var(--gl);
@@ -428,8 +422,11 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       <!-- START/STOP unificato -->
       <button class="startstop-btn go" id="ssBtn" onclick="doStartStop()">▶ Start</button>
 
-      <!-- FERMO BRANO -->
-      <button class="fermo-btn" id="fermoBtn" onclick="doFermo()" disabled>✂ FERMO BRANO</button>
+      <!-- STOP BRANO / RESTART affiancati -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0">
+        <button class="stopbrano-btn" id="stopBranoBtn" onclick="doStopBrano()" disabled>■ Stop Brano</button>
+        <button class="restart-btn" id="restartBtn" onclick="doRestartBrano()" disabled>↻ Restart</button>
+      </div>
 
       <div class="brani-stats">
         <div class="bs-row">
@@ -551,15 +548,6 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 
   <div class="coreo-body">
 
-    <!-- CRONOMETRO COREOGRAFIA con pulsante start/stop -->
-    <div class="coreo-timer-block">
-      <div class="ct-left">
-        <div class="ct-lbl">⏱ Esercizio</div>
-        <div class="ct-time" id="coreoTimeDisp">0:00</div>
-      </div>
-      <button class="ct-btn go" id="coreoSsBtn" onclick="doCoreoStartStop()">▶ Start</button>
-    </div>
-
     <div class="stitle">Portamento</div>
     <div class="porta-row">
       <div class="p-opt" id="po_0"  onclick="setPorta(0.0)"><span class="p-opt-v">0.0</span><span class="p-opt-l">Assente</span></div>
@@ -657,6 +645,53 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   </div>
 </div><!-- /sCoreo -->
 
+<!-- ════════ EDIT BRANO MODAL ════════ -->
+<div class="exp-ov" id="editModal">
+  <div class="exp-box" style="max-width:460px;max-height:92vh;overflow-y:auto">
+    <div class="exp-hdr">
+      <div class="exp-title" id="editTitle">Modifica Brano</div>
+      <div class="exp-sub" id="editSub">Classe — · Durata —</div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-fld">
+        <label class="exp-lbl">Numero di Voci</label>
+        <div class="voci-row" style="margin-bottom:0">
+          <div class="vbtn" id="ev1" onclick="setEditVoci(1)"><span class="v-n">1</span><span class="v-lbl">Unisono</span></div>
+          <div class="vbtn" id="ev2" onclick="setEditVoci(2)"><span class="v-n">2</span><span class="v-lbl">Due voci</span></div>
+          <div class="vbtn" id="ev3" onclick="setEditVoci(3)"><span class="v-n">3</span><span class="v-lbl">Tre voci</span></div>
+        </div>
+      </div>
+
+      <div class="exp-fld">
+        <label class="exp-lbl">Difficoltà Aggiuntive</label>
+        <div class="tog-grid" id="editAddGrid"></div>
+        <div class="add-warn" id="editAddWarn"></div>
+      </div>
+
+      <div class="exp-fld">
+        <label class="exp-lbl">Declassamenti</label>
+        <div class="dec-grid" id="editDecGrid"></div>
+      </div>
+
+      <div class="exp-fld">
+        <label class="exp-lbl">Penalità di Esecuzione</label>
+        <div id="editPenGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
+      </div>
+
+      <div style="background:var(--gll);border:2px solid var(--gl);border-radius:10px;
+        padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-top:4px;margin-bottom:4px">
+        <span style="font-family:'Cinzel',serif;font-size:9px;color:var(--gd);letter-spacing:.1em;text-transform:uppercase">Punteggio ricalcolato</span>
+        <span id="editScorePreview" style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gd)">—</span>
+      </div>
+
+      <div class="exp-actions">
+        <button class="exp-cancel" onclick="closeEditModal()">✕ Annulla</button>
+        <button class="exp-confirm" onclick="saveEditModal()">✓ Salva Modifiche</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ════════ EXPORT PDF MODAL ════════ -->
 <div class="exp-ov" id="expModal">
   <div class="exp-box">
@@ -737,29 +772,30 @@ const FIG_PTS={pres:10,insiemeB:4,insiemeC:10,extP:1,extB:3,extC:5,congedo:5};
 /* ─── STATE ──────────────────────────────────────────── */
 let curSec=null, selCard=null;
 
-// Cronometro musici
+// Cronometro musici — il totale scorre sempre; il lap (singolo brano) ha un
+// suo stato indipendente di marcia/pausa, per escludere le pause tra i brani
 let timer={running:false,startedAt:null,acc:0};
-let lapStart=0;
+let lapBase=0;          // valore di getTotal() da cui parte il lap corrente
+let lapRunning=false;   // se il lap sta accumulando tempo in questo momento
+let sessionStarted=false;
 let tickId=null;
 
 // Brano corrente (config live)
-function defaultVoci(){return curSec==='tamburi'?3:1;}
+function defaultVoci(){return 3;}
 function newB(){return{voci:defaultVoci(),adds:[],decs:[],penLieve:0,penMedia:0,penGrave:0,penGravis:0};}
 let curB=newB(), penLog=[];
 
 // Brani salvati — array semplice, aggiungiamo push e mai sovrascriviamo
 let brani=[];
 
-// Coreografia
+// Coreografia (nessun cronometro: solo conteggio punti)
 function freshC(){return{pres:0,insiemeB:0,insiemeC:0,extP:0,extB:0,extC:0,
   congedo:0,sinc:0,porta:.5,penLieve:0,penMedia:0,penGrave:0,penSpec:0};}
 let coreo=freshC(), cpenLog=[];
-let coreoTimer={running:false,startedAt:null,acc:0};
-let coreoTickId=null;
 
 /* ─── HELPERS ────────────────────────────────────────── */
 function getTotal(){return timer.acc+(timer.running?(Date.now()-timer.startedAt)/1000:0);}
-function getLap()  {return Math.max(0,getTotal()-lapStart);}
+function getLap(){return lapRunning?Math.max(0,getTotal()-lapBase):0;}
 
 function fmtCC(s){
   const m=Math.floor(s/60),r=s%60,si=Math.floor(r),cc=Math.floor((r-si)*100);
@@ -786,16 +822,16 @@ function boot(){
   document.getElementById('sSetup').classList.remove('active');
   if(curSec==='coreo'){
     document.getElementById('sCoreo').classList.add('active');
-    // NON parte automaticamente: aspetta il pulsante start
     refreshCoreo();
   } else {
     document.getElementById('mTitle').textContent=curSec==='fiati'?'🎺 Fiati':'🥁 Tamburi';
     document.getElementById('totMax').textContent=MAX_PTS[curSec];
     buildGrids();
-    curB=newB();          // ricrea con voci di default corrette per la sezione
+    curB=newB();
     setVoci(defaultVoci());
     document.getElementById('sMusici').classList.add('active');
     tickId=setInterval(tickTimer,33);
+    updateStopRestartBtns();
     refreshMusici();
   }
 }
@@ -803,10 +839,6 @@ function boot(){
 function goBack(){
   clearAll();
   resetMusiciDOM();
-  document.getElementById('coreoTimeDisp').textContent='0:00';
-  document.getElementById('coreoTimeDisp').className='ct-time';
-  document.getElementById('coreoSsBtn').textContent='\u25B6 Start';
-  document.getElementById('coreoSsBtn').className='ct-btn go';
   document.getElementById('sMusici').classList.remove('active');
   document.getElementById('sCoreo').classList.remove('active');
   document.getElementById('sSetup').classList.add('active');
@@ -824,39 +856,34 @@ function resetMusiciDOM(){
   document.getElementById('branoLbl').textContent='\u2014';
   document.getElementById('ssBtn').textContent='\u25B6 Start';
   document.getElementById('ssBtn').className='startstop-btn go';
-  document.getElementById('fermoBtn').disabled=true;
+  document.getElementById('stopBranoBtn').disabled=true;
+  document.getElementById('restartBtn').disabled=true;
 }
 
 function doReset(w){
   if(w==='musici'){
     // Ferma e riavvia il ticker (evita sovrascritture durante il reset)
     clearInterval(tickId);
-    timer={running:false,startedAt:null,acc:0};lapStart=0;
+    timer={running:false,startedAt:null,acc:0};
+    lapBase=0;lapRunning=false;sessionStarted=false;
     brani=[];curB=newB();penLog=[];
     resetMusiciDOM();
     resetAddGrid();resetDecGrid();setVoci(defaultVoci());
     refreshMusici();refreshPenUI();
     tickId=setInterval(tickTimer,33);
   } else {
-    clearInterval(coreoTickId);
-    coreoTimer={running:false,startedAt:null,acc:0};
     coreo=freshC();cpenLog=[];
-    document.getElementById('coreoTimeDisp').textContent='0:00';
-    document.getElementById('coreoTimeDisp').className='ct-time';
-    document.getElementById('coreoSsBtn').textContent='\u25B6 Start';
-    document.getElementById('coreoSsBtn').className='ct-btn go';
-    coreoTickId=null;
     setPorta(.5);refreshCoreo();
   }
 }
 
 function clearAll(){
-  clearInterval(tickId);clearInterval(coreoTickId);
-  tickId=coreoTickId=null;
-  timer={running:false,startedAt:null,acc:0};lapStart=0;
+  clearInterval(tickId);
+  tickId=null;
+  timer={running:false,startedAt:null,acc:0};
+  lapBase=0;lapRunning=false;sessionStarted=false;
   brani=[];curB=newB();penLog=[];
   coreo=freshC();cpenLog=[];
-  coreoTimer={running:false,startedAt:null,acc:0};
 }
 
 /* ─── TIMER MUSICI ───────────────────────────────────── */
@@ -864,7 +891,7 @@ function tickTimer(){
   const lap=getLap(),tot=getTotal(),cls=getClass(lap);
   const ld=document.getElementById('lapDisp');
   ld.textContent=fmtCC(lap);
-  ld.className='tb-big'+(timer.running?' run':(tot>0?' done':''));
+  ld.className='tb-big'+(lapRunning?' run':(sessionStarted?' done':''));
   document.getElementById('totalDisp').textContent=fmtCC(tot);
   const tb=document.getElementById('totalBadge');
   tb.textContent=fmtCC(tot);
@@ -878,13 +905,17 @@ function tickTimer(){
 function doStartStop(){
   if(!timer.running){
     timer.startedAt=Date.now();timer.running=true;
-    if(lapStart===0&&timer.acc===0)
-      document.getElementById('branoLbl').textContent='Brano 1';
+    if(!sessionStarted){
+      sessionStarted=true;
+      lapBase=0;lapRunning=true;
+      document.getElementById('branoLbl').textContent='Brano 1 in corso';
+    }
   } else {
     timer.acc+=(Date.now()-timer.startedAt)/1000;
     timer.startedAt=null;timer.running=false;
   }
   updateSsBtn();
+  updateStopRestartBtns();
 }
 
 function updateSsBtn(){
@@ -896,12 +927,16 @@ function updateSsBtn(){
     btn.textContent=started?'▶ Riprendi':'▶ Start';
     btn.className='startstop-btn go';
   }
-  // abilita fermo brano solo se il cronometro è mai partito
-  document.getElementById('fermoBtn').disabled=!(getTotal()>0||timer.running);
 }
 
-/* ─── FERMO BRANO ────────────────────────────────────── */
-function doFermo(){
+function updateStopRestartBtns(){
+  document.getElementById('stopBranoBtn').disabled=!(sessionStarted&&lapRunning);
+  document.getElementById('restartBtn').disabled=!(sessionStarted&&!lapRunning);
+}
+
+/* ─── STOP BRANO / RESTART ───────────────────────────── */
+function doStopBrano(){
+  if(!lapRunning)return;
   const dur=getLap();
   // Crea il brano snapshot con COPIA degli array
   const b={
@@ -916,20 +951,27 @@ function doFermo(){
     cls:getClass(dur),
     id:Date.now()
   };
-  brani.push(b);          // aggiungiamo SEMPRE in coda
-  lapStart=getTotal();    // il totale avanza, il lap si azzera
+  brani.push(b);        // aggiungiamo SEMPRE in coda
+  lapRunning=false;      // il lap resta fermo: la pausa fino al Restart non viene contata
   // Reset stato brano corrente
   curB=newB();penLog=[];
   setVoci(defaultVoci());resetAddGrid();resetDecGrid();
-  // Aggiorna etichetta brano corrente
-  document.getElementById('branoLbl').textContent='Brano '+(brani.length+1);
+  document.getElementById('branoLbl').textContent='Brano '+(brani.length+1)+' — premi Restart';
   refreshMusici();
   refreshPenUI();
-  // Scorri in fondo alla lista
+  updateStopRestartBtns();
   setTimeout(()=>{
     const rs=document.getElementById('rightScroll');
     rs.scrollTop=rs.scrollHeight;
   },80);
+}
+
+function doRestartBrano(){
+  if(lapRunning)return;
+  lapBase=getTotal();
+  lapRunning=true;
+  document.getElementById('branoLbl').textContent='Brano '+(brani.length+1)+' in corso';
+  updateStopRestartBtns();
 }
 
 /* ─── GRIDS ──────────────────────────────────────────── */
@@ -1053,9 +1095,23 @@ function calcScore(b,clsOvr){
   return raw*sel.reduce((acc,a)=>acc*(1+a.mult),1);
 }
 function calcPen(b){
-  if(curSec==='fiati')
-    return Math.max(b.penLieve*.10,b.penMedia*.30)+b.penGrave*.60+b.penGravis*.90;
-  return b.penLieve*.10+b.penMedia*.30+b.penGrave*.60+b.penGravis*.90;
+  // Fiati: tra Lieve/Media/Gravissima conta solo quella di valore maggiore (una volta);
+  //        le Gravi sono illimitate (si applicano tutte per intero).
+  // Tamburi: tra Lieve/Grave/Gravissima conta solo quella di valore maggiore (una volta);
+  //          le Medie sono illimitate (si applicano tutte per intero).
+  if(curSec==='fiati'){
+    let single=0;
+    if(b.penGravis>0)single=PEN_VALS.gravis;
+    else if(b.penMedia>0)single=PEN_VALS.media;
+    else if(b.penLieve>0)single=PEN_VALS.lieve;
+    return single + b.penGrave*PEN_VALS.grave;
+  } else {
+    let single=0;
+    if(b.penGravis>0)single=PEN_VALS.gravis;
+    else if(b.penGrave>0)single=PEN_VALS.grave;
+    else if(b.penLieve>0)single=PEN_VALS.lieve;
+    return single + b.penMedia*PEN_VALS.media;
+  }
 }
 function calcTotals(){
   let aaC=0,aC=0,raw=0;
@@ -1073,6 +1129,158 @@ function calcTotals(){
 window.delBrano=function(i){
   if(i>=0&&i<brani.length){brani.splice(i,1);refreshMusici();}
 };
+
+/* ─── EDIT BRANO MODAL ──────────────────────────────── */
+let editIndex=null, editState=null;
+
+window.openEditBrano=function(i){
+  if(i<0||i>=brani.length)return;
+  editIndex=i;
+  const b=brani[i];
+  editState={
+    voci:b.voci, adds:[...b.adds], decs:[...b.decs],
+    penLieve:b.penLieve, penMedia:b.penMedia, penGrave:b.penGrave, penGravis:b.penGravis
+  };
+  document.getElementById('editTitle').textContent='Modifica Brano #'+(i+1);
+  document.getElementById('editSub').textContent='Classe '+b.cls+' · Durata '+b.dur.toFixed(2)+'s (non modificabili)';
+
+  buildEditAddGrid();
+  buildEditDecGrid();
+  buildEditPenGrid();
+
+  setEditVoci(editState.voci);
+
+  getAdds().forEach(a=>{
+    const el=document.getElementById('eadd_'+a.id);
+    if(el)el.classList.toggle('on',editState.adds.includes(a.id));
+  });
+  const n=editState.adds.length;
+  document.getElementById('editAddWarn').textContent=n>2?`⚠ ${n} difficoltà selezionate: le ${n-2} di valore maggiore saranno scartate.`:'';
+
+  getDecs().forEach(d=>{
+    const el=document.getElementById('edec_'+d.id);
+    if(!el)return;
+    el.classList.toggle('on',editState.decs.includes(d.id));
+    if(d.notFor&&d.notFor.includes(b.cls))el.classList.add('na');
+    else el.classList.remove('na');
+  });
+
+  refreshEditPenDisplay();
+  updateEditScorePreview();
+  document.getElementById('editModal').classList.add('show');
+};
+
+function closeEditModal(){
+  document.getElementById('editModal').classList.remove('show');
+  editIndex=null;editState=null;
+}
+
+function buildEditAddGrid(){
+  const g=document.getElementById('editAddGrid');g.innerHTML='';
+  getAdds().forEach(a=>{
+    const d=document.createElement('div');
+    d.className='tog';d.id='eadd_'+a.id;
+    d.innerHTML=`<span class="tog-sym">${a.sym} +${(a.mult*100).toFixed(0)}%</span>`+
+                `<span class="tog-name">${a.name}</span>`;
+    d.onclick=()=>toggleEditAdd(a.id);
+    g.appendChild(d);
+  });
+}
+function buildEditDecGrid(){
+  const g=document.getElementById('editDecGrid');g.innerHTML='';
+  getDecs().forEach(d_=>{
+    const d=document.createElement('div');
+    d.className='dtog';d.id='edec_'+d_.id;
+    d.innerHTML=`<span class="dtog-val">−10</span>`+
+                `<span class="dtog-name">${d_.name}</span>`;
+    d.onclick=()=>toggleEditDec(d_.id);
+    g.appendChild(d);
+  });
+}
+function buildEditPenGrid(){
+  const grid=document.getElementById('editPenGrid');grid.innerHTML='';
+  const defs=[
+    {k:'lieve', sym:'/', lbl:'Lieve',      val:.10},
+    {k:'media', sym:'✕', lbl:'Media',      val:.30},
+    {k:'grave', sym:'○', lbl:'Grave',      val:.60},
+    {k:'gravis',sym:'S', lbl:'Gravissima', val:.90}
+  ];
+  defs.forEach(d=>{
+    const box=document.createElement('div');
+    box.style.cssText='background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;padding:8px 4px;text-align:center';
+    box.innerHTML=
+      `<div style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--red)">${d.sym}</div>`+
+      `<div style="font-size:9px;color:#8b0000;font-weight:600">${d.lbl}</div>`+
+      `<div style="font-size:8.5px;color:var(--red);font-style:italic;margin-bottom:3px">−${d.val.toFixed(2)}</div>`+
+      `<div style="display:flex;align-items:center;justify-content:center;gap:4px">`+
+        `<button style="width:24px;height:24px;border-radius:6px;border:1.5px solid var(--red);background:#fff;color:var(--red);font-size:15px;cursor:pointer" onclick="adjEditPen('${d.k}',-1)">−</button>`+
+        `<span id="ep_${d.k}" style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;min-width:16px;color:var(--ink)">0</span>`+
+        `<button style="width:24px;height:24px;border-radius:6px;border:none;background:var(--red);color:#fff;font-size:15px;cursor:pointer" onclick="adjEditPen('${d.k}',1)">+</button>`+
+      `</div>`;
+    grid.appendChild(box);
+  });
+}
+
+function setEditVoci(n){
+  editState.voci=n;
+  [1,2,3].forEach(i=>document.getElementById('ev'+i).classList.toggle('on',i===n));
+  updateEditScorePreview();
+}
+function toggleEditAdd(id){
+  const idx=editState.adds.indexOf(id);
+  if(idx>=0){editState.adds.splice(idx,1);document.getElementById('eadd_'+id).classList.remove('on');}
+  else{editState.adds.push(id);document.getElementById('eadd_'+id).classList.add('on');}
+  const n=editState.adds.length;
+  document.getElementById('editAddWarn').textContent=n>2?`⚠ ${n} difficoltà selezionate: le ${n-2} di valore maggiore saranno scartate.`:'';
+  updateEditScorePreview();
+}
+function toggleEditDec(id){
+  const el=document.getElementById('edec_'+id);
+  if(!el||el.classList.contains('na'))return;
+  const idx=editState.decs.indexOf(id);
+  if(idx>=0){editState.decs.splice(idx,1);el.classList.remove('on');}
+  else{editState.decs.push(id);el.classList.add('on');}
+  updateEditScorePreview();
+}
+function adjEditPen(k,d){
+  const key='pen'+k.charAt(0).toUpperCase()+k.slice(1);
+  editState[key]=Math.max(0,(editState[key]||0)+d);
+  refreshEditPenDisplay();
+  updateEditScorePreview();
+}
+function refreshEditPenDisplay(){
+  ['lieve','media','grave','gravis'].forEach(k=>{
+    const key='pen'+k.charAt(0).toUpperCase()+k.slice(1);
+    const el=document.getElementById('ep_'+k);
+    if(el)el.textContent=editState[key]||0;
+  });
+}
+function updateEditScorePreview(){
+  if(!editState||editIndex===null)return;
+  const b=brani[editIndex];
+  const tempB={...b,voci:editState.voci,adds:editState.adds,decs:editState.decs,
+    penLieve:editState.penLieve,penMedia:editState.penMedia,
+    penGrave:editState.penGrave,penGravis:editState.penGravis};
+  const pts=calcScore(tempB,tempB.cls);
+  const pen=calcPen(tempB);
+  document.getElementById('editScorePreview').textContent=
+    (Math.round(pts*10)/10).toFixed(1)+' pt'+(pen>0?'  (pen −'+pen.toFixed(2)+')':'');
+}
+function saveEditModal(){
+  if(editIndex===null||!editState)return;
+  const b=brani[editIndex];
+  brani[editIndex]={...b,
+    voci:editState.voci,
+    adds:[...editState.adds],
+    decs:[...editState.decs],
+    penLieve:editState.penLieve,
+    penMedia:editState.penMedia,
+    penGrave:editState.penGrave,
+    penGravis:editState.penGravis
+  };
+  refreshMusici();
+  closeEditModal();
+}
 
 /* ─── MUSICI REFRESH ─────────────────────────────────── */
 function refreshMusici(){
@@ -1103,7 +1311,9 @@ function refreshMusici(){
 
       const row=document.createElement('div');
       row.className='brano-row';
-      // Bottone delete con onclick inline globale — tecnica più affidabile
+      row.style.cursor='pointer';
+      row.setAttribute('onclick','openEditBrano('+i+')');
+      // Bottone delete con onclick inline globale + stopPropagation per non aprire la modifica
       row.innerHTML=
         '<span class="br-idx">'+(i+1)+'</span>'+
         '<div class="br-info">'+
@@ -1120,7 +1330,7 @@ function refreshMusici(){
         '<span class="br-pts'+(scaled?' sc':'')+'">'+
           (Math.round(pts*10)/10).toFixed(1)+
         '</span>'+
-        '<button class="br-del" onclick="delBrano('+i+')">🗑</button>';
+        '<button class="br-del" onclick="event.stopPropagation();delBrano('+i+')">🗑</button>';
       list.appendChild(row);
     });
   }
@@ -1135,28 +1345,6 @@ function refreshMusici(){
   const voto10=Math.max(0,(t.raw/maxP)*10 - t.pen);
   document.getElementById('totVoto').textContent=voto10.toFixed(3);
   document.getElementById('braniPtsHdr').textContent=Math.round(t.raw)+' pt';
-}
-
-/* ─── CRONOMETRO COREOGRAFIA ─────────────────────────── */
-function doCoreoStartStop(){
-  const btn=document.getElementById('coreoSsBtn');
-  const disp=document.getElementById('coreoTimeDisp');
-  if(!coreoTimer.running){
-    coreoTimer.startedAt=Date.now();coreoTimer.running=true;
-    if(!coreoTickId){
-      coreoTickId=setInterval(()=>{
-        const e=coreoTimer.acc+(coreoTimer.running?(Date.now()-coreoTimer.startedAt)/1000:0);
-        document.getElementById('coreoTimeDisp').textContent=fmtMin(e);
-      },1000);
-    }
-    btn.textContent='⏸ Pausa';btn.className='ct-btn pause';
-    disp.className='ct-time run';
-  } else {
-    coreoTimer.acc+=(Date.now()-coreoTimer.startedAt)/1000;
-    coreoTimer.startedAt=null;coreoTimer.running=false;
-    btn.textContent='▶ Riprendi';btn.className='ct-btn go';
-    disp.className='ct-time done';
-  }
 }
 
 /* ─── COREOGRAFIA ────────────────────────────────────── */
