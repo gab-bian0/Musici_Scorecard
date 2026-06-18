@@ -1,478 +1,1771 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FISB Musici Live Evaluator</title>
-    <!-- Google Fonts: Outfit per un'estetica premium e leggibilità ottimale sotto il sole -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>FISB – Scorecard Musici Live</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Musici Live">
+<meta name="theme-color" content="#1D5C1A">
+
+<!-- Font storici ed eleganti FISB -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gd:#1D5C1A; /* Verde scuro federale */
+  --gm:#2E7A2A; /* Verde medio */
+  --gl:#C8E6C0; /* Verde chiaro per bordi */
+  --gll:#EBF5E7; /* Verde chiarissimo per sfondi */
+  --gold:#C9A010; /* Oro */
+  --goldl:#E8C94A; /* Oro chiaro */
+  --goldf:#F5E89A;
+  --parch:#F4F8F0; /* Sfondo carta/pergamena */
+  --ink:#0E1A0C; /* Inchiostro scuro */
+  --red:#B52222;
+  --red-bg:#FEF2F2;
+  --orange:#C46010;
+  --st:env(safe-area-inset-top,0px);
+  --sb:env(safe-area-inset-bottom,0px);
+  --sl:env(safe-area-inset-left,0px);
+  --sr:env(safe-area-inset-right,0px);
+  --hdr:56px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background-color: var(--bg-primary)}
+body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(--ink);
+  padding-left:var(--sl);padding-right:var(--sr);user-select:none}
+
+.scr{display:none;width:100%;height:100dvh;overflow:hidden;position:relative}
+.scr.active{display:flex;flex-direction:column;animation:fi .18s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ══ SETUP ═══════════════════════════════════════ */
+#sSetup{align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#0e3a0c,var(--gd) 60%,#235c20);
+  overflow-y:auto;padding:20px 10px}
+.setup-inner{width:100%;max-width:480px;padding:24px 20px;text-align:center}
+.brand-emb{width:86px;height:86px;border-radius:50%;margin:0 auto 14px;
+  background:linear-gradient(135deg,var(--goldl),var(--gold));
+  display:flex;align-items:center;justify-content:center;font-size:42px;
+  box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.brand-t{font-family:'Cinzel',serif;font-size:26px;font-weight:700;
+  color:var(--goldl);letter-spacing:.06em;margin-bottom:4px;text-shadow:0 2px 4px rgba(0,0,0,0.3)}
+.brand-v{font-size:12.5px;color:rgba(255,255,255,.55);font-style:italic;margin-bottom:24px}
+.setup-lbl{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px}
+
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 6px;
+}
+.form-group input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1.5px solid rgba(232, 201, 74, 0.3);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: #fff;
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.2s;
+}
+.form-group input:focus {
+  border-color: var(--goldl);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 10px rgba(232, 201, 74, 0.2);
+}
+
+.sp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.sp-card{background:rgba(255,255,255,.06);border:2px solid rgba(232,201,74,.2);
+  border-radius:12px;padding:12px 4px 10px;cursor:pointer;transition:all .18s;text-align:center}
+.sp-card:active{transform:scale(.95)}
+.sp-card.sel{border-color:var(--goldl);background:rgba(232,201,74,.18);box-shadow:0 0 12px rgba(232,201,74,0.15)}
+.sp-ico{font-size:26px;display:block;margin-bottom:4px}
+.sp-nm{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--goldl);display:block;margin-bottom:2px}
+.sp-at{font-size:9.5px;color:rgba(255,255,255,.4);font-style:italic}
+
+.check-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.checkbox-label input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+}
+
+.start-cta{background:linear-gradient(135deg,var(--gold),var(--goldl));
+  color:#0e3a0c;border:none;border-radius:12px;padding:14px 64px;
+  font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.08em;cursor:pointer;
+  box-shadow:0 4px 18px rgba(201,160,16,.4);opacity:0;pointer-events:none;
+  transition:all .2s;display:block;margin:12px auto 0}
+.start-cta.rdy{opacity:1;pointer-events:all}
+.start-cta:active{transform:scale(.97)}
+
+/* ══ HEADER ═════════════════════════════════════ */
+.hdr{background:linear-gradient(135deg,var(--gd),#0e3a0c);
+  height:calc(var(--hdr) + var(--st));padding-top:var(--st);flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding-left:12px;padding-right:12px;
+  box-shadow:0 2px 14px rgba(0,0,0,.28);z-index:50}
+.hdr-left{display:flex;align-items:center;gap:10px}
+.hbtn-back{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);
+  border-radius:8px;color:#fff;font-family:'Cinzel',serif;font-size:11px;
+  font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.03em}
+.hbtn-back:active{background:rgba(255,255,255,.2)}
+.hdr-title-wrapper {display:flex;flex-direction:column}
+.hdr-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--goldl);letter-spacing:.05em;line-height:1.2}
+.hdr-sub{font-size:10px;color:rgba(255,255,255,.5);font-style:italic}
+.hdr-right{display:flex;align-items:center;gap:8px}
+.hbtn-rst{background:rgba(180,30,30,.2);border:1.5px solid rgba(180,30,30,.4);
+  border-radius:8px;color:#ffa0a0;font-family:'Cinzel',serif;font-size:10px;
+  font-weight:700;padding:5px 9px;cursor:pointer;letter-spacing:.03em}
+.hbtn-rst:active{background:rgba(180,30,30,.4)}
+.total-badge{background:rgba(0,0,0,.2);border:1.5px solid rgba(232,201,74,.25);
+  border-radius:8px;color:rgba(255,255,255,.6);font-family:'JetBrains Mono',monospace;font-size:13px;
+  font-weight:700;padding:4px 8px;min-width:86px;text-align:center}
+.total-badge.run{color:var(--goldl);border-color:rgba(232,201,74,.55);box-shadow:0 0 8px rgba(232,201,74,.3)}
+
+/* ══ MUSICI BODY ════════════════════════════════ */
+.mus-body{flex:1;display:grid;overflow:hidden;grid-template-columns:40% 60%}
+@media(max-width: 680px){.mus-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+/* SINISTRA */
+.mus-left{border-right:2px solid var(--gl);background:#fff;
+  display:flex;flex-direction:column;padding:12px;gap:8px;overflow-y:auto}
+
+.timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;padding:12px}
+.tb-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gd);margin-bottom:2px;display:flex;align-items:center;justify-content:space-between}
+.tb-big{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:700;color:#bbb;
+  letter-spacing:-1px;line-height:1.05;transition:color .2s}
+.tb-big.run{color:var(--ink)}
+.tb-big.done{color:var(--gd)}
+.tb-cls-row{display:flex;align-items:center;gap:8px;margin-top:4px}
+.cls-badge{font-family:'Cinzel',serif;font-size:11px;font-weight:700;
+  padding:2px 8px;border-radius:7px;color:#fff;letter-spacing:.04em}
+.cls-D{background:#9e9e9e}.cls-C{background:#5b8c5a}
+.cls-B{background:#4a7ab5}.cls-A{background:#b58a10}.cls-AA{background:#8b2252}
+.tb-hint{font-size:11px;color:#aaa;font-style:italic}
+.tb-total{font-size:11.5px;color:#777;margin-top:6px;border-top:1px solid rgba(0,0,0,0.05);padding-top:6px}
+.tb-total span{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--gd)}
+
+/* Pulsanti start/stop e fermo brano */
+.startstop-btn{width:100%;padding:13px 6px;border-radius:10px;border:2px solid;
+  font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.05em;
+  cursor:pointer;transition:all .18s;flex-shrink:0;text-align:center}
+.startstop-btn:active{transform:scale(.97)}
+.startstop-btn.go{border-color:var(--gd);color:var(--gd);background:var(--gll)}
+.startstop-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef;
+  box-shadow:0 2px 10px rgba(196,96,16,.15)}
+
+.fermo-btn{width:100%;padding:14px 6px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--gd),#0e3a0c);
+  color:var(--goldl);font-family:'Cinzel',serif;font-size:13px;font-weight:700;
+  letter-spacing:.06em;cursor:pointer;transition:all .15s;flex-shrink:0;
+  box-shadow:0 3px 14px rgba(29,92,26,.3)}
+.fermo-btn:active{transform:scale(.97);filter:brightness(.9)}
+.fermo-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+
+.brani-stats{background:var(--gll);border:1.5px solid var(--gl);
+  border-radius:9px;padding:8px 12px;flex-shrink:0;margin-top:4px}
+.bs-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.bs-row:last-child{margin-bottom:0}
+.bs-lbl{color:#888;font-style:italic}
+.bs-val{font-family:'Cinzel',serif;font-weight:700;color:var(--gd)}
+.bs-val.warn{color:var(--red)}
+
+.action-block {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* DESTRA */
+.mus-right{display:flex;flex-direction:column;background:var(--parch);overflow:hidden}
+.right-scroll{flex:1;overflow-y:auto;padding:10px 12px}
+
+.sec-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gd);
+  display:flex;align-items:center;gap:6px;margin:10px 0 8px}
+.sec-title::before,.sec-title::after{content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+/* Penalità */
+.pen-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px}
+.pbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
+  padding:8px 4px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
+.pbtn:active{background:#fcd0d0;border-color:var(--red);transform:scale(.96)}
+.pbtn.flash{animation:pflash .22s ease}
+@keyframes pflash{0%,100%{background:var(--red-bg)}40%{background:#fcd0d0;border-color:var(--red)}}
+.p-sym{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--red);display:block}
+.p-lbl{font-size:9px;color:#8b0000;display:block}
+.p-val{font-size:9.5px;color:var(--red);font-style:italic;display:block}
+.p-cnt{position:absolute;top:3px;right:4px;background:var(--red);color:#fff;
+  border-radius:50%;width:18px;height:18px;font-family:'Cinzel',serif;font-size:9.5px;
+  font-weight:700;display:none;align-items:center;justify-content:center}
+.p-cnt.show{display:flex}
+
+.undo-row{display:flex;flex-wrap:wrap;gap:5px;min-height:20px;margin-bottom:6px}
+.ubtn{border:1.5px solid #ddd;border-radius:6px;padding:3px 8px;
+  font-family:'Cinzel',serif;font-size:10px;font-weight:600;
+  color:#888;background:none;cursor:pointer}
+.ubtn:active{background:#eaeaea;color:#444}
+
+/* Voci */
+.voci-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.vbtn{padding:8px 5px;border-radius:9px;border:2px solid var(--gl);
+  background:#fff;cursor:pointer;transition:all .14s;text-align:center}
+.vbtn.on{border-color:var(--gd);background:var(--gd)}
+.vbtn:active{transform:scale(.95)}
+.v-n{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gd);display:block}
+.v-lbl{font-size:9.5px;color:#aaa;display:block}
+.vbtn.on .v-n,.vbtn.on .v-lbl{color:#fff}
+.vbtn.on .v-lbl{color:rgba(255,255,255,.65)}
+
+/* Difficoltà aggiuntive */
+.tog-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:4px}
+.tog{background:#fff;border:1.5px solid #dde8dd;border-radius:8px;
+  padding:6px 10px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+.tog.on{background:var(--gll);border-color:var(--gd)}
+.tog.on::before{content:'✓';position:absolute;top:4px;right:8px;
+  font-size:11px;color:var(--gd);font-weight:700}
+.tog:active{transform:scale(.97)}
+.tog-sym{font-family:'Cinzel',serif;font-size:9.5px;font-weight:700;color:var(--gd);display:block;margin-bottom:1px}
+.tog-name{font-size:12px;font-weight:700;color:var(--ink);display:block}
+.add-warn{font-size:10px;color:var(--orange);font-style:italic;min-height:15px;margin-bottom:4px}
+
+/* Declassamenti */
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:4px}
+.dtog{background:#fff;border:1.5px solid #f5d5d5;border-radius:7px;
+  padding:6px 10px;cursor:pointer;transition:all .12s;position:relative;overflow:hidden}
+.dtog.on{background:var(--red-bg);border-color:var(--red)}
+.dtog.on::before{content:'✓';position:absolute;top:4px;right:8px;
+  font-size:11px;color:var(--red);font-weight:700}
+.dtog:active{transform:scale(.97)}
+.dtog.na{opacity:.3;pointer-events:none}
+.dtog-val{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--red);display:block}
+.dtog-name{font-size:11px;color:var(--ink)}
+
+/* Lista brani */
+.brani-hdr-row{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gd);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0}
+.brano-row{background:#fff;border-radius:9px;padding:8px 10px;
+  border:1.5px solid var(--gl);display:flex;align-items:center;gap:8px;
+  margin-bottom:6px;box-shadow:0 1px 5px rgba(29,92,26,.06);animation:fi .15s ease}
+.br-idx{font-family:'Cinzel',serif;font-size:9.5px;color:#bbb;min-width:16px;flex-shrink:0}
+.br-info{flex:1;min-width:0}
+.br-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.br-cls{font-family:'Cinzel',serif;font-size:9px;font-weight:700;padding:1px 6px;border-radius:5px;color:#fff;flex-shrink:0}
+.br-cls.D{background:#9e9e9e}.br-cls.C{background:#5b8c5a}
+.br-cls.B{background:#4a7ab5}.br-cls.A{background:#b58a10}.br-cls.AA{background:#8b2252}
+.br-dur{font-size:11px;color:#aaa;font-style:italic}
+.br-voci{font-family:'Cinzel',serif;font-size:10px;color:var(--gd)}
+.br-add{font-size:9.5px;color:var(--gm);display:block}
+.br-dec{font-size:9.5px;color:var(--red);display:block}
+.br-pts{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gd);flex-shrink:0}
+.br-del{background:none;border:none;color:#ccc;font-size:18px;cursor:pointer;
+  padding:4px 6px;flex-shrink:0;line-height:1;border-radius:6px;transition:background .12s}
+.br-del:active{color:var(--red);background:#fef2f2}
+.no-brani{font-size:13px;color:#bbb;font-style:italic;text-align:center;padding:16px 0}
+
+/* Totale bar */
+.totals-bar{background:var(--gd);padding:10px 16px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tot-item{text-align:center}
+.tot-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.55)}
+.tot-val{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--goldl);line-height:1.1}
+.tot-val.warn{color:#ffb040}
+.tot-val.pen{color:#ff8888;font-size:14px}
+.tot-sep{width:1px;height:28px;background:rgba(255,255,255,.15)}
+
+/* ══ COREOGRAFIA ═══════════════════════════════ */
+.coreo-body{flex:1;overflow-y:auto;padding:12px 14px 24px}
+.stitle{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gd);
+  display:flex;align-items:center;gap:8px;margin:12px 0 10px}
+.stitle::before,.stitle::after{content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+.coreo-timer-block{background:var(--gll);border:2px solid var(--gl);border-radius:12px;
+  padding:12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ct-left{flex:1}
+.ct-lbl{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gd);margin-bottom:2px}
+.ct-time{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;color:#bbb;line-height:1;transition:color .2s}
+.ct-time.run{color:var(--ink)}
+.ct-btn{flex-shrink:0;padding:11px 18px;border-radius:10px;border:2px solid;
+  font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .18s}
+.ct-btn.go{border-color:var(--gd);color:var(--gd);background:#fff}
+.ct-btn.pause{border-color:var(--orange);color:var(--orange);background:#fff8ef}
+.ct-btn:active{transform:scale(.95)}
+
+.porta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.p-opt{padding:9px 4px;border-radius:8px;border:2px solid var(--gl);
+  background:var(--gll);cursor:pointer;transition:all .15s;text-align:center}
+.p-opt.on{border-color:var(--gd);background:var(--gd)}
+.p-opt:active{transform:scale(.95)}
+.p-opt-v{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--gd);display:block}
+.p-opt.on .p-opt-v{color:var(--goldl)}
+.p-opt-l{font-size:9.5px;color:#aaa;display:block}
+.p-opt.on .p-opt-l{color:rgba(255,255,255,.65)}
+
+.fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.fig-card{background:#fff;border-radius:11px;border:2px solid var(--gl);
+  padding:10px 12px;box-shadow:0 1px 6px rgba(29,92,26,.06)}
+.fig-card.wide{grid-column:1/-1}
+.fig-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.fig-name{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--gd)}
+.fig-pts-lbl{font-size:10px;color:#aaa;font-style:italic}
+.fig-counter{display:flex;align-items:center;gap:6px}
+.fc-btn{width:38px;height:38px;border-radius:8px;border:none;
+  font-size:22px;font-weight:300;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .12s;user-select:none}
+.fc-btn.plus{background:var(--gd);color:var(--goldl)}
+.fc-btn.plus:active{background:var(--gm)}
+.fc-btn.plus:disabled{background:var(--gl);color:#aaa}
+.fc-btn.minus{background:var(--gll);border:1.5px solid var(--gl);color:var(--gd)}
+.fc-btn.minus:active{background:var(--gl)}
+.fc-btn.minus:disabled{color:#ccc;border-color:#eee}
+.fc-count{font-family:'Cinzel',serif;font-size:24px;font-weight:700;
+  color:var(--gd);text-align:center;width:48px}
+.fc-total{font-size:10.5px;color:var(--gd);font-style:italic;text-align:right;font-weight:600}
+.fig-warn{font-size:9.5px;color:var(--orange);font-style:italic;margin-top:4px}
+
+.sinc-card{background:#fff;border-radius:11px;border:2px solid var(--gl);
+  padding:11px 13px;margin-bottom:14px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 1px 6px rgba(29,92,26,.06)}
+.sinc-info{flex:1}
+.sinc-name{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--gd)}
+.sinc-rule{font-size:10.5px;color:#aaa;font-style:italic}
+.sinc-ctrl{display:flex;align-items:center;gap:8px}
+.sinc-val{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--gd);min-width:36px;text-align:center}
+.sinc-pts{font-size:10.5px;color:var(--gd);font-style:italic;min-width:48px;text-align:right}
+
+.cpen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.cpbtn{background:var(--red-bg);border:2px solid #f5c0c0;border-radius:9px;
+  padding:10px 6px;cursor:pointer;transition:all .12s;text-align:center;position:relative}
+.cpbtn:active{background:#fcd0d0;border-color:var(--red);transform:scale(.96)}
+.cp-sym{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--red);display:block}
+.cp-lbl{font-size:9.5px;color:#8b0000;display:block;margin-top:1px}
+.cp-val{font-size:9.5px;color:var(--red);font-style:italic;display:block}
+.cp-cnt{position:absolute;top:4px;right:6px;background:var(--red);color:#fff;
+  border-radius:50%;width:18px;height:18px;font-family:'Cinzel',serif;font-size:9.5px;
+  font-weight:700;display:none;align-items:center;justify-content:center}
+.cp-cnt.show{display:flex}
+
+.coreo-result{background:linear-gradient(135deg,var(--gd),#0e3a0c);
+  border-radius:13px;padding:16px;margin-top:6px}
+.cr-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(255,255,255,.5);text-align:center;margin-bottom:12px}
+.cr-row{display:flex;justify-content:space-between;align-items:center;
+  padding:6px 10px;border-radius:7px;margin-bottom:4px;background:rgba(255,255,255,.06)}
+.cr-lbl{font-size:13px;color:rgba(255,255,255,.75);font-style:italic}
+.cr-val{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#fff}
+.cr-val.pen{color:#ff8888}
+.cr-sep{height:1px;background:rgba(255,255,255,.1);margin:8px 0}
+.cr-final{text-align:center;margin-top:10px}
+.cr-final-num{font-family:'Cinzel',serif;font-size:54px;font-weight:900;
+  color:var(--goldl);line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.36)}
+.cr-final-of{font-size:12.5px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* ══ SUPERVISORE ═══════════════════════════════ */
+.super-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+.super-card {
+  background: #fff;
+  border: 2px solid var(--gl);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.super-input-group {
+  margin-bottom: 16px;
+}
+.super-input-group label {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--gd);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.super-input-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gl);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  outline: none;
+}
+.super-input-group input:focus {
+  border-color: var(--gd);
+}
+
+/* ══ UTILITY ═══════════════════════════════════ */
+.hidden{display:none !important}
+.w-full{width:100%}
+.btn-export{background:linear-gradient(135deg,var(--gold),var(--goldl));
+  color:#0e3a0c;border:none;border-radius:8px;padding:8px 12px;
+  font-family:'Cinzel',serif;font-weight:700;font-size:11.5px;cursor:pointer;
+  box-shadow:0 3px 10px rgba(201,160,16,0.3);text-align:center}
+.btn-export:active{transform:scale(.97)}
+.btn-save{background:var(--parch);color:var(--gd);border:1.5px solid var(--gl);
+  border-radius:8px;padding:8px 12px;font-family:'Cinzel',serif;font-weight:700;
+  font-size:11.5px;cursor:pointer;text-align:center}
+.btn-save:active{transform:scale(.97)}
+</style>
 </head>
 <body>
-    <!-- App Container -->
-    <div id="app-container" class="dashboard-active">
-        
-        <!-- Header dell'applicazione -->
-        <header class="app-header">
-            <div class="header-logo">
-                <span class="logo-shield">🛡️</span>
-                <div class="logo-text">
-                    <h1>FISB Musici</h1>
-                    <small>Live Evaluator Rev. 33/2025</small>
-                </div>
-            </div>
-            
-            <!-- Badge Gruppo Attivo -->
-            <div id="active-group-badge" class="active-group-badge hidden">
-                <span id="badge-group-name">Nessun Gruppo</span>
-                <span id="badge-role" class="badge-role">Ruolo</span>
-            </div>
-        </header>
 
-        <!-- Contenuto Principale / Viste SPA -->
-        <main class="app-content">
-            
-            <!-- VISTA 1: CONFIGURAZIONE (DASHBOARD) -->
-            <section id="view-setup" class="app-view active">
-                <div class="card glassmorphism animate-fade-in">
-                    <h2 class="section-title">Configura Sessione di Giudizio</h2>
-                    <p class="section-desc">Inserisci i dati del gruppo in gara e seleziona il tuo ruolo di giuria.</p>
-                    
-                    <form id="setup-form" onsubmit="event.preventDefault();">
-                        <div class="form-group">
-                            <label for="input-group-name">Nome Gruppo Musici</label>
-                            <input type="text" id="input-group-name" placeholder="Es. Sestiere Porta Romana" required autocomplete="off">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="input-phase">Fase Gara / Note</label>
-                            <input type="text" id="input-phase" placeholder="Es. Qualificazioni, Finale, Torneo di Maggio..." autocomplete="off">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="select-role">Ruolo Giudice</label>
-                            <select id="select-role">
-                                <option value="tamburi" selected>Giudice Tamburi (Percussioni)</option>
-                                <option value="chiarine">Giudice Chiarine (Fiati)</option>
-                                <option value="coreografia">Giudice Coreografia Musici</option>
-                                <option value="supervisore">Supervisore Completo / Ispettore</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Opzione Chiarine Naturali (mostrata solo se Chiarine o Supervisore è selezionato) -->
-                        <div id="natural-chiarine-container" class="form-group-checkbox hidden">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="check-natural-chiarine">
-                                <span class="custom-checkbox"></span>
-                                Sezione Chiarine Naturali (+12% addendum su Difficoltà)
-                            </label>
-                        </div>
-
-                        <button type="button" id="btn-start-session" class="btn btn-primary btn-block ripple-effect">
-                            Inizia Valutazione Live
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Lista Storico Rapida -->
-                <div class="card glassmorphism mt-4 animate-fade-in">
-                    <h3 class="card-title">Storico Valutazioni Recenti</h3>
-                    <div id="recent-sessions-list" class="recent-sessions-list">
-                        <p class="empty-state">Nessuna valutazione salvata in locale.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SEZIONE COMUNE: CRONOMETRO GENERALE (Fissa sopra i tab durante la gara) -->
-            <div id="global-timer-bar" class="global-timer-bar hidden glassmorphism">
-                <div class="timer-display-container">
-                    <div id="timer-display" class="timer-display">00:00.0</div>
-                    <div id="timer-status-badge" class="timer-status-badge">PRONTO</div>
-                </div>
-                
-                <div class="timer-controls">
-                    <button id="btn-timer-toggle" class="btn-timer btn-timer-start" title="Avvia/Pausa Esercizio">
-                        <svg viewBox="0 0 24 24" class="icon"><path d="M8 5v14l11-7z"/></svg>
-                    </button>
-                    <button id="btn-timer-reset" class="btn-timer btn-timer-reset" title="Resetta Cronometro">
-                        <svg viewBox="0 0 24 24" class="icon"><path d="M6 19h12V6H6v13z"/></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- VISTA 2: CRONOMETRO E BRANI (DIFFICOLTÀ) -->
-            <section id="view-tunes" class="app-view hidden">
-                <!-- Tasto Live per Brani -->
-                <div class="card glassmorphism text-center animate-fade-in py-4">
-                    <h3 class="card-title">Misurazione Brani Live</h3>
-                    <p class="section-desc">Premi all'inizio del brano e premi di nuovo per fermare. L'app registrerà la durata esatta senza fermare l'esercizio.</p>
-                    
-                    <div class="tune-button-container">
-                        <button id="btn-tune-trigger" class="btn btn-tune btn-inactive btn-block ripple-effect" disabled>
-                            <span class="pulse-indicator"></span>
-                            <span id="btn-tune-text">Avvia Brano</span>
-                        </button>
-                    </div>
-                    
-                    <div id="current-tune-running-display" class="current-tune-running-display hidden">
-                        Tempo Brano Corrente: <span id="running-tune-time" class="mono">0.0s</span>
-                    </div>
-                </div>
-
-                <!-- Lista dei brani inseriti -->
-                <div class="card glassmorphism mt-4 animate-fade-in">
-                    <div class="card-header-flex">
-                        <h3 class="card-title">Elenco Brani Valutati</h3>
-                        <button id="btn-add-manual-tune" class="btn btn-secondary btn-sm">+ Aggiungi Brano Manuale</button>
-                    </div>
-                    
-                    <div id="tunes-list" class="tunes-list mt-3">
-                        <p class="empty-state">Nessun brano registrato. Avvia un brano durante l'esercizio o inseriscilo manualmente.</p>
-                    </div>
-                    
-                    <div class="card-footer-info mt-3">
-                        <div class="limit-status">
-                            <span>Limite Brani:</span>
-                            <span id="tune-limits-badge">Max 1 AA | Max 3 A</span>
-                        </div>
-                        <div class="points-summary">
-                            <span>Punteggio Difficoltà Raw:</span>
-                            <span id="difficulty-raw-points" class="mono font-bold">0 / 1600</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VISTA 3: ESECUZIONE (PENALITÀ LIVE) -->
-            <section id="view-execution" class="app-view hidden">
-                <div class="execution-layout">
-                    <!-- Display Punteggio Live -->
-                    <div class="card glassmorphism text-center py-3 display-score-card">
-                        <div class="score-label">Punteggio Esecuzione Live</div>
-                        <div id="execution-live-score" class="execution-live-score mono">10.00</div>
-                        <div class="penalty-count-summary">
-                            <span class="count-tag count-lieve">L: <span id="count-l-display">0</span></span>
-                            <span class="count-tag count-media">M: <span id="count-m-display">0</span></span>
-                            <span class="count-tag count-grave">G: <span id="count-g-display">0</span></span>
-                            <span class="count-tag count-extra" id="extra-penalty-header">V: <span id="count-x-display">0</span></span>
-                        </div>
-                    </div>
-
-                    <!-- Griglia Pulsantiera Live (Mobile-first, posizionata in basso per ergonomia pollice) -->
-                    <div class="penalty-buttons-grid">
-                        <button class="btn btn-penalty btn-lieve ripple-effect" data-severity="lieve">
-                            <span class="btn-label">LIEVE (/)</span>
-                            <span class="btn-subtext">-0.10</span>
-                        </button>
-                        
-                        <button class="btn btn-penalty btn-media ripple-effect" data-severity="media">
-                            <span class="btn-label">MEDIA (X)</span>
-                            <span class="btn-subtext">-0.30</span>
-                        </button>
-                        
-                        <button class="btn btn-penalty btn-grave ripple-effect" data-severity="grave">
-                            <span class="btn-label">GRAVE (O)</span>
-                            <span class="btn-subtext">-0.60</span>
-                        </button>
-                        
-                        <button class="btn btn-penalty btn-gravissima ripple-effect" data-severity="extra" id="btn-penalty-extra">
-                            <span class="btn-label" id="extra-btn-label">GRAVISSIMA (S)</span>
-                            <span class="btn-subtext" id="extra-btn-subtext">-0.90</span>
-                        </button>
-                    </div>
-
-                    <!-- Pulsanti di Controllo in Fondo -->
-                    <div class="execution-actions mt-3">
-                        <button id="btn-undo-penalty" class="btn btn-danger btn-block ripple-effect" disabled>
-                            <svg viewBox="0 0 24 24" class="icon-inline"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-                            Annulla Ultimo Errore (UNDO)
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VISTA 4: COREOGRAFIA MUSICI -->
-            <section id="view-choreography" class="app-view hidden">
-                <div class="card glassmorphism animate-fade-in">
-                    <h2 class="section-title">Valutazione Coreografia Musici</h2>
-                    <p class="section-desc">Inserisci i punteggi delle diverse tipologie di figurazioni e portamento dei Musici.</p>
-                    
-                    <div class="choreo-scroll-area">
-                        <!-- Presentazione -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Figurazioni di Presentazione (Max 2)</label>
-                                <span class="choreo-live-val"><span id="choreo-pres-val">0</span> / 20 pt</span>
-                            </div>
-                            <p class="choreo-desc">Realizzate prima della sbandierata con interazione Musici-Sbandieratori. Rotazione o incrocio. 10 pt l'una.</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-pres">-</button>
-                                <span id="choreo-pres-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-pres">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Insieme Base -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Figurazioni d'Insieme Base (Max 4)</label>
-                                <span class="choreo-live-val"><span id="choreo-ins-base-val">0</span> / 16 pt</span>
-                            </div>
-                            <p class="choreo-desc">Eseguite nella zona di attivazione tra gli sbandieratori. 4 pt l'una.</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-ins-base">-</button>
-                                <span id="choreo-ins-base-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-ins-base">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Insieme Composta -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Figurazioni d'Insieme Composta (Max 3)</label>
-                                <span class="choreo-live-val"><span id="choreo-ins-comp-val">0</span> / 30 pt</span>
-                            </div>
-                            <p class="choreo-desc">Eseguite dopo esterna con sinergia complessa e spettacolarità. 10 pt l'una. (Nota: max tot. Insieme è 30 pt)</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-ins-comp">-</button>
-                                <span id="choreo-ins-comp-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-ins-comp">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Esterna Parziale -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Figurazioni Esterne Parziali</label>
-                                <span class="choreo-live-val"><span id="choreo-est-parz-val">0</span> pt</span>
-                            </div>
-                            <p class="choreo-desc">Completata da una sola delle due sezioni (fiati o percussioni). 1 pt l'una.</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-est-parz">-</button>
-                                <span id="choreo-est-parz-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-est-parz">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Esterna Base -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Figurazioni Esterne Base</label>
-                                <span class="choreo-live-val"><span id="choreo-est-base-val">0</span> pt</span>
-                            </div>
-                            <p class="choreo-desc">Completata da tutto il gruppo Musici. 3 pt l'una.</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-est-base">-</button>
-                                <span id="choreo-est-base-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-est-base">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Esterna Composta -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Figurazioni Esterne Composte</label>
-                                <span class="choreo-live-val"><span id="choreo-est-comp-val">0</span> pt</span>
-                            </div>
-                            <p class="choreo-desc">Spostamento complessi, forme diverse rispetto alla partenza. 5 pt l'una (Nota: max tot. Esterne è 68 pt).</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-est-comp">-</button>
-                                <span id="choreo-est-comp-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-est-comp">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Congedo -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Figurazione di Congedo (Max 1)</label>
-                                <span class="choreo-live-val"><span id="choreo-cong-val">0</span> / 5 pt</span>
-                            </div>
-                            <p class="choreo-desc">Fase finale fuori sbandierata, terminata in zona pre-gara. 5 pt.</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-cong">-</button>
-                                <span id="choreo-cong-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-cong">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Sincronismo -->
-                        <div class="choreo-group">
-                            <div class="choreo-header">
-                                <label>Momenti di Sincronismo Musici-Sbandieratori (Max 12)</label>
-                                <span class="choreo-live-val"><span id="choreo-sinc-val">0</span> / 12 pt</span>
-                            </div>
-                            <p class="choreo-desc">Punti di contatto tra movimenti artistici ed evidenziazione musicale. 1 pt l'uno.</p>
-                            <div class="counter-control">
-                                <button type="button" class="btn-counter btn-minus" data-target="choreo-sinc">-</button>
-                                <span id="choreo-sinc-counter" class="counter-display">0</span>
-                                <button type="button" class="btn-counter btn-plus" data-target="choreo-sinc">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Portamento -->
-                        <div class="form-group mt-3">
-                            <label for="select-portamento">Punteggio Portamento Musici</label>
-                            <select id="select-portamento">
-                                <option value="0.5">Totalità dell'esercizio (0.50 pt)</option>
-                                <option value="0.3">Maggior parte dell'esercizio (0.30 pt)</option>
-                                <option value="0.1">In minor parte dell'esercizio (0.10 pt)</option>
-                                <option value="0.0" selected>Assente (0.00 pt)</option>
-                            </select>
-                            <p class="section-desc">Valuta postura eretta, fiera, eleganza e marzialità del gruppo musici.</p>
-                        </div>
-                    </div>
-
-                    <div class="choreo-summary-card mt-3">
-                        <div class="text-sm">Riepilogo Punti Coreografia:</div>
-                        <div class="font-bold">Raw: <span id="choreo-raw-total">0</span> / 135 pt</div>
-                        <div class="font-bold">Scalato a 9.5: <span id="choreo-scaled-total">0.00</span> / 9.50 pt</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VISTA 5: RISULTATI & REPORT -->
-            <section id="view-results" class="app-view hidden">
-                <div class="card glassmorphism animate-fade-in">
-                    <h2 class="section-title text-center">Scheda Valutazione Finale</h2>
-                    
-                    <!-- Dettagli Gruppo -->
-                    <div class="results-meta-card text-center mb-3">
-                        <h3 id="res-group-name" class="group-title">NOME GRUPPO</h3>
-                        <p id="res-phase-note" class="phase-subtitle">Fase di Gara</p>
-                        <span id="res-role-badge" class="badge">Ruolo</span>
-                    </div>
-
-                    <!-- Griglia Tabella Punteggi -->
-                    <div class="results-table mb-3">
-                        <!-- Input per Supervisore -->
-                        <div id="res-row-supervisore-inputs" class="hidden">
-                            <div class="table-row" style="margin-bottom: 8px;">
-                                <span>Voto Tamburi (0-10):</span>
-                                <input type="number" id="input-tamburi-score" class="mono-input" value="10.0" step="0.01" min="0" max="10" style="width: 80px;">
-                            </div>
-                            <div class="table-row" style="margin-bottom: 8px;">
-                                <span>Voto Chiarine (0-10):</span>
-                                <input type="number" id="input-chiarine-score" class="mono-input" value="10.0" step="0.01" min="0" max="10" style="width: 80px;">
-                            </div>
-                            <div class="table-row" style="margin-bottom: 8px;">
-                                <span>Voto Coreografia Musici (0-10):</span>
-                                <input type="number" id="input-coreo-score" class="mono-input" value="10.0" step="0.01" min="0" max="10" style="width: 80px;">
-                            </div>
-                            <hr class="table-divider">
-                        </div>
-
-                        <div class="table-row" id="res-row-difficulty-display">
-                            <span>Difficoltà Musicale (o Coreografia):</span>
-                            <span id="res-val-diff" class="mono font-bold">0.00 / 10.00</span>
-                        </div>
-                        <div id="res-row-addendum" class="table-row hidden">
-                            <span class="text-sm text-green">Addendum Chiarine Naturali (+12%):</span>
-                            <span id="res-val-addendum" class="mono text-green">0.00</span>
-                        </div>
-                        <div class="table-row">
-                            <span>Portamento Musici:</span>
-                            <span id="res-val-port" class="mono">0.00 / 0.50</span>
-                        </div>
-                        <div class="table-row">
-                            <span>Punteggio Base Esecuzione:</span>
-                            <span id="res-val-exec-base" class="mono">10.00</span>
-                        </div>
-                        <div class="table-row penalty-row">
-                            <span>Penalità Esecuzione:</span>
-                            <span id="res-val-exec-penalties" class="mono text-red">-0.00</span>
-                        </div>
-                        <div class="table-row penalty-row">
-                            <span>Penalità di Tempo (Oltre 6'10"):</span>
-                            <span id="res-val-time-penalty" class="mono text-red">-0.00</span>
-                        </div>
-                        <div class="table-row" id="res-row-inspector-penalties">
-                            <span>Altre Penalità (Ispettore):</span>
-                            <input type="number" id="input-inspector-penalties" class="mono-input" value="0.0" step="0.5" min="0">
-                        </div>
-                        <hr class="table-divider">
-                        <div class="table-row total-row">
-                            <span>PUNTEGGIO TOTALE:</span>
-                            <span id="res-val-total-score" class="mono total-score">0.00</span>
-                        </div>
-                    </div>
-
-                    <!-- Metadati Tempo -->
-                    <div class="time-meta mb-3">
-                        Tempo Totale Esercizio: <span id="res-total-time" class="mono">00:00.0</span>
-                    </div>
-
-                    <!-- Pulsanti Azione -->
-                    <div class="results-actions">
-                        <button id="btn-copy-report" class="btn btn-primary btn-block ripple-effect mb-2">
-                            Copiare Report per WhatsApp/Telegram
-                        </button>
-                        <button id="btn-save-session" class="btn btn-success btn-block ripple-effect mb-2">
-                            Salva in Locale
-                        </button>
-                        <button id="btn-discard-session" class="btn btn-danger btn-block ripple-effect">
-                            Nuova Valutazione (Scarta Attuale)
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Storico Completo -->
-                <div class="card glassmorphism mt-4 animate-fade-in">
-                    <h3 class="card-title">Storico e Classifica Sessioni</h3>
-                    <div id="full-history-list" class="full-history-list">
-                        <!-- Popolato dinamicamente da app.js -->
-                    </div>
-                    <button id="btn-clear-history" class="btn btn-danger btn-sm mt-3 btn-block hidden">Cancella Tutto lo Storico</button>
-                </div>
-            </section>
-        </main>
-
-        <!-- Barra di Navigazione Inferiore (Mobile) -->
-        <nav class="app-navbar">
-            <button class="nav-item active" data-view="view-setup" id="nav-setup">
-                <svg viewBox="0 0 24 24" class="icon"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
-                <span>Setup</span>
-            </button>
-            <button class="nav-item disabled" data-view="view-tunes" id="nav-tunes">
-                <svg viewBox="0 0 24 24" class="icon"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                <span>Brani</span>
-            </button>
-            <button class="nav-item disabled" data-view="view-execution" id="nav-execution">
-                <svg viewBox="0 0 24 24" class="icon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                <span>Esecuzione</span>
-            </button>
-            <button class="nav-item disabled" data-view="view-choreography" id="nav-choreography">
-                <svg viewBox="0 0 24 24" class="icon"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
-                <span>Coreografia</span>
-            </button>
-            <button class="nav-item disabled" data-view="view-results" id="nav-results">
-                <svg viewBox="0 0 24 24" class="icon"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                <span>Voti</span>
-            </button>
-        </nav>
+<!-- ════════ SETUP ════════ -->
+<div id="sSetup" class="scr active">
+  <div class="setup-inner">
+    <div class="brand-emb">🎶</div>
+    <div class="brand-t">Scorecard Musici</div>
+    <div class="brand-v">FISB Rev. 33 · 2025 — Categoria Tradizionale</div>
+    
+    <div class="form-group">
+      <label for="group-name-input">Nome Gruppo Musici</label>
+      <input type="text" id="group-name-input" placeholder="Es. Sestiere Porta Romana" autocomplete="off">
+    </div>
+    
+    <div class="form-group">
+      <label for="phase-input">Fase di Gara / Note</label>
+      <input type="text" id="phase-input" placeholder="Es. Qualificazioni, Finale..." autocomplete="off">
     </div>
 
-    <!-- MODALE INSERIMENTO MANUALE BRANO -->
-    <div id="modal-manual-tune" class="modal hidden">
-        <div class="modal-content glassmorphism">
-            <h3 class="card-title">Inserisci Brano Manualmente</h3>
-            
-            <form id="manual-tune-form" onsubmit="event.preventDefault();">
-                <div class="form-group">
-                    <label for="input-manual-duration">Durata in secondi</label>
-                    <input type="number" id="input-manual-duration" step="0.1" min="1" placeholder="Es. 24.5" required>
-                </div>
-                
-                <div class="form-actions mt-3">
-                    <button type="button" id="btn-modal-cancel" class="btn btn-secondary">Annulla</button>
-                    <button type="button" id="btn-modal-save" class="btn btn-primary">Aggiungi</button>
-                </div>
-            </form>
+    <p class="setup-lbl" style="margin-top: 10px;">Scegli la sezione da valutare</p>
+    <div class="sp-grid">
+      <div class="sp-card" onclick="selSec('fiati',this)">
+        <span class="sp-ico">🎺</span>
+        <span class="sp-nm">Fiati</span>
+        <span class="sp-at">Difficoltà &amp; Esecuzione</span>
+      </div>
+      <div class="sp-card" onclick="selSec('tamburi',this)">
+        <span class="sp-ico">🥁</span>
+        <span class="sp-nm">Tamburi</span>
+        <span class="sp-at">Difficoltà &amp; Esecuzione</span>
+      </div>
+      <div class="sp-card" onclick="selSec('coreo',this)">
+        <span class="sp-ico">🎭</span>
+        <span class="sp-nm">Coreo</span>
+        <span class="sp-at">Portamento &amp; Esecuzione</span>
+      </div>
+      <div class="sp-card" onclick="selSec('supervisore',this)">
+        <span class="sp-ico">📋</span>
+        <span class="sp-nm">Superv.</span>
+        <span class="sp-at">Aggregazione Voti</span>
+      </div>
+    </div>
+    
+    <!-- Opzione Chiarine Naturali -->
+    <div id="natural-chiarine-setup" class="check-container hidden">
+      <label class="checkbox-label">
+        <input type="checkbox" id="check-natural">
+        Chiarine Naturali (+12% addendum)
+      </label>
+    </div>
+
+    <button class="start-cta" id="startCta" onclick="boot()">▶ INIZIA GARA</button>
+  </div>
+</div>
+
+<!-- ════════ FIATI / TAMBURI ════════ -->
+<div id="sMusici" class="scr">
+  <div class="hdr">
+    <div class="hdr-left">
+      <button class="hbtn-back" onclick="goBack()">◀ Esci</button>
+      <div class="hdr-title-wrapper">
+        <div class="hdr-title" id="mTitle">Fiati</div>
+        <div class="hdr-sub" id="mSub">Gruppo: - | Fase: -</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="total-badge" id="totalBadge">0:00.00</div>
+      <button class="hbtn-rst" onclick="doReset('musici')">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="mus-body">
+
+    <!-- SINISTRA -->
+    <div class="mus-left">
+      <div class="timer-block">
+        <div class="tb-label">
+          <span>🎵 Brano corrente</span>
+          <span id="branoLbl" style="font-size:9px;color:var(--gm);font-weight:bold">—</span>
         </div>
+        <div class="tb-big" id="lapDisp">0:00.00</div>
+        <div class="tb-cls-row">
+          <span class="cls-badge cls-D" id="clsBadge">D</span>
+          <span class="tb-hint" id="clsHint">–</span>
+        </div>
+        <div class="tb-total">Totale: <span id="totalDisp">0:00.00</span></div>
+      </div>
+
+      <!-- START/STOP unificato -->
+      <button class="startstop-btn go" id="ssBtn" onclick="doStartStop()">▶ Start Esercizio</button>
+
+      <!-- FERMO BRANO -->
+      <button class="fermo-btn" id="fermoBtn" onclick="doFermo()" disabled>✂ FERMO BRANO</button>
+
+      <div class="brani-stats">
+        <div class="bs-row">
+          <span class="bs-lbl">Brani salvati</span>
+          <span class="bs-val" id="braniCount">0</span>
+        </div>
+        <div class="bs-row">
+          <span class="bs-lbl">Brani AA (Max 1)</span>
+          <span class="bs-val" id="aaCount">0 / 1</span>
+        </div>
+        <div class="bs-row">
+          <span class="bs-lbl">Brani A (Max 3)</span>
+          <span class="bs-val" id="aCount">0 / 3</span>
+        </div>
+      </div>
+      
+      <!-- Blocco Azioni Report -->
+      <div class="action-block">
+        <button class="btn-export w-full" onclick="copyReportText()">📋 Copia Report WhatsApp</button>
+        <button class="btn-save w-full" onclick="saveSessionToStorage()">💾 Salva Sessione</button>
+      </div>
     </div>
 
-    <script src="app.js"></script>
+    <!-- DESTRA -->
+    <div class="mus-right">
+      <div class="right-scroll" id="rightScroll">
+
+        <!-- PENALITÀ -->
+        <div class="sec-title">Penalità di Esecuzione</div>
+        <div class="pen-row">
+          <div class="pbtn" id="pb_lieve"  onclick="addPen('lieve')">
+            <span class="p-sym">/</span><span class="p-lbl">Lieve</span>
+            <span class="p-val">–0.10</span><span class="p-cnt" id="pc_lieve">0</span>
+          </div>
+          <div class="pbtn" id="pb_media"  onclick="addPen('media')">
+            <span class="p-sym">✕</span><span class="p-lbl">Media</span>
+            <span class="p-val">–0.30</span><span class="p-cnt" id="pc_media">0</span>
+          </div>
+          <div class="pbtn" id="pb_grave"  onclick="addPen('grave')">
+            <span class="p-sym">○</span><span class="p-lbl">Grave</span>
+            <span class="p-val">–0.60</span><span class="p-cnt" id="pc_grave">0</span>
+          </div>
+          <div class="pbtn" id="pb_gravis" onclick="addPen('gravis')">
+            <span class="p-sym">S</span><span class="p-lbl">Gravissima</span>
+            <span class="p-val">–0.90</span><span class="p-cnt" id="pc_gravis">0</span>
+          </div>
+        </div>
+        <div class="undo-row" id="penUndoRow"></div>
+
+        <!-- CONFIGURAZIONE BRANO ATTIVO -->
+        <div class="active-tune-config-panel" style="background: rgba(255,255,255,0.4); border: 1.5px dashed var(--gl); padding: 10px; border-radius: 10px; margin-bottom: 8px;">
+          <div class="sec-title" style="margin-top: 0; margin-bottom: 4px;">Configura Brano Corrente</div>
+          
+          <!-- VOCI -->
+          <div style="font-size: 11px; font-weight: bold; color: var(--gd); margin-bottom: 3px;">Voci:</div>
+          <div class="voci-row">
+            <div class="vbtn on" id="v1" onclick="setVoci(1)">
+              <span class="v-n">1</span><span class="v-lbl">Unisono</span>
+            </div>
+            <div class="vbtn" id="v2" onclick="setVoci(2)">
+              <span class="v-n">2</span><span class="v-lbl">Due voci</span>
+            </div>
+            <div class="vbtn" id="v3" onclick="setVoci(3)">
+              <span class="v-n">3</span><span class="v-lbl">Tre voci</span>
+            </div>
+          </div>
+
+          <!-- DIFFICOLTÀ AGGIUNTIVE -->
+          <div style="font-size: 11px; font-weight: bold; color: var(--gd); margin-bottom: 3px;">Difficoltà (Max 2):</div>
+          <div class="tog-grid" id="addGrid"></div>
+          <div class="add-warn" id="addWarn"></div>
+
+          <!-- DECLASSAMENTI -->
+          <div style="font-size: 11px; font-weight: bold; color: var(--gd); margin-bottom: 3px;">Declassamenti (-10 pt):</div>
+          <div class="dec-grid" id="decGrid"></div>
+        </div>
+
+        <!-- LISTA BRANI -->
+        <div class="brani-hdr-row">
+          <span>Brani Registrati ed Editabili</span>
+          <span id="braniPtsHdr" style="font-size:12px;color:var(--gd);font-weight:bold">— pt</span>
+        </div>
+        <div class="no-brani" id="noBrani">Nessun brano salvato. Clicca FERMO BRANO durante la gara.</div>
+        <div id="braniList"></div>
+
+      </div><!-- /right-scroll -->
+
+      <div class="totals-bar">
+        <div class="tot-item">
+          <div class="tot-lbl">Punti grezzi</div>
+          <div class="tot-val" id="totRaw">0</div>
+        </div>
+        <div class="tot-sep"></div>
+        <div class="tot-item">
+          <div class="tot-lbl">Pen. Tempo</div>
+          <div class="tot-val pen" id="totTimePen">–0.00</div>
+        </div>
+        <div class="tot-sep"></div>
+        <div class="tot-item">
+          <div class="tot-lbl">Pen. Esec.</div>
+          <div class="tot-val pen" id="totPen">–0.00</div>
+        </div>
+        <div class="tot-sep"></div>
+        <div class="tot-item">
+          <div class="tot-lbl">VOTO FINALE</div>
+          <div class="tot-val" id="totFinal" style="color:var(--goldl)">0.00</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /sMusici -->
+
+<!-- ════════ COREOGRAFIA ════════ -->
+<div id="sCoreo" class="scr">
+  <div class="hdr">
+    <div class="hdr-left">
+      <button class="hbtn-back" onclick="goBack()">◀ Esci</button>
+      <div class="hdr-title-wrapper">
+        <div class="hdr-title">🎭 Coreografia</div>
+        <div class="hdr-sub" id="cSub">Gruppo: - | Fase: -</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <button class="hbtn-rst" onclick="doReset('coreo')">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="coreo-body">
+
+    <!-- CRONOMETRO COREOGRAFIA con pulsante start/stop -->
+    <div class="coreo-timer-block">
+      <div class="ct-left">
+        <div class="ct-lbl">⏱ Esercizio (Max 6'10")</div>
+        <div class="ct-time" id="coreoTimeDisp">0:00</div>
+      </div>
+      <button class="ct-btn go" id="coreoSsBtn" onclick="doCoreoStartStop()">▶ Start</button>
+    </div>
+
+    <!-- AZIONI REPORT COREOGRAFIA -->
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn-export" style="flex:1" onclick="copyReportText()">📋 Copia Report WhatsApp</button>
+      <button class="btn-save" style="flex:1" onclick="saveSessionToStorage()">💾 Salva Sessione</button>
+    </div>
+
+    <div class="stitle">Portamento Musici</div>
+    <div class="porta-row">
+      <div class="p-opt" id="po_0"  onclick="setPorta(0.0)"><span class="p-opt-v">0.0</span><span class="p-opt-l">Assente</span></div>
+      <div class="p-opt" id="po_01" onclick="setPorta(0.1)"><span class="p-opt-v">0.1</span><span class="p-opt-l">Parziale</span></div>
+      <div class="p-opt" id="po_03" onclick="setPorta(0.3)"><span class="p-opt-v">0.3</span><span class="p-opt-l">Maggior parte</span></div>
+      <div class="p-opt on" id="po_05" onclick="setPorta(0.5)"><span class="p-opt-v">0.5</span><span class="p-opt-l">Totalità</span></div>
+    </div>
+
+    <div class="stitle">Figurazioni Coreografia Musici</div>
+    <div class="fig-grid">
+      <div class="fig-card">
+        <div class="fig-top"><div><div class="fig-name">Presentazione</div><div class="fig-pts-lbl">+10 pt · max 2</div></div></div>
+        <div class="fig-counter"><button class="fc-btn minus" onclick="adjFig('pres',-1)">−</button><span class="fc-count" id="fc_pres">0</span><button class="fc-btn plus" id="fp_pres" onclick="adjFig('pres',1)">+</button></div>
+        <div class="fc-total" id="ft_pres">0 pt</div>
+      </div>
+      <div class="fig-card">
+        <div class="fig-top"><div><div class="fig-name">Insieme Base</div><div class="fig-pts-lbl">+4 pt · max 4</div></div></div>
+        <div class="fig-counter"><button class="fc-btn minus" onclick="adjFig('insiemeB',-1)">−</button><span class="fc-count" id="fc_insiemeB">0</span><button class="fc-btn plus" id="fp_insiemeB" onclick="adjFig('insiemeB',1)">+</button></div>
+        <div class="fc-total" id="ft_insiemeB">0 pt</div>
+      </div>
+      <div class="fig-card">
+        <div class="fig-top"><div><div class="fig-name">Insieme Composta</div><div class="fig-pts-lbl">+10 pt · max 3</div></div></div>
+        <div class="fig-counter"><button class="fc-btn minus" onclick="adjFig('insiemeC',-1)">−</button><span class="fc-count" id="fc_insiemeC">0</span><button class="fc-btn plus" id="fp_insiemeC" onclick="adjFig('insiemeC',1)">+</button></div>
+        <div class="fc-total" id="ft_insiemeC">0 pt</div>
+        <div class="fig-warn" id="fw_insieme"></div>
+      </div>
+      <div class="fig-card">
+        <div class="fig-top"><div><div class="fig-name">Esterna Parziale</div><div class="fig-pts-lbl">+1 pt</div></div></div>
+        <div class="fig-counter"><button class="fc-btn minus" onclick="adjFig('extP',-1)">−</button><span class="fc-count" id="fc_extP">0</span><button class="fc-btn plus" id="fp_extP" onclick="adjFig('extP',1)">+</button></div>
+        <div class="fc-total" id="ft_extP">0 pt</div>
+      </div>
+      <div class="fig-card">
+        <div class="fig-top"><div><div class="fig-name">Esterna Base</div><div class="fig-pts-lbl">+3 pt</div></div></div>
+        <div class="fig-counter"><button class="fc-btn minus" onclick="adjFig('extB',-1)">−</button><span class="fc-count" id="fc_extB">0</span><button class="fc-btn plus" id="fp_extB" onclick="adjFig('extB',1)">+</button></div>
+        <div class="fc-total" id="ft_extB">0 pt</div>
+      </div>
+      <div class="fig-card">
+        <div class="fig-top"><div><div class="fig-name">Esterna Composta</div><div class="fig-pts-lbl">+5 pt</div></div></div>
+        <div class="fig-counter"><button class="fc-btn minus" onclick="adjFig('extC',-1)">−</button><span class="fc-count" id="fc_extC">0</span><button class="fc-btn plus" id="fp_extC" onclick="adjFig('extC',1)">+</button></div>
+        <div class="fc-total" id="ft_extC">0 pt</div>
+        <div class="fig-warn" id="fw_esterne"></div>
+      </div>
+      <div class="fig-card wide">
+        <div class="fig-top"><div><div class="fig-name">Figurazione di Congedo</div><div class="fig-pts-lbl">+5 pt · max 1</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="fig-counter" style="flex:1"><button class="fc-btn minus" onclick="adjFig('congedo',-1)">−</button><span class="fc-count" id="fc_congedo">0</span><button class="fc-btn plus" id="fp_congedo" onclick="adjFig('congedo',1)">+</button></div>
+          <div class="fc-total" id="ft_congedo" style="font-size:14px">0 pt</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stitle">Momenti di Sincronismo</div>
+    <div class="sinc-card">
+      <div class="sinc-info">
+        <div class="sinc-name">Momenti di Sincronismo</div>
+        <div class="sinc-rule">+1 pt per momento · max 12 pt</div>
+      </div>
+      <div class="sinc-ctrl">
+        <button class="fc-btn minus" onclick="adjSinc(-1)">−</button>
+        <span class="sinc-val" id="sincVal">0</span>
+        <button class="fc-btn plus" id="sincPlus" onclick="adjSinc(1)">+</button>
+      </div>
+      <div class="sinc-pts" id="sincPts">0 / 12 pt</div>
+    </div>
+
+    <div class="stitle">Penalità di Esecuzione Coreografia</div>
+    <div class="cpen-grid">
+      <div class="cpbtn" id="cp_lieve" onclick="addCPen('lieve')"><span class="cp-sym">/</span><span class="cp-lbl">Lieve</span><span class="cp-val">–0.10</span><span class="cp-cnt" id="cpc_lieve">0</span></div>
+      <div class="cpbtn" id="cp_media" onclick="addCPen('media')"><span class="cp-sym">✕</span><span class="cp-lbl">Media</span><span class="cp-val">–0.30</span><span class="cp-cnt" id="cpc_media">0</span></div>
+      <div class="cpbtn" id="cp_grave" onclick="addCPen('grave')"><span class="cp-sym">○</span><span class="cp-lbl">Grave</span><span class="cp-val">–0.60</span><span class="cp-cnt" id="cpc_grave">0</span></div>
+      <div class="cpbtn" id="cp_spec"  onclick="addCPen('spec')"><span class="cp-sym">S</span><span class="cp-lbl">Speciale</span><span class="cp-val">–2.50</span><span class="cp-cnt" id="cpc_spec">0</span></div>
+    </div>
+    <div class="undo-row" id="cpenUndo"></div>
+
+    <div class="stitle">Risultato Finale Coreografia</div>
+    <div class="coreo-result">
+      <div class="cr-title">🎭 Coreografia · Portamento · Esecuzione</div>
+      <div class="cr-row"><span class="cr-lbl">Punti coreo grezzi</span><span class="cr-val" id="cr_raw">0 / 135</span></div>
+      <div class="cr-row"><span class="cr-lbl">Stima voto coreo (0–9.5)</span><span class="cr-val" id="cr_conv">0.00</span></div>
+      <div class="cr-row"><span class="cr-lbl">Portamento</span><span class="cr-val" id="cr_porta">0.50</span></div>
+      <div class="cr-row pen"><span class="cr-lbl">Penalità esecuzione</span><span class="cr-val pen" id="cr_pen">–0.00</span></div>
+      <div class="cr-row pen"><span class="cr-lbl">Penalità tempo</span><span class="cr-val pen" id="cr_c_timepen">–0.00</span></div>
+      <div class="cr-sep"></div>
+      <div class="cr-final">
+        <div class="cr-final-num" id="cr_final">—</div>
+        <div class="cr-final-of">punti stimati su 10.00</div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /sCoreo -->
+
+<!-- ════════ SUPERVISORE ════════ -->
+<div id="sSupervisore" class="scr">
+  <div class="hdr">
+    <div class="hdr-left">
+      <button class="hbtn-back" onclick="goBack()">◀ Esci</button>
+      <div class="hdr-title-wrapper">
+        <div class="hdr-title">📋 Supervisore</div>
+        <div class="hdr-sub" id="sSubName">Gruppo: - | Fase: -</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="total-badge" id="superTimerBadge">0:00.00</div>
+      <button class="hbtn-rst" onclick="doReset('super')">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="super-body">
+    <div class="super-card">
+      <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gd);margin-bottom:12px;border-bottom:1.5px solid var(--gl);padding-bottom:6px">
+        Aggregazione Voti Sezioni
+      </div>
+
+      <!-- TIMER SUPERVISORE -->
+      <div class="coreo-timer-block" style="padding: 8px 10px; margin-bottom: 14px;">
+        <div class="ct-left">
+          <div class="ct-lbl">⏱ Cronometro Esercizio (Max 6'10")</div>
+          <div class="ct-time" id="superTimeDisp" style="font-size:30px">0:00</div>
+        </div>
+        <button class="ct-btn go" id="superSsBtn" onclick="doSuperStartStop()" style="padding:8px 12px">▶ Start</button>
+      </div>
+
+      <div class="super-input-group">
+        <label for="input-s-tamburi">Voto Tamburi (0–10.00)</label>
+        <input type="number" id="input-s-tamburi" step="0.01" min="0" max="10" value="10.00" oninput="updateSuperScore()">
+      </div>
+
+      <div class="super-input-group">
+        <label for="input-s-chiarine">Voto Chiarine (0–10.00)</label>
+        <input type="number" id="input-s-chiarine" step="0.01" min="0" max="10" value="10.00" oninput="updateSuperScore()">
+      </div>
+
+      <div class="super-input-group">
+        <label for="input-s-coreo">Voto Coreografia Musici (0–10.00)</label>
+        <input type="number" id="input-s-coreo" step="0.01" min="0" max="10" value="10.00" oninput="updateSuperScore()">
+      </div>
+
+      <div class="super-input-group">
+        <label for="input-s-inspector">Penalità Ispettore (Mancato N. atleti, costumi, ecc.)</label>
+        <input type="number" id="input-s-inspector" step="0.5" min="0" value="0.00" oninput="updateSuperScore()">
+      </div>
+
+      <div class="coreo-result" style="margin-top: 16px;">
+        <div class="cr-title">Valutazione Finale Aggregata</div>
+        <div class="cr-row"><span class="cr-lbl">Media voti sezioni</span><span class="cr-val" id="s-val-media">10.00</span></div>
+        <div class="cr-row pen"><span class="cr-lbl">Penalità tempo</span><span class="cr-val pen" id="s-val-timepen">–0.00</span></div>
+        <div class="cr-row pen"><span class="cr-lbl">Penalità ispettore</span><span class="cr-val pen" id="s-val-inspector">–0.00</span></div>
+        <div class="cr-sep"></div>
+        <div class="cr-final">
+          <div class="cr-final-num" id="s-val-final">—</div>
+          <div class="cr-final-of">punti aggregati su 10.00</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:16px">
+        <button class="btn-export" style="flex:1" onclick="copyReportText()">📋 Copia Report</button>
+        <button class="btn-save" style="flex:1" onclick="saveSessionToStorage()">💾 Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ JS ════════ -->
+<script>
+'use strict';
+
+/* ─── COSTANTS ──────────────────────────────────────── */
+const BASE_VALUES={
+  1:{D:1,C:4,B:10,A:25,AA:45},
+  2:{D:6,C:15,B:40,A:60,AA:80},
+  3:{D:15,C:40,B:60,A:80,AA:100}
+};
+const FIATI_ADDS=[
+  {id:'accral',name:'Accel./Rallentando',sym:'+',    mult:.10},
+  {id:'ingin', name:'Inginocchiamento',  sym:'+',    mult:.10},
+  {id:'dinam', name:'Dinamica',          sym:'++',   mult:.20},
+  {id:'separ', name:'Brano in Separazione',sym:'+++',mult:.40},
+  {id:'polif', name:'Voci Polifoniche',  sym:'++++', mult:.80}
+];
+const PERC_ADDS=[
+  {id:'accral',name:'Accel./Rallentando',sym:'+',    mult:.10},
+  {id:'dinam', name:'Dinamica',          sym:'+',    mult:.10},
+  {id:'ingin', name:'Inginocchiamento',  sym:'++',   mult:.20},
+  {id:'access',name:'Utilizzo Accessori',sym:'++',   mult:.20},
+  {id:'separ', name:'Brano in Separazione',sym:'+++',mult:.40},
+  {id:'contro',name:'Controtempi',       sym:'++++', mult:.80}
+];
+const FIATI_DECS=[
+  {id:'melo',name:'Ass. linea melodica'},
+  {id:'ext', name:'Mancato uso estensione'},
+  {id:'int', name:'Interruzioni evidenti'},
+  {id:'sim', name:'Brano simile'},
+  {id:'ost', name:'Comp. ostinata',notFor:['A','AA']},
+  {id:'off', name:'Brano offuscato'}
+];
+const PERC_DECS=[
+  {id:'linea',name:'Ass. linea ritmica'},
+  {id:'alt',  name:'Manc. alternanza acc.'},
+  {id:'int',  name:'Interruzioni evidenti'},
+  {id:'sim',  name:'Brano simile'},
+  {id:'ost',  name:'Fraseggi ostinati',notFor:['A','AA']},
+  {id:'off',  name:'Brano offuscato'}
+];
+const MAX_PTS={fiati:1600,tamburi:1550};
+const PEN_KEYS={lieve:'penLieve',media:'penMedia',grave:'penGrave',gravis:'penGravis'};
+const PEN_VALS={lieve:.10,media:.30,grave:.60,gravis:.90};
+const PEN_SYMS={lieve:'/ Lieve',media:'✕ Media',grave:'○ Grave',gravis:'S Gravis'};
+const CLASS_HINTS={D:'< 9s',C:'9.0–15.49s',B:'15.5–21.49s',A:'21.5–27.99s',AA:'≥ 28s'};
+const FIG_MAX={pres:2,insiemeB:4,insiemeC:3,extP:99,extB:99,extC:99,congedo:1};
+const FIG_PTS={pres:10,insiemeB:4,insiemeC:10,extP:1,extB:3,extC:5,congedo:5};
+
+/* ─── STATE ──────────────────────────────────────────── */
+let curSec=null, selCard=null;
+let groupName='';
+let phaseNote='';
+
+// Cronometro musici
+let timer={running:false,startedAt:null,acc:0};
+let lapStart=0;
+let tickId=null;
+
+// Brano corrente (config live)
+function newB(){return{voci:1,adds:[],decs:[],penLieve:0,penMedia:0,penGrave:0,penGravis:0};}
+let curB=newB(), penLog=[];
+
+// Brani salvati
+let brani=[];
+
+// Coreografia
+function freshC(){return{pres:0,insiemeB:0,insiemeC:0,extP:0,extB:0,extC:0,
+  congedo:0,sinc:0,porta:.5,penLieve:0,penMedia:0,penGrave:0,penSpec:0};}
+let coreo=freshC(), cpenLog=[];
+let coreoTimer={running:false,startedAt:null,acc:0};
+let coreoTickId=null;
+
+// Supervisore
+let superTimer={running:false,startedAt:null,acc:0};
+let superTickId=null;
+
+/* ─── HELPERS ────────────────────────────────────────── */
+function getTotal(){return timer.acc+(timer.running?(Date.now()-timer.startedAt)/1000:0);}
+function getLap()  {return Math.max(0,getTotal()-lapStart);}
+function getCoreoTotal(){return coreoTimer.acc+(coreoTimer.running?(Date.now()-coreoTimer.startedAt)/1000:0);}
+function getSuperTotal(){return superTimer.acc+(superTimer.running?(Date.now()-superTimer.startedAt)/1000:0);}
+
+function fmtCC(s){
+  const m=Math.floor(s/60),r=s%60,si=Math.floor(r),cc=Math.floor((r-si)*100);
+  return `${m}:${si<10?'0':''}${si}.${cc<10?'0':''}${cc}`;
+}
+function fmtMin(s){
+  const m=Math.floor(s/60),ss=Math.floor(s%60);
+  return `${m}:${ss<10?'0':''}${ss}`;
+}
+function getClass(s){return s<9?'D':s<15.5?'C':s<21.5?'B':s<28?'A':'AA';}
+function getAdds(){return curSec==='fiati'?FIATI_ADDS:PERC_ADDS;}
+function getDecs(){return curSec==='fiati'?FIATI_DECS:PERC_DECS;}
+
+// CALCOLO PENALITÀ DI TEMPO GENERALE (Grande Squadra Musici: Max 6'10" = 370 secondi)
+function calcTimePenalty(totalSeconds) {
+  if (totalSeconds <= 370) return 0.0;
+  const deviation = totalSeconds - 370;
+  if (deviation >= 30) {
+    return 3.50; // flat 3.5 points penalty
+  }
+  // 0.3 points for every 5 seconds (or fraction)
+  const fiveSecondBlocks = Math.ceil(deviation / 5);
+  return parseFloat((fiveSecondBlocks * 0.30).toFixed(2));
+}
+
+/* ─── SETUP ──────────────────────────────────────────── */
+function selSec(sec,el){
+  curSec=sec;
+  if(selCard)selCard.classList.remove('sel');
+  el.classList.add('sel');selCard=el;
+  document.getElementById('startCta').classList.add('rdy');
+  
+  // Mostra/Nascondi addendum chiarine naturali
+  if (sec === 'fiati') {
+    document.getElementById('natural-chiarine-setup').classList.remove('hidden');
+  } else {
+    document.getElementById('natural-chiarine-setup').classList.add('hidden');
+  }
+}
+
+function boot(){
+  if(!curSec)return;
+  
+  groupName = document.getElementById('group-name-input').value.trim() || 'Senza Nome';
+  phaseNote = document.getElementById('phase-input').value.trim() || 'Gara';
+  
+  document.getElementById('sSetup').classList.remove('active');
+  
+  if(curSec==='coreo'){
+    document.getElementById('cSub').textContent = `Gruppo: ${groupName} | Fase: ${phaseNote}`;
+    document.getElementById('sCoreo').classList.add('active');
+    coreoTickId = setInterval(tickCoreoTimer, 100);
+    refreshCoreo();
+  } else if (curSec==='supervisore') {
+    document.getElementById('sSubName').textContent = `Gruppo: ${groupName} | Fase: ${phaseNote}`;
+    document.getElementById('sSupervisore').classList.add('active');
+    superTickId = setInterval(tickSuperTimer, 100);
+    updateSuperScore();
+  } else {
+    document.getElementById('mTitle').textContent=curSec==='fiati'?'🎺 Fiati':'🥁 Tamburi';
+    document.getElementById('mSub').textContent = `Gruppo: ${groupName} | Fase: ${phaseNote}`;
+    document.getElementById('totMax').textContent=MAX_PTS[curSec];
+    buildGrids();
+    document.getElementById('sMusici').classList.add('active');
+    tickId=setInterval(tickTimer,33);
+    refreshMusici();
+  }
+}
+
+function goBack(){
+  clearAll();
+  resetMusiciDOM();
+  
+  document.getElementById('sMusici').classList.remove('active');
+  document.getElementById('sCoreo').classList.remove('active');
+  document.getElementById('sSupervisore').classList.remove('active');
+  document.getElementById('sSetup').classList.add('active');
+}
+
+function resetMusiciDOM(){
+  document.getElementById('lapDisp').textContent='0:00.00';
+  document.getElementById('lapDisp').className='tb-big';
+  document.getElementById('totalDisp').textContent='0:00.00';
+  document.getElementById('totalBadge').textContent='0:00.00';
+  document.getElementById('totalBadge').className='total-badge';
+  document.getElementById('clsBadge').textContent='D';
+  document.getElementById('clsBadge').className='cls-badge cls-D';
+  document.getElementById('clsHint').textContent='\u2013';
+  document.getElementById('branoLbl').textContent='\u2014';
+  document.getElementById('ssBtn').textContent='\u25B6 Start Esercizio';
+  document.getElementById('ssBtn').className='startstop-btn go';
+  document.getElementById('fermoBtn').disabled=true;
+  
+  // Clear inputs
+  document.getElementById('group-name-input').value = '';
+  document.getElementById('phase-input').value = '';
+}
+
+function doReset(w){
+  if(w==='musici'){
+    clearInterval(tickId);
+    timer={running:false,startedAt:null,acc:0};lapStart=0;
+    brani=[];curB=newB();penLog=[];
+    resetMusiciDOM();
+    resetAddGrid();resetDecGrid();setVoci(1);
+    refreshMusici();refreshPenUI();
+    tickId=setInterval(tickTimer,33);
+  } else if (w==='coreo') {
+    clearInterval(coreoTickId);
+    coreoTimer={running:false,startedAt:null,acc:0};
+    coreo=freshC();cpenLog=[];
+    document.getElementById('coreoTimeDisp').textContent='0:00';
+    document.getElementById('coreoTimeDisp').className='ct-time';
+    document.getElementById('coreoSsBtn').textContent='\u25B6 Start';
+    document.getElementById('coreoSsBtn').className='ct-btn go';
+    setPorta(.5);
+    refreshCoreo();
+    coreoTickId=setInterval(tickCoreoTimer,100);
+  } else {
+    clearInterval(superTickId);
+    superTimer={running:false,startedAt:null,acc:0};
+    document.getElementById('superTimeDisp').textContent='0:00';
+    document.getElementById('superTimeDisp').className='ct-time';
+    document.getElementById('superSsBtn').textContent='\u25B6 Start';
+    document.getElementById('superSsBtn').className='ct-btn go';
+    document.getElementById('input-s-tamburi').value = '10.00';
+    document.getElementById('input-s-chiarine').value = '10.00';
+    document.getElementById('input-s-coreo').value = '10.00';
+    document.getElementById('input-s-inspector').value = '0.00';
+    updateSuperScore();
+    superTickId=setInterval(tickSuperTimer,100);
+  }
+}
+
+function clearAll(){
+  clearInterval(tickId);clearInterval(coreoTickId);clearInterval(superTickId);
+  tickId=coreoTickId=superTickId=null;
+  timer={running:false,startedAt:null,acc:0};lapStart=0;
+  brani=[];curB=newB();penLog=[];
+  coreo=freshC();cpenLog=[];
+  coreoTimer={running:false,startedAt:null,acc:0};
+  superTimer={running:false,startedAt:null,acc:0};
+}
+
+/* ─── TIMER MUSICI ───────────────────────────────────── */
+function tickTimer(){
+  const lap=getLap(),tot=getTotal(),cls=getClass(lap);
+  const ld=document.getElementById('lapDisp');
+  ld.textContent=fmtCC(lap);
+  ld.className='tb-big'+(timer.running?' run':(tot>0?' done':''));
+  document.getElementById('totalDisp').textContent=fmtCC(tot);
+  const tb=document.getElementById('totalBadge');
+  tb.textContent=fmtCC(tot);
+  
+  // Alert color if near 6'10"
+  if (tot > 370) {
+    tb.className='total-badge run';
+    tb.style.color = 'var(--red)';
+    tb.style.borderColor = 'var(--red)';
+  } else if (tot > 340) {
+    tb.className='total-badge run';
+    tb.style.color = 'var(--orange)';
+    tb.style.borderColor = 'var(--orange)';
+  } else {
+    tb.className='total-badge'+(timer.running?' run':'');
+    tb.style.color = '';
+    tb.style.borderColor = '';
+  }
+  
+  const cb=document.getElementById('clsBadge');
+  cb.textContent=cls;cb.className='cls-badge cls-'+cls;
+  document.getElementById('clsHint').textContent=CLASS_HINTS[cls];
+  updateDecNA();
+  
+  // Update totals live to reflect time penalty
+  refreshTotalsDisplay();
+}
+
+function doStartStop(){
+  if(!timer.running){
+    timer.startedAt=Date.now();timer.running=true;
+    if(lapStart===0&&timer.acc===0)
+      document.getElementById('branoLbl').textContent='Brano 1';
+  } else {
+    timer.acc+=(Date.now()-timer.startedAt)/1000;
+    timer.startedAt=null;timer.running=false;
+  }
+  updateSsBtn();
+}
+
+function updateSsBtn(){
+  const btn=document.getElementById('ssBtn');
+  const started=getTotal()>0||timer.running;
+  if(timer.running){
+    btn.textContent='⏸ Pausa';btn.className='startstop-btn pause';
+  } else {
+    btn.textContent=started?'▶ Riprendi Esercizio':'▶ Start Esercizio';
+    btn.className='startstop-btn go';
+  }
+  document.getElementById('fermoBtn').disabled=!(getTotal()>0||timer.running);
+}
+
+/* ─── FERMO BRANO ────────────────────────────────────── */
+function doFermo(){
+  const dur=getLap();
+  const b={
+    voci:curB.voci,
+    adds:[...curB.adds],
+    decs:[...curB.decs],
+    penLieve:curB.penLieve,
+    penMedia:curB.penMedia,
+    penGrave:curB.penGrave,
+    penGravis:curB.penGravis,
+    dur:dur,
+    cls:getClass(dur),
+    id:Date.now()
+  };
+  brani.push(b);          
+  lapStart=getTotal();    
+  
+  // Reset
+  curB=newB();penLog=[];
+  setVoci(1);resetAddGrid();resetDecGrid();
+  
+  document.getElementById('branoLbl').textContent='Brano '+(brani.length+1);
+  refreshMusici();
+  refreshPenUI();
+  
+  setTimeout(()=>{
+    const rs=document.getElementById('rightScroll');
+    rs.scrollTop=rs.scrollHeight;
+  },80);
+}
+
+/* ─── GRIDS ──────────────────────────────────────────── */
+function buildGrids(){
+  const ag=document.getElementById('addGrid');ag.innerHTML='';
+  getAdds().forEach(a=>{
+    const d=document.createElement('div');
+    d.className='tog';d.id='add_'+a.id;
+    d.innerHTML=`<span class="tog-sym">${a.sym} +${(a.mult*100).toFixed(0)}%</span>`+
+                `<span class="tog-name">${a.name}</span>`;
+    d.onclick=()=>toggleAdd(a.id);
+    ag.appendChild(d);
+  });
+  const dg=document.getElementById('decGrid');dg.innerHTML='';
+  getDecs().forEach(d_=>{
+    const d=document.createElement('div');
+    d.className='dtog';d.id='dec_'+d_.id;
+    d.dataset.notFor=d_.notFor?d_.notFor.join(','):'';
+    d.innerHTML=`<span class="dtog-val">−10</span>`+
+                `<span class="dtog-name">${d_.name}</span>`;
+    d.onclick=()=>toggleDec(d_.id);
+    dg.appendChild(d);
+  });
+}
+
+function resetAddGrid(){
+  getAdds().forEach(a=>{
+    const el=document.getElementById('add_'+a.id);
+    if(el)el.classList.remove('on');
+  });
+  curB.adds=[];
+  document.getElementById('addWarn').textContent='';
+}
+
+function resetDecGrid(){
+  getDecs().forEach(d=>{
+    const el=document.getElementById('dec_'+d.id);
+    if(el){el.classList.remove('on');el.classList.remove('na');}
+  });
+  curB.decs=[];
+  updateDecNA();
+}
+
+function toggleAdd(id){
+  const idx=curB.adds.indexOf(id);
+  if(idx>=0){curB.adds.splice(idx,1);document.getElementById('add_'+id).classList.remove('on');}
+  else      {curB.adds.push(id);    document.getElementById('add_'+id).classList.add('on');}
+  const n=curB.adds.length;
+  document.getElementById('addWarn').textContent=
+    n>2?`⚠ ${n} difficoltà selezionate: le ${n-2} di valore maggiore saranno scartate.`:'';
+}
+
+function toggleDec(id){
+  const el=document.getElementById('dec_'+id);
+  if(!el||el.classList.contains('na'))return;
+  const idx=curB.decs.indexOf(id);
+  if(idx>=0){curB.decs.splice(idx,1);el.classList.remove('on');}
+  else      {curB.decs.push(id);     el.classList.add('on');}
+}
+
+function updateDecNA(){
+  if(!curSec || curSec === 'coreo' || curSec === 'supervisore')return;
+  const cls=getClass(getLap());
+  getDecs().forEach(d=>{
+    const el=document.getElementById('dec_'+d.id);if(!el)return;
+    if(d.notFor&&d.notFor.includes(cls)){
+      el.classList.add('na');
+      const i=curB.decs.indexOf(d.id);
+      if(i>=0){curB.decs.splice(i,1);el.classList.remove('on');}
+    } else {
+      el.classList.remove('na');
+    }
+  });
+}
+
+/* ─── VOCI ───────────────────────────────────────────── */
+function setVoci(n){
+  curB.voci=n;
+  [1,2,3].forEach(i=>document.getElementById('v'+i).classList.toggle('on',i===n));
+}
+
+/* ─── PENALITÀ BRANO ─────────────────────────────────── */
+function addPen(t){
+  curB[PEN_KEYS[t]]++;
+  penLog.push(t);
+  const el=document.getElementById('pb_'+t);
+  el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
+  refreshPenUI();
+  refreshTotalsDisplay();
+}
+function undoPen(idx){
+  const t=penLog[idx];
+  penLog.splice(idx,1);
+  curB[PEN_KEYS[t]]=Math.max(0,curB[PEN_KEYS[t]]-1);
+  refreshPenUI();
+  refreshTotalsDisplay();
+}
+function refreshPenUI(){
+  ['lieve','media','grave','gravis'].forEach(t=>{
+    const cnt=curB[PEN_KEYS[t]];
+    const c=document.getElementById('pc_'+t);
+    c.textContent=cnt;c.className='p-cnt'+(cnt>0?' show':'');
+  });
+  const ur=document.getElementById('penUndoRow');ur.innerHTML='';
+  penLog.forEach((t,i)=>{
+    const b=document.createElement('button');b.className='ubtn';
+    b.textContent='↩ '+PEN_SYMS[t];
+    b.onclick=(function(ii){return function(){undoPen(ii);};})(i);
+    ur.appendChild(b);
+  });
+}
+
+/* ─── CALCOLO PUNTEGGIO ──────────────────────────────── */
+function calcScore(b,clsOvr){
+  const cls=clsOvr||b.cls;
+  const base=BASE_VALUES[b.voci][cls];
+  let raw=Math.max(0,base-b.decs.length*10);
+  const addDefs=curSec==='fiati'?FIATI_ADDS:PERC_ADDS;
+  let sel=b.adds.map(id=>addDefs.find(a=>a.id===id)).filter(Boolean);
+  sel.sort((a,z)=>z.mult-a.mult);
+  if(sel.length>2)sel=sel.slice(sel.length-2); 
+  return raw*sel.reduce((acc,a)=>acc*(1+a.mult),1);
+}
+function calcPen(b){
+  return b.penLieve*.10+b.penMedia*.30+b.penGrave*.60+b.penGravis*.90;
+}
+
+function calcTotals(){
+  let aaC=0,aC=0,raw=0;
+  // Waterfall demotion
+  let processed = brani.map(b => ({...b}));
+  processed.sort((x, y) => {
+    const valX = getBasePoints(x.cls, x.voci);
+    const valY = getBasePoints(y.cls, y.voci);
+    return valY - valX;
+  });
+
+  processed.forEach(b=>{
+    let c=b.cls;
+    if(c==='AA'){aaC++;if(aaC>1)c='A';}
+    if(c==='A') {aC++; if(aC>3) c='B';}
+    b.effectiveClass = c;
+    raw+=calcScore(b,c);
+  });
+  
+  return{
+    raw:Math.min(raw,MAX_PTS[curSec]||1600),
+    aaC,
+    aC,
+    pen:brani.reduce((s,b)=>s+calcPen(b),0) + penLog.reduce((s,t)=>s+PEN_VALS[t],0)
+  };
+}
+
+function getBasePoints(meritClass, voices) {
+  const voiceIndex = Math.min(voices, 3) - 1;
+  const scores = {
+    'D': [1, 6, 15],
+    'C': [4, 15, 40],
+    'B': [10, 40, 60],
+    'A': [25, 60, 80],
+    'AA': [45, 80, 100]
+  };
+  return scores[meritClass] ? scores[meritClass][voiceIndex] : 0;
+}
+
+function refreshTotalsDisplay() {
+  if (curSec === 'coreo' || curSec === 'supervisore') return;
+  const tot = calcTotals();
+  const timePen = calcTimePenalty(getTotal());
+  
+  document.getElementById('totRaw').textContent = tot.raw.toFixed(1);
+  document.getElementById('totPen').textContent = `-${tot.pen.toFixed(2)}`;
+  document.getElementById('totTimePen').textContent = `-${timePen.toFixed(2)}`;
+  
+  // Calculate scaled and addendum
+  const limit = MAX_PTS[curSec];
+  let scaled = (tot.raw / limit) * 10.0;
+  
+  const isNatural = document.getElementById('check-natural').checked;
+  if (curSec === 'fiati' && isNatural) {
+    scaled = scaled * 1.12;
+  }
+  scaled = Math.min(10.0, scaled);
+  
+  let finalVal = scaled - tot.pen - timePen;
+  finalVal = Math.max(0, finalVal);
+  
+  document.getElementById('totFinal').textContent = finalVal.toFixed(2);
+}
+
+function refreshMusici() {
+  const tot = calcTotals();
+  document.getElementById('braniCount').textContent = brani.length;
+  document.getElementById('aaCount').textContent = `${tot.aaC} / 1`;
+  document.getElementById('aCount').textContent = `${tot.aC} / 3`;
+  
+  // Render brani list
+  const bl=document.getElementById('braniList');bl.innerHTML='';
+  const noB=document.getElementById('noBrani');
+  
+  if(brani.length===0){
+    noB.style.display='block';
+    document.getElementById('braniPtsHdr').textContent='— pt';
+    refreshTotalsDisplay();
+    return;
+  }
+  noB.style.display='none';
+  
+  let aaC=0,aC=0;
+  // Sort and apply waterfall to render list with demoted badges
+  let listItems = brani.map((b, idx) => ({...b, originalIdx: idx}));
+  listItems.sort((x, y) => {
+    const valX = getBasePoints(x.cls, x.voci);
+    const valY = getBasePoints(y.cls, y.voci);
+    return valY - valX;
+  });
+
+  listItems.forEach(b => {
+    let c = b.cls;
+    if(c==='AA'){aaC++;if(aaC>1)c='A';}
+    if(c==='A') {aC++; if(aC>3) c='B';}
+    b.effectiveClass = c;
+  });
+
+  // Re-sort by original index for chronological view
+  listItems.sort((x,y) => x.originalIdx - y.originalIdx);
+
+  listItems.forEach((b, i)=>{
+    const pts = calcScore(b, b.effectiveClass);
+    const isDemoted = b.cls !== b.effectiveClass;
+    
+    // Add items to DOM
+    const d=document.createElement('div');
+    d.className='brano-row';
+    
+    let addsText = b.adds.map(id => {
+      const a = getAdds().find(add => add.id === id);
+      return a ? `${a.sym} ${a.name}` : '';
+    }).filter(Boolean).join(', ');
+    
+    let decsText = b.decs.map(id => {
+      const dec = getDecs().find(d_ => d_.id === id);
+      return dec ? `− ${dec.name}` : '';
+    }).filter(Boolean).join(', ');
+
+    d.innerHTML = `
+      <span class="br-idx">#${i+1}</span>
+      <div class="br-info">
+        <div class="br-top">
+          <span class="br-cls ${b.effectiveClass}">${b.effectiveClass} ${isDemoted ? `<small style="font-size:7px;font-weight:normal">(da ${b.cls})</small>` : ''}</span>
+          <span class="br-dur">${b.dur.toFixed(1)}s</span>
+          <span class="br-voci">${b.voci} Voc${b.voci > 1 ? 'i' : 'e'}</span>
+        </div>
+        ${addsText ? `<span class="br-add">Diff: ${addsText}</span>` : ''}
+        ${decsText ? `<span class="br-dec">Decl: ${decsText}</span>` : ''}
+      </div>
+      <div class="br-pts">${pts.toFixed(1)}</div>
+      <button class="br-del" onclick="window.delBrano(${b.originalIdx})">✕</button>
+    `;
+    bl.appendChild(d);
+  });
+
+  document.getElementById('braniPtsHdr').textContent = `${brani.reduce((sum, b) => sum + calcScore(b, b.effectiveClass), 0).toFixed(1)} pt`;
+  refreshTotalsDisplay();
+}
+
+window.delBrano = function(i) {
+  if (i >= 0 && i < brani.length) {
+    brani.splice(i, 1);
+    refreshMusici();
+  }
+};
+
+/* ─── TIMER COREOGRAFIA ──────────────────────────────── */
+function tickCoreoTimer(){
+  const s=getCoreoTotal();
+  const d=document.getElementById('coreoTimeDisp');
+  d.textContent=fmtMin(s);
+  
+  if (s > 370) {
+    d.className='ct-time run';
+    d.style.color = 'var(--red)';
+  } else if (s > 340) {
+    d.className='ct-time run';
+    d.style.color = 'var(--orange)';
+  } else {
+    d.className='ct-time' + (coreoTimer.running ? ' run' : '');
+    d.style.color = '';
+  }
+  
+  // Update live score
+  updateChoreoResults();
+}
+
+function doCoreoStartStop(){
+  if(!coreoTimer.running){
+    coreoTimer.startedAt=Date.now();coreoTimer.running=true;
+    document.getElementById('coreoSsBtn').textContent='⏸ Pausa';
+    document.getElementById('coreoSsBtn').className='ct-btn pause';
+  } else {
+    coreoTimer.acc+=(Date.now()-coreoTimer.startedAt)/1000;
+    coreoTimer.startedAt=null;coreoTimer.running=false;
+    document.getElementById('coreoSsBtn').textContent='▶ Riprendi';
+    document.getElementById('coreoSsBtn').className='ct-btn go';
+  }
+}
+
+/* ─── COREOGRAFIA SCORING ────────────────────────────── */
+function setPorta(val){
+  coreo.porta=val;
+  ['0','01','03','05'].forEach(id=>{
+    const k = id==='0'?0.0 : id==='01'?0.1 : id==='03'?0.3 : 0.5;
+    document.getElementById('po_'+id).classList.toggle('on', k===val);
+  });
+  updateChoreoResults();
+}
+
+function adjFig(k,val){
+  const old=coreo[k];
+  let n=old+val;
+  if(n<0)n=0;
+  if(FIG_MAX[k] && n>FIG_MAX[k])n=FIG_MAX[k];
+  
+  // Custom combined limits
+  if (k === 'insiemeB' || k === 'insiemeC') {
+    const baseVal = k==='insiemeB'? n*4 : coreo.insiemeB*4;
+    const compVal = k==='insiemeC'? n*10 : coreo.insiemeC*10;
+    if (baseVal + compVal > 30) {
+      document.getElementById('fw_insieme').textContent = '⚠ Limite max 30 punti per Figurazioni d\'Insieme raggiunto.';
+    } else {
+      document.getElementById('fw_insieme').textContent = '';
+    }
+  }
+  
+  if (k === 'extP' || k === 'extB' || k === 'extC') {
+    const pVal = k==='extP'? n*1 : coreo.extP*1;
+    const bVal = k==='extB'? n*3 : coreo.extB*3;
+    const cVal = k==='extC'? n*5 : coreo.extC*5;
+    if (pVal + bVal + cVal > 68) {
+      document.getElementById('fw_esterne').textContent = '⚠ Limite max 68 punti per Figurazioni Esterne raggiunto.';
+    } else {
+      document.getElementById('fw_esterne').textContent = '';
+    }
+  }
+
+  coreo[k]=n;
+  document.getElementById('fc_'+k).textContent=n;
+  document.getElementById('ft_'+k).textContent=(n*FIG_PTS[k])+' pt';
+  
+  // Enable plus buttons depending on limit
+  document.getElementById('fp_'+k).disabled = (n >= FIG_MAX[k]);
+  
+  updateChoreoResults();
+}
+
+function adjSinc(val){
+  let n=coreo.sinc+val;
+  if(n<0)n=0;
+  if(n>12)n=12;
+  coreo.sinc=n;
+  document.getElementById('sincVal').textContent=n;
+  document.getElementById('sincPts').textContent=`${n} / 12 pt`;
+  document.getElementById('sincPlus').disabled = (n >= 12);
+  
+  updateChoreoResults();
+}
+
+function addCPen(t){
+  const keys = {lieve:'penLieve',media:'penMedia',grave:'penGrave',spec:'penSpec'};
+  coreo[keys[t]]++;
+  cpenLog.push(t);
+  const el=document.getElementById('cp_'+t);
+  el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),250);
+  refreshCPenUI();
+  updateChoreoResults();
+}
+function undoCPen(idx){
+  const keys = {lieve:'penLieve',media:'penMedia',grave:'penGrave',spec:'penSpec'};
+  const t=cpenLog[idx];
+  cpenLog.splice(idx,1);
+  coreo[keys[t]]=Math.max(0,coreo[keys[t]]-1);
+  refreshCPenUI();
+  updateChoreoResults();
+}
+function refreshCPenUI(){
+  const keys = {lieve:'penLieve',media:'penMedia',grave:'penGrave',spec:'penSpec'};
+  const syms = {lieve:'/ Lieve',media:'✕ Media',grave:'○ Grave',spec:'S Speciale'};
+  
+  ['lieve','media','grave','spec'].forEach(t=>{
+    const cnt=coreo[keys[t]];
+    const c=document.getElementById('cpc_'+t);
+    c.textContent=cnt;c.className='cp-cnt'+(cnt>0?' show':'');
+  });
+  const ur=document.getElementById('cpenUndo');ur.innerHTML='';
+  cpenLog.forEach((t,i)=>{
+    const b=document.createElement('button');b.className='ubtn';
+    b.textContent='↩ '+syms[t];
+    b.onclick=(function(ii){return function(){undoCPen(ii);};})(i);
+    ur.appendChild(b);
+  });
+}
+
+function getChoreoRawTotal() {
+  const pres = coreo.pres * 10;
+  const ins = Math.min(30, (coreo.insiemeB * 4) + (coreo.insiemeC * 10));
+  const est = Math.min(68, (coreo.extP * 1) + (coreo.extB * 3) + (coreo.extC * 5));
+  const cong = coreo.congedo * 5;
+  const sinc = coreo.sinc * 1;
+  return pres + ins + est + cong + sinc;
+}
+
+function updateChoreoResults() {
+  const raw = getChoreoRawTotal();
+  const scaled = (raw / 135) * 9.5;
+  
+  document.getElementById('cr_raw').textContent = `${raw} / 135`;
+  document.getElementById('cr_pres').textContent = `+${coreo.pres*10} pt`;
+  document.getElementById('cr_ins').textContent = `+${Math.min(30, (coreo.insiemeB * 4) + (coreo.insiemeC * 10))} pt`;
+  document.getElementById('cr_ext').textContent = `+${Math.min(68, (coreo.extP * 1) + (coreo.extB * 3) + (coreo.extC * 5))} pt`;
+  document.getElementById('cr_cong').textContent = `+${coreo.congedo*5} pt`;
+  document.getElementById('cr_sinc').textContent = `+${coreo.sinc*1} pt`;
+  
+  document.getElementById('cr_conv').textContent = scaled.toFixed(2);
+  document.getElementById('cr_porta').textContent = coreo.porta.toFixed(2);
+  
+  // Execution penalties
+  const penTotal = (coreo.penLieve * 0.10) + (coreo.penMedia * 0.30) + (coreo.penGrave * 0.60) + (coreo.penSpec * 2.50);
+  document.getElementById('cr_pen').textContent = `-${penTotal.toFixed(2)}`;
+  
+  // Time penalties
+  const timePen = calcTimePenalty(getCoreoTotal());
+  document.getElementById('cr_c_timepen').textContent = `-${timePen.toFixed(2)}`;
+  
+  let finalScore = (scaled + coreo.porta) - penTotal - timePen;
+  finalScore = Math.max(0, finalScore);
+  
+  document.getElementById('cr_final').textContent = finalScore.toFixed(2);
+}
+
+function refreshCoreo() {
+  // Counters sync
+  ['pres','insiemeB','insiemeC','extP','extB','extC','congedo'].forEach(k=>{
+    document.getElementById('fc_'+k).textContent = coreo[k];
+    document.getElementById('ft_'+k).textContent = (coreo[k] * FIG_PTS[k]) + ' pt';
+    document.getElementById('fp_'+k).disabled = (coreo[k] >= FIG_MAX[k]);
+  });
+  document.getElementById('sincVal').textContent = coreo.sinc;
+  document.getElementById('sincPts').textContent = `${coreo.sinc} / 12 pt`;
+  document.getElementById('sincPlus').disabled = (coreo.sinc >= 12);
+  
+  refreshCPenUI();
+  updateChoreoResults();
+}
+
+/* ─── TIMER SUPERVISORE ──────────────────────────────── */
+function tickSuperTimer() {
+  const s = getSuperTotal();
+  const d = document.getElementById('superTimeDisp');
+  d.textContent = fmtMin(s);
+  
+  if (s > 370) {
+    d.className = 'ct-time run';
+    d.style.color = 'var(--red)';
+  } else if (s > 340) {
+    d.className = 'ct-time run';
+    d.style.color = 'var(--orange)';
+  } else {
+    d.className = 'ct-time' + (superTimer.running ? ' run' : '');
+    d.style.color = '';
+  }
+  
+  const b = document.getElementById('superTimerBadge');
+  b.textContent = fmtCC(s);
+  b.className = 'total-badge' + (superTimer.running ? ' run' : '');
+  
+  updateSuperScore();
+}
+
+function doSuperStartStop() {
+  if (!superTimer.running) {
+    superTimer.startedAt = Date.now();
+    superTimer.running = true;
+    document.getElementById('superSsBtn').textContent = '⏸ Pausa';
+    document.getElementById('superSsBtn').className = 'ct-btn pause';
+  } else {
+    superTimer.acc += (Date.now() - superTimer.startedAt) / 1000;
+    superTimer.startedAt = null;
+    superTimer.running = false;
+    document.getElementById('superSsBtn').textContent = '▶ Riprendi';
+    document.getElementById('superSsBtn').className = 'ct-btn go';
+  }
+}
+
+function updateSuperScore() {
+  if (curSec !== 'supervisore') return;
+  
+  const tamburi = Math.min(10, Math.max(0, parseFloat(document.getElementById('input-s-tamburi').value) || 0));
+  const chiarine = Math.min(10, Math.max(0, parseFloat(document.getElementById('input-s-chiarine').value) || 0));
+  const coreografia = Math.min(10, Math.max(0, parseFloat(document.getElementById('input-s-coreo').value) || 0));
+  const inspector = Math.max(0, parseFloat(document.getElementById('input-s-inspector').value) || 0);
+  
+  const media = (tamburi + chiarine + coreografia) / 3;
+  const timePen = calcTimePenalty(getSuperTotal());
+  
+  document.getElementById('s-val-media').textContent = media.toFixed(2);
+  document.getElementById('s-val-timepen').textContent = `-${timePen.toFixed(2)}`;
+  document.getElementById('s-val-inspector').textContent = `-${inspector.toFixed(2)}`;
+  
+  let finalScore = media - timePen - inspector;
+  finalScore = Math.max(0, finalScore);
+  
+  document.getElementById('s-val-final').textContent = finalScore.toFixed(2);
+}
+
+/* ─── STORAGGIO E REPORTISTICA ───────────────────────── */
+function saveSessionToStorage() {
+  let finalScore = 0.0;
+  if (curSec === 'coreo') {
+    finalScore = parseFloat(document.getElementById('cr_final').textContent) || 0.0;
+  } else if (curSec === 'supervisore') {
+    finalScore = parseFloat(document.getElementById('s-val-final').textContent) || 0.0;
+  } else {
+    finalScore = parseFloat(document.getElementById('totFinal').textContent) || 0.0;
+  }
+
+  const session = {
+    id: Date.now(),
+    date: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }),
+    groupName: groupName,
+    phaseNote: phaseNote,
+    section: curSec,
+    duration: curSec === 'coreo' ? getCoreoTotal() : (curSec === 'supervisore' ? getSuperTotal() : getTotal()),
+    score: finalScore
+  };
+
+  let history = JSON.parse(localStorage.getItem('fisb_musici_history') || '[]');
+  history.push(session);
+  localStorage.setItem('fisb_musici_history', JSON.stringify(history));
+  
+  alert(`Sessione di giudizio per "${groupName}" salvata in locale!`);
+  goBack();
+}
+
+function copyReportText() {
+  let text = `🛡️ *SCORECARD FISB MUSICI LIVE* 🛡️\n`;
+  text += `------------------------------------\n`;
+  text += `👤 *Gruppo:* ${groupName}\n`;
+  text += `📅 *Fase:* ${phaseNote}\n`;
+  
+  const m = curSec === 'coreo' ? getCoreoTotal() : (curSec === 'supervisore' ? getSuperTotal() : getTotal());
+  text += `⏱️ *Tempo Esercizio:* ${fmtMin(m)}\n`;
+  text += `------------------------------------\n`;
+
+  if (curSec === 'coreo') {
+    const raw = getChoreoRawTotal();
+    const scaled = (raw / 135) * 9.5;
+    const pen = (coreo.penLieve * 0.10) + (coreo.penMedia * 0.30) + (coreo.penGrave * 0.60) + (coreo.penSpec * 2.50);
+    const timePen = calcTimePenalty(getCoreoTotal());
+    const finalVal = parseFloat(document.getElementById('cr_final').textContent) || 0.0;
+    
+    text += `🎭 *Coreografia Musici:* ${raw}/135 pt (Scalato: ${scaled.toFixed(2)}/9.50)\n`;
+    text += `🧍 *Portamento:* ${coreo.porta.toFixed(2)}/0.50\n`;
+    text += `⚠️ *Penalità Esecuzione:* -${pen.toFixed(2)} pt\n`;
+    if (timePen > 0) text += `⏱️ *Penalità Tempo:* -${timePen.toFixed(2)} pt\n`;
+    text += `🏆 *VOTO FINALE:* *${finalVal.toFixed(2)}* / 10.00\n`;
+  } else if (curSec === 'supervisore') {
+    const tamburi = parseFloat(document.getElementById('input-s-tamburi').value) || 0;
+    const chiarine = parseFloat(document.getElementById('input-s-chiarine').value) || 0;
+    const coreoVal = parseFloat(document.getElementById('input-s-coreo').value) || 0;
+    const inspector = parseFloat(document.getElementById('input-s-inspector').value) || 0;
+    const timePen = calcTimePenalty(getSuperTotal());
+    const finalVal = parseFloat(document.getElementById('s-val-final').textContent) || 0.0;
+    
+    text += `📋 *Aggregazione Supervisore:*\n`;
+    text += `  • 🥁 Tamburi: ${tamburi.toFixed(2)} pt\n`;
+    text += `  • 🎺 Chiarine: ${chiarine.toFixed(2)} pt\n`;
+    text += `  • 📐 Coreografia: ${coreoVal.toFixed(2)} pt\n`;
+    if (timePen > 0) text += `⏱️ *Penalità Tempo:* -${timePen.toFixed(2)} pt\n`;
+    if (inspector > 0) text += `👮 *Penalità Ispettore:* -${inspector.toFixed(2)} pt\n`;
+    text += `🏆 *VOTO COMBINATO:* *${finalVal.toFixed(2)}* / 10.00\n`;
+  } else { // fiati / tamburi
+    const tot = calcTotals();
+    const timePen = calcTimePenalty(getTotal());
+    const finalVal = parseFloat(document.getElementById('totFinal').textContent) || 0.0;
+    const isNatural = document.getElementById('check-natural').checked;
+    
+    text += `${curSec === 'fiati' ? '🎺 *Sezione Fiati*' : '🥁 *Sezione Tamburi*'}\n`;
+    text += `🎼 *Punti Difficoltà:* ${tot.raw.toFixed(1)} pt\n`;
+    if (curSec === 'fiati' && isNatural) text += `🌿 *Addendum Chiarine Naturali:* +12%\n`;
+    text += `⚠️ *Penalità Esecuzione:* -${tot.pen.toFixed(2)} pt\n`;
+    if (timePen > 0) text += `⏱️ *Penalità Tempo:* -${timePen.toFixed(2)} pt\n`;
+    text += `🏆 *VOTO FINALE:* *${finalVal.toFixed(2)}* / 10.00\n`;
+  }
+  
+  text += `------------------------------------\n`;
+  text += `Generato con Scorecard FISB Musici Live`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Report copiato! Incollalo ora su WhatsApp.');
+  }).catch(err => {
+    alert('Impossibile copiare il report automaticamente.');
+  });
+}
+
+</script>
 </body>
 </html>
