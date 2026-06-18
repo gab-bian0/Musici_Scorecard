@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Musici">
 <meta name="theme-color" content="#1D5C1A">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{
   --gd:#1D5C1A;--gm:#2E7A2A;--gl:#C8E6C0;--gll:#EBF5E7;
@@ -78,6 +79,10 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
   border-radius:8px;color:#ffa0a0;font-family:'Cinzel',serif;font-size:10px;
   font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.03em}
 .hbtn-rst:active{background:rgba(180,30,30,.45)}
+.hbtn-pdf{background:rgba(232,201,74,.18);border:1.5px solid rgba(232,201,74,.5);
+  border-radius:8px;color:var(--goldl);font-family:'Cinzel',serif;font-size:10px;
+  font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.03em}
+.hbtn-pdf:active{background:rgba(232,201,74,.32)}
 .total-badge{background:rgba(255,255,255,.1);border:1.5px solid rgba(232,201,74,.25);
   border-radius:8px;color:rgba(255,255,255,.6);font-family:'Cinzel',serif;font-size:10px;
   font-weight:600;padding:4px 10px;min-width:72px;text-align:center;letter-spacing:.02em}
@@ -328,6 +333,32 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 .cr-final-num{font-family:'Cinzel',serif;font-size:50px;font-weight:900;
   color:var(--goldl);line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.3)}
 .cr-final-of{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px}
+
+/* ══ EXPORT MODAL ═══════════════════════════════ */
+.exp-ov{position:fixed;inset:0;background:rgba(8,20,6,.72);z-index:300;
+  display:none;align-items:center;justify-content:center;padding:16px;
+  backdrop-filter:blur(3px)}
+.exp-ov.show{display:flex}
+.exp-box{background:#fff;border-radius:16px;width:100%;max-width:380px;
+  overflow:hidden;box-shadow:0 16px 60px rgba(0,0,0,.4)}
+.exp-hdr{background:linear-gradient(135deg,var(--gd),#0e3a0c);padding:16px 18px 14px}
+.exp-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--goldl)}
+.exp-sub{font-size:10.5px;color:rgba(255,255,255,.5);font-style:italic;margin-top:2px}
+.exp-body{padding:16px 18px}
+.exp-fld{margin-bottom:12px}
+.exp-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gd);margin-bottom:5px;display:block}
+.exp-input{width:100%;padding:9px 11px;border:2px solid var(--gl);border-radius:8px;
+  font-family:'EB Garamond',Georgia,serif;font-size:14px;color:var(--ink);background:var(--gll)}
+.exp-input:focus{outline:none;border-color:var(--gd)}
+.exp-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.exp-cancel{background:none;border:2px solid #ddd;border-radius:10px;color:#aaa;
+  font-family:'Cinzel',serif;font-size:12px;font-weight:700;padding:11px;cursor:pointer}
+.exp-cancel:active{background:#f5f5f5}
+.exp-confirm{background:linear-gradient(135deg,var(--gd),#0e3a0c);border:none;border-radius:10px;
+  color:var(--goldl);font-family:'Cinzel',serif;font-size:12px;font-weight:700;padding:11px;cursor:pointer}
+.exp-confirm:active{filter:brightness(.9)}
+.exp-confirm:disabled{opacity:.5}
 </style>
 </head>
 <body>
@@ -372,6 +403,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
     </div>
     <div class="hdr-right">
       <div class="total-badge" id="totalBadge">0:00.00</div>
+      <button class="hbtn-pdf" onclick="openExportModal('musici')">📄 PDF</button>
       <button class="hbtn-rst" onclick="doReset('musici')">↺ Reset</button>
     </div>
   </div>
@@ -507,6 +539,7 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
       </div>
     </div>
     <div class="hdr-right">
+      <button class="hbtn-pdf" onclick="openExportModal('coreo')">📄 PDF</button>
       <button class="hbtn-rst" onclick="doReset('coreo')">↺ Reset</button>
     </div>
   </div>
@@ -618,6 +651,34 @@ body{background:var(--parch);font-family:'EB Garamond',Georgia,serif;color:var(-
 
   </div>
 </div><!-- /sCoreo -->
+
+<!-- ════════ EXPORT PDF MODAL ════════ -->
+<div class="exp-ov" id="expModal">
+  <div class="exp-box">
+    <div class="exp-hdr">
+      <div class="exp-title">📄 Esporta Referto PDF</div>
+      <div class="exp-sub" id="expSub">Compila i dati per l'intestazione</div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-fld">
+        <label class="exp-lbl">Squadra / Gruppo</label>
+        <input type="text" class="exp-input" id="expSquadra" placeholder="es. Sbandieratori di…">
+      </div>
+      <div class="exp-fld">
+        <label class="exp-lbl">Giudice</label>
+        <input type="text" class="exp-input" id="expGiudice" placeholder="Nome del giudice">
+      </div>
+      <div class="exp-fld" style="margin-bottom:4px">
+        <label class="exp-lbl">Manifestazione / Località</label>
+        <input type="text" class="exp-input" id="expEvento" placeholder="es. Palio di…">
+      </div>
+      <div class="exp-actions">
+        <button class="exp-cancel" onclick="closeExportModal()">✕ Annulla</button>
+        <button class="exp-confirm" onclick="confirmExportPDF()">✓ Genera PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ════════ JS ════════ -->
 <script>
@@ -1157,6 +1218,288 @@ function refreshCoreo(){
   document.getElementById('cr_porta').textContent=coreo.porta.toFixed(2);
   document.getElementById('cr_pen').textContent='–'+pen.toFixed(2);
   document.getElementById('cr_final').textContent=fin.toFixed(2);
+}
+
+/* ─── EXPORT PDF ─────────────────────────────────────── */
+let exportTarget=null;
+
+function openExportModal(which){
+  exportTarget=which;
+  const sub=document.getElementById('expSub');
+  sub.textContent = which==='coreo'
+    ? 'Referto Coreografia · '+ (brani.length>=0?'':'')
+    : 'Referto '+(curSec==='fiati'?'Fiati':'Tamburi');
+  if(which==='coreo') sub.textContent='Referto Coreografia';
+  document.getElementById('expModal').classList.add('show');
+}
+function closeExportModal(){
+  document.getElementById('expModal').classList.remove('show');
+}
+
+function fmtDateIT(d){
+  const p=n=>String(n).padStart(2,'0');
+  return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes());
+}
+
+function confirmExportPDF(){
+  const squadra=document.getElementById('expSquadra').value.trim();
+  const giudice=document.getElementById('expGiudice').value.trim();
+  const evento =document.getElementById('expEvento').value.trim();
+  if(exportTarget==='musici') buildMusiciPDF(squadra,giudice,evento);
+  else buildCoreoPDF(squadra,giudice,evento);
+  closeExportModal();
+}
+
+// Colori comuni (RGB) — coerenti con il tema verde/oro dell'app
+const PDF_GD=[29,92,26], PDF_GOLD=[180,140,10], PDF_RED=[181,34,34],
+      PDF_INK=[20,30,18], PDF_GREY=[140,140,140], PDF_LGREEN=[235,245,231];
+
+function pdfHeader(doc,sectionLabel,squadra,giudice,evento,subRules){
+  const W=210, M=15;
+  doc.setFillColor(...PDF_GD);
+  doc.rect(0,0,W,26,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(17);
+  doc.setTextColor(232,201,74);
+  doc.text('FISB · Scorecard Musici',M,12);
+  doc.setFont('helvetica','normal');doc.setFontSize(9.5);
+  doc.setTextColor(255,255,255);
+  doc.text(sectionLabel,M,19);
+  doc.setFontSize(8);doc.setTextColor(220,220,220);
+  doc.text(subRules,M,23.5);
+  doc.setFont('helvetica','normal');doc.setFontSize(8);
+  doc.setTextColor(255,255,255);
+  doc.text(fmtDateIT(new Date()),W-M,12,{align:'right'});
+
+  let y=34;
+  doc.setFontSize(10);doc.setTextColor(...PDF_INK);
+  const infoLine=[
+    squadra?('Squadra/Gruppo: '+squadra):null,
+    giudice?('Giudice: '+giudice):null,
+    evento?('Manifestazione: '+evento):null
+  ].filter(Boolean);
+  if(infoLine.length){
+    doc.setFont('helvetica','bold');
+    doc.text(infoLine.join('   ·   '),M,y);
+    y+=6;
+  }
+  doc.setDrawColor(...PDF_GOLD);doc.setLineWidth(.6);
+  doc.line(M,y,W-M,y);
+  return y+6;
+}
+
+function pdfFooter(doc,pageNum){
+  const W=210,H=297,M=15;
+  doc.setFont('helvetica','italic');doc.setFontSize(7.5);
+  doc.setTextColor(...PDF_GREY);
+  doc.text('FISB Rev. 33 · 2025 — Categoria Tradizionale · Generato automaticamente',M,H-10);
+  doc.text('Pag. '+pageNum,W-M,H-10,{align:'right'});
+}
+
+function buildMusiciPDF(squadra,giudice,evento){
+  if(!window.jspdf){alert('Libreria PDF non disponibile: verificare la connessione internet.');return;}
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const W=210,M=15;
+  const sectionLabel=(curSec==='fiati'?'🎺 Sezione Fiati':'🥁 Sezione Tamburi')+' — Difficoltà Musicale ed Esecuzione';
+  let y=pdfHeader(doc,sectionLabel,squadra,giudice,evento,'FISB Rev. 33 · 2025 — Categoria Tradizionale');
+  let pageNum=1;
+
+  // Colonne tabella (somma = 180mm)
+  const cols=[
+    {w:9,  lbl:'#',     a:'center'},
+    {w:16, lbl:'Cls',   a:'center'},
+    {w:20, lbl:'Durata',a:'center'},
+    {w:12, lbl:'Voci',  a:'center'},
+    {w:46, lbl:'Difficoltà Agg.', a:'left'},
+    {w:42, lbl:'Declassamenti',  a:'left'},
+    {w:16, lbl:'Pen.',  a:'center'},
+    {w:19, lbl:'Punti', a:'right'}
+  ];
+  function colX(i){let x=M;for(let k=0;k<i;k++)x+=cols[k].w;return x;}
+
+  function drawTableHeader(){
+    doc.setFillColor(...PDF_GD);
+    doc.rect(M,y,180,7,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);
+    doc.setTextColor(232,201,74);
+    cols.forEach((c,i)=>{
+      const x=colX(i)+(c.a==='center'?c.w/2:c.a==='right'?c.w-2:2);
+      doc.text(c.lbl,x,y+4.7,{align:c.a});
+    });
+    y+=7;
+  }
+  drawTableHeader();
+
+  const addDefs=curSec==='fiati'?FIATI_ADDS:PERC_ADDS;
+  const decDefs=curSec==='fiati'?FIATI_DECS:PERC_DECS;
+  let aaC=0,aC=0;
+  doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+
+  brani.forEach((b,i)=>{
+    if(y>268){ pdfFooter(doc,pageNum); doc.addPage(); pageNum++; y=20; drawTableHeader(); doc.setFont('helvetica','normal');doc.setFontSize(8.5); }
+
+    let cls=b.cls;
+    if(cls==='AA'){aaC++;if(aaC>1)cls='A';}
+    if(cls==='A'){aC++;if(aC>3)cls='B';}
+    const pts=calcScore(b,cls);
+    const pen=calcPen(b);
+    const addStr=b.adds.length?b.adds.map(id=>{const a=addDefs.find(x=>x.id===id);return a?a.name:'';}).filter(Boolean).join(', '):'—';
+    const decStr=b.decs.length?b.decs.map(id=>{const d=decDefs.find(x=>x.id===id);return d?d.name:'';}).filter(Boolean).join(', '):'—';
+    const penStr=pen>0?('−'+pen.toFixed(2)):'—';
+
+    // Zebra striping
+    if(i%2===1){doc.setFillColor(...PDF_LGREEN);doc.rect(M,y,180,7,'F');}
+
+    doc.setTextColor(...PDF_INK);
+    doc.text(String(i+1),colX(0)+cols[0].w/2,y+4.7,{align:'center'});
+    doc.text(b.cls+(cls!==b.cls?(' →'+cls):''),colX(1)+cols[1].w/2,y+4.7,{align:'center'});
+    doc.text(b.dur.toFixed(2)+'s',colX(2)+cols[2].w/2,y+4.7,{align:'center'});
+    doc.text(String(b.voci),colX(3)+cols[3].w/2,y+4.7,{align:'center'});
+
+    // Testo lungo: troncamento automatico con splitTextToSize
+    const addLines=doc.splitTextToSize(addStr,cols[4].w-4);
+    doc.text(addLines[0]||'—',colX(4)+2,y+4.7);
+    const decLines=doc.splitTextToSize(decStr,cols[5].w-4);
+    doc.text(decLines[0]||'—',colX(5)+2,y+4.7);
+
+    doc.setTextColor(...PDF_RED);
+    doc.text(penStr,colX(6)+cols[6].w/2,y+4.7,{align:'center'});
+    doc.setTextColor(...PDF_GD);doc.setFont('helvetica','bold');
+    doc.text((Math.round(pts*10)/10).toFixed(1),colX(7)+cols[7].w-2,y+4.7,{align:'right'});
+    doc.setFont('helvetica','normal');
+
+    // linea sottile di separazione
+    doc.setDrawColor(220,220,220);doc.setLineWidth(.2);
+    doc.line(M,y+7,M+180,y+7);
+
+    y+=7;
+  });
+
+  if(brani.length===0){
+    doc.setFont('helvetica','italic');doc.setFontSize(10);doc.setTextColor(...PDF_GREY);
+    doc.text('Nessun brano registrato.',M,y+8);
+    y+=14;
+  }
+
+  // Riepilogo totali
+  y+=8;
+  if(y>250){ pdfFooter(doc,pageNum); doc.addPage(); pageNum++; y=24; }
+  const t=calcTotals();
+  const maxP=MAX_PTS[curSec]||1600;
+
+  doc.setDrawColor(...PDF_GOLD);doc.setLineWidth(.6);
+  doc.line(M,y,M+180,y);
+  y+=8;
+
+  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(...PDF_GD);
+  doc.text('Riepilogo Valutazione',M,y);
+  y+=8;
+
+  const sumRows=[
+    ['Brani registrati', String(brani.length)],
+    ['Brani in classe AA (max 1)', t.aaC+(t.aaC>1?'  ⚠ oltre il limite':'')],
+    ['Brani in classe A (max 3)',  t.aC +(t.aC>3 ?'  ⚠ oltre il limite':'')],
+    ['Punti grezzi (su massimale)', Math.round(t.raw)+' / '+maxP],
+    ['Penalità di esecuzione totali', '−'+t.pen.toFixed(2)]
+  ];
+  doc.setFont('helvetica','normal');doc.setFontSize(10);
+  sumRows.forEach(r=>{
+    doc.setTextColor(...PDF_INK);
+    doc.text(r[0],M,y);
+    doc.setFont('helvetica','bold');
+    doc.text(r[1],M+180,y,{align:'right'});
+    doc.setFont('helvetica','normal');
+    y+=6.5;
+  });
+
+  pdfFooter(doc,pageNum);
+  const fname='Musici_'+(curSec==='fiati'?'Fiati':'Tamburi')+'_'+Date.now()+'.pdf';
+  doc.save(fname);
+}
+
+function buildCoreoPDF(squadra,giudice,evento){
+  if(!window.jspdf){alert('Libreria PDF non disponibile: verificare la connessione internet.');return;}
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const W=210,M=15;
+  let y=pdfHeader(doc,'🎭 Coreografia — Portamento ed Esecuzione',squadra,giudice,evento,'FISB Rev. 33 · 2025 — Categoria Tradizionale');
+
+  const insPts=Math.min(coreo.insiemeB*4+coreo.insiemeC*10,30);
+  const extRaw=coreo.extP+coreo.extB*3+coreo.extC*5;
+  const extPts=Math.min(extRaw,68);
+  const presPts=coreo.pres*10, congPts=coreo.congedo*5, sincPts=coreo.sinc;
+  const rawT=presPts+insPts+extPts+congPts+sincPts;
+  const conv=Math.min(rawT/135*9.5,9.5);
+  const pen=coreo.penLieve*.10+coreo.penMedia*.30+coreo.penGrave*.60+coreo.penSpec*2.50;
+  const fin=Math.max(0,conv+coreo.porta-pen);
+
+  y+=4;
+  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(...PDF_GD);
+  doc.text('Dettaglio Figurazioni',M,y);
+  y+=8;
+
+  const rows=[
+    ['Presentazione',       coreo.pres+' × 10 pt',     presPts+' pt'],
+    ['Insieme Base',        coreo.insiemeB+' × 4 pt',  (coreo.insiemeB*4)+' pt'],
+    ['Insieme Composta',    coreo.insiemeC+' × 10 pt', (coreo.insiemeC*10)+' pt'],
+    ['  Totale Insieme (cap 30)', '', insPts+' pt'],
+    ['Esterna Parziale',    coreo.extP+' × 1 pt',  coreo.extP+' pt'],
+    ['Esterna Base',        coreo.extB+' × 3 pt',  (coreo.extB*3)+' pt'],
+    ['Esterna Composta',    coreo.extC+' × 5 pt',  (coreo.extC*5)+' pt'],
+    ['  Totale Esterne (cap 68)','', extPts+' pt'],
+    ['Figurazione di Congedo', coreo.congedo+' × 5 pt', congPts+' pt'],
+    ['Momenti di Sincronismo', coreo.sinc+' × 1 pt (max 12)', sincPts+' pt']
+  ];
+  doc.setFontSize(9.5);
+  rows.forEach((r,i)=>{
+    const isSub=r[0].startsWith('  ');
+    doc.setFont('helvetica',isSub?'bold':'normal');
+    doc.setTextColor(...(isSub?PDF_GD:PDF_INK));
+    doc.text(r[0].trim(),M+(isSub?4:0),y);
+    doc.text(r[1],M+110,y,{align:'right'});
+    doc.setFont('helvetica','bold');
+    doc.text(r[2],M+180,y,{align:'right'});
+    y+=6.2;
+    if(isSub){doc.setDrawColor(220,220,220);doc.setLineWidth(.2);doc.line(M,y-2,M+180,y-2);}
+  });
+
+  y+=6;
+  doc.setDrawColor(...PDF_GOLD);doc.setLineWidth(.6);
+  doc.line(M,y,M+180,y);
+  y+=8;
+
+  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(...PDF_GD);
+  doc.text('Conversione e Penalità',M,y);
+  y+=8;
+
+  const sumRows=[
+    ['Punti coreo grezzi', rawT+' / 135'],
+    ['Stima voto coreo (0–9.5)', conv.toFixed(2)],
+    ['Portamento', '+'+coreo.porta.toFixed(2)],
+    ['Penalità di esecuzione totali', '−'+pen.toFixed(2)]
+  ];
+  doc.setFont('helvetica','normal');doc.setFontSize(10);
+  sumRows.forEach(r=>{
+    doc.setTextColor(...PDF_INK);
+    doc.text(r[0],M,y);
+    doc.setFont('helvetica','bold');
+    doc.text(r[1],M+180,y,{align:'right'});
+    doc.setFont('helvetica','normal');
+    y+=7;
+  });
+
+  y+=6;
+  doc.setFillColor(...PDF_GD);
+  doc.roundedRect(M,y,180,26,3,3,'F');
+  doc.setFont('helvetica','normal');doc.setFontSize(9);
+  doc.setTextColor(220,235,215);
+  doc.text('PUNTEGGIO FINALE STIMATO (su 10.00)',M+90,y+8,{align:'center'});
+  doc.setFont('helvetica','bold');doc.setFontSize(26);
+  doc.setTextColor(232,201,74);
+  doc.text(fin.toFixed(2),M+90,y+20,{align:'center'});
+
+  pdfFooter(doc,1);
+  doc.save('Musici_Coreografia_'+Date.now()+'.pdf');
 }
 
 /* ─── INIT ───────────────────────────────────────────── */
